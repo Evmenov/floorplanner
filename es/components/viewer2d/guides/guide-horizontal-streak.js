@@ -21,7 +21,7 @@ export default function GuideHorizontalStreak(_ref) {
   for (var y = 0; y <= height; y += step) {
     var color = colors.get(i % colors.size);
     i++;
-    rendered.push(React.createElement('line', { key: y, x1: '0', y1: y, x2: width, y2: y, strokeWidth: '1', stroke: color }));
+    rendered.push(React.createElement('line', { key: y, x1: '0', y1: y, x2: width, y2: y, strokeWidth: '0.5', stroke: color }));
   }
 
   return React.createElement(

@@ -44,7 +44,10 @@ export default function Sidebar(_ref) {
       sidebarComponents = _ref.sidebarComponents;
 
 
-  var sorter = [{ index: 0, condition: true, dom: React.createElement(PanelLayers, { state: state }) }, { index: 1, condition: true, dom: React.createElement(PanelLayerElements, { mode: state.mode, layers: state.scene.layers, selectedLayer: state.scene.selectedLayer }) }, { index: 2, condition: true, dom: React.createElement(PanelElementEditor, { state: state }) }];
+  var sorter = [
+  // { index: 0, condition: true, dom: <PanelLayers state={state} /> },
+  // { index: 1, condition: true, dom: <PanelLayerElements mode={state.mode} layers={state.scene.layers} selectedLayer={state.scene.selectedLayer} /> },
+  { index: 2, condition: true, dom: React.createElement(PanelElementEditor, { state: state }) }];
 
   sorter = sorter.concat(sidebarComponents.map(function (Component, key) {
     return Component.prototype ? //if is a react component

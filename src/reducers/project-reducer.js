@@ -5,6 +5,7 @@ import {
   OPEN_CATALOG,
   MODE_VIEWING_CATALOG,
   MODE_CONFIGURING_PROJECT,
+  MODE_AGENTS_VIEWER,
   SELECT_TOOL_EDIT,
   MODE_IDLE,
   UNSELECT_ALL,
@@ -17,6 +18,7 @@ import {
   ROLLBACK,
   SET_PROJECT_PROPERTIES,
   OPEN_PROJECT_CONFIGURATOR,
+  OPEN_AGENT_VIEWER,
   INIT_CATALOG,
   UPDATE_MOUSE_COORDS,
   UPDATE_ZOOM_SCALE,
@@ -91,6 +93,9 @@ export default function (state, action) {
 
     case OPEN_PROJECT_CONFIGURATOR:
       return openProjectConfigurator(state);
+
+    case OPEN_AGENT_VIEWER:
+      return openAgentsVIew(state);
 
     case INIT_CATALOG:
       return initCatalog(state, action.catalog);
@@ -263,6 +268,12 @@ function setProjectProperties(state, properties) {
 function openProjectConfigurator(state) {
   return state.merge({
     mode: MODE_CONFIGURING_PROJECT,
+  });
+}
+
+function openAgentsVIew(state) {
+  return state.merge({
+    mode: MODE_AGENTS_VIEWER,
   });
 }
 

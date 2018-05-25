@@ -13,6 +13,7 @@ import {
   UNDO,
   ROLLBACK,
   OPEN_PROJECT_CONFIGURATOR,
+  OPEN_AGENT_VIEWER,
   SET_PROJECT_PROPERTIES,
   INIT_CATALOG,
   UPDATE_MOUSE_COORDS,
@@ -24,7 +25,7 @@ import {
   THROW_WARNING,
   COPY_PROPERTIES,
   PASTE_PROPERTIES,
-  PUSH_LAST_SELECTED_CATALOG_ELEMENT_TO_HISTORY
+  PUSH_LAST_SELECTED_CATALOG_ELEMENT_TO_HISTORY,
 } from '../constants';
 
 export function loadProject(sceneJSON) {
@@ -143,6 +144,12 @@ export function rollback() {
 export function openProjectConfigurator() {
   return {
     type: OPEN_PROJECT_CONFIGURATOR
+  };
+}
+
+export function openAgentsVIew() {
+  return {
+    type: OPEN_AGENT_VIEWER
   };
 }
 

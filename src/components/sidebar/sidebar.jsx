@@ -32,8 +32,8 @@ const mapButtonsCb = (el, ind) => <If key={ind} condition={el.condition} style={
 export default function Sidebar({ state, width, height, sidebarComponents }) {
 
   let sorter = [
-    { index: 0, condition: true, dom: <PanelLayers state={state} /> },
-    { index: 1, condition: true, dom: <PanelLayerElements mode={state.mode} layers={state.scene.layers} selectedLayer={state.scene.selectedLayer} /> },
+   // { index: 0, condition: true, dom: <PanelLayers state={state} /> },
+   // { index: 1, condition: true, dom: <PanelLayerElements mode={state.mode} layers={state.scene.layers} selectedLayer={state.scene.selectedLayer} /> },
     { index: 2, condition: true, dom: <PanelElementEditor state={state} /> },
     //{ index: 999999, condition: true, dom: <PanelGuides state={state}/> },
   ];

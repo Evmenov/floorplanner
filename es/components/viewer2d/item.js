@@ -4,7 +4,9 @@ import If from '../../utils/react-if';
 
 var STYLE_LINE = {
   fill: "#0096fd",
-  stroke: "#0096fd"
+  stroke: "#0096fd",
+  strokeWidth: "50px",
+  strokeHeight: "50px"
 };
 
 var STYLE_CIRCLE = {

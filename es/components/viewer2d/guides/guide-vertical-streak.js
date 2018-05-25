@@ -21,7 +21,7 @@ export default function GuideVerticalStreak(_ref) {
   for (var x = 0; x <= width; x += step) {
     var color = colors.get(i % colors.size);
     i++;
-    rendered.push(React.createElement('line', { key: x, x1: x, y1: '0', x2: x, y2: height, strokeWidth: '1', stroke: color }));
+    rendered.push(React.createElement('line', { key: x, x1: x, y1: '0', x2: x, y2: height, strokeWidth: '0.5', stroke: color }));
   }
 
   return React.createElement(

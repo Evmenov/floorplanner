@@ -1,4 +1,5 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 import Viewer2D from './viewer2d/viewer2d';
 import Viewer3D from './viewer3d/viewer3d';
@@ -7,6 +8,7 @@ import CatalogList from './catalog-view/catalog-list';
 import ProjectConfigurator from './configurator/project-configurator';
 
 import * as constants from '../constants';
+import AgentViewer from "./agents/agent-viewer";
 
 export default function Content({width, height, state, customContents}) {
   let mode = state.get('mode');
@@ -38,6 +40,9 @@ export default function Content({width, height, state, customContents}) {
 
     case constants.MODE_CONFIGURING_PROJECT:
       return <ProjectConfigurator width={width} height={height} state={state}/>;
+
+      case constants.MODE_AGENTS_VIEWER:
+      return <AgentViewer width={width} height={height} state={state}/>;
 
     default:
       if (customContents.hasOwnProperty(mode)) {

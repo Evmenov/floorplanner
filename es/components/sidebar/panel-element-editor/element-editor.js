@@ -446,28 +446,6 @@ var ElementEditor = function (_Component) {
           attributeFormData: attributesFormData,
           state: appState
         }),
-        React.createElement(
-          'div',
-          { style: attrPorpSeparatorStyle },
-          React.createElement(
-            'div',
-            { style: headActionStyle },
-            React.createElement(
-              'div',
-              { title: translator.t('Copy'), style: iconHeadStyle, onClick: function onClick(e) {
-                  return _this3.copyProperties(element.properties);
-                } },
-              React.createElement(MdContentCopy, null)
-            ),
-            appState.get('clipboardProperties') ? React.createElement(
-              'div',
-              { title: translator.t('Paste'), style: iconHeadStyle, onClick: function onClick(e) {
-                  return _this3.pasteProperties();
-                } },
-              React.createElement(MdContentPaste, null)
-            ) : null
-          )
-        ),
         propertiesFormData.entrySeq().map(function (_ref3) {
           var _ref4 = _slicedToArray(_ref3, 2),
               propertyName = _ref4[0],

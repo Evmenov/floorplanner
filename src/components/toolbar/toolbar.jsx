@@ -11,7 +11,7 @@ import {
   MODE_3D_VIEW,
   MODE_3D_FIRST_PERSON,
   MODE_VIEWING_CATALOG,
-  MODE_CONFIGURING_PROJECT
+  MODE_CONFIGURING_PROJECT, MODE_AGENTS_VIEWER
 } from '../../constants';
 import * as SharedStyle from '../../shared-style';
 
@@ -78,7 +78,7 @@ export default class Toolbar extends Component {
     let mode = state.get('mode');
 
     let sorter = [
-      {
+           {
         index: 0, condition: allowProjectFileSupport, dom: <ToolbarButton
           active={false}
           tooltip={translator.t('New project')}
@@ -127,7 +127,7 @@ export default class Toolbar extends Component {
       //     <MdDirectionsRun />
       //   </ToolbarButton>
       // },
-      {
+            {
         index: 7, condition: true, dom: <ToolbarButton
           active={false}
           tooltip={translator.t('Undo (CTRL-Z)')}
@@ -141,6 +141,14 @@ export default class Toolbar extends Component {
           tooltip={translator.t('Configure project')}
           onClick={event => projectActions.openProjectConfigurator()}>
           <MdSettings />
+        </ToolbarButton>
+      },
+      {
+        index: 9, condition: true, dom: <ToolbarButton
+          active={[MODE_AGENTS_VIEWER].includes(mode)}
+          tooltip={translator.t('View agents')}
+          onClick={event => projectActions.openAgentsVIew()}>
+          <MdDirectionsRun />
         </ToolbarButton>
       }
     ];

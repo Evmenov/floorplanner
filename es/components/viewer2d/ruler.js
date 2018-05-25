@@ -8,7 +8,7 @@ var STYLE = {
 
 var STYLE_TEXT = {
   textAnchor: "middle",
-  fontSize: "12px",
+  fontSize: "20px",
   fontFamily: "'Courier New', Courier, monospace",
   pointerEvents: "none",
   fontWeight: "bold",

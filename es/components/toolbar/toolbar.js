@@ -16,7 +16,7 @@ import ToolbarButton from './toolbar-button';
 import ToolbarSaveButton from './toolbar-save-button';
 import ToolbarLoadButton from './toolbar-load-button';
 import If from '../../utils/react-if';
-import { MODE_IDLE, MODE_3D_VIEW, MODE_3D_FIRST_PERSON, MODE_VIEWING_CATALOG, MODE_CONFIGURING_PROJECT } from '../../constants';
+import { MODE_IDLE, MODE_3D_VIEW, MODE_3D_FIRST_PERSON, MODE_VIEWING_CATALOG, MODE_CONFIGURING_PROJECT, MODE_AGENTS_VIEWER } from '../../constants';
 import * as SharedStyle from '../../shared-style';
 
 var iconTextStyle = {
@@ -154,18 +154,16 @@ var Toolbar = function (_Component) {
             } },
           [MODE_3D_FIRST_PERSON, MODE_3D_VIEW].includes(mode) ? React.createElement(Icon2D, null) : React.createElement(FaMousePointer, null)
         )
-      }, {
-        index: 6, condition: true, dom: React.createElement(
-          ToolbarButton,
-          {
-            active: [MODE_3D_FIRST_PERSON].includes(mode),
-            tooltip: translator.t('3D First Person'),
-            onClick: function onClick(event) {
-              return viewer3DActions.selectTool3DFirstPerson();
-            } },
-          React.createElement(MdDirectionsRun, null)
-        )
-      }, {
+      },
+      // {
+      //   index: 6, condition: true, dom: <ToolbarButton
+      //     active={[MODE_3D_FIRST_PERSON].includes(mode)}
+      //     tooltip={translator.t('3D First Person')}
+      //     onClick={event => viewer3DActions.selectTool3DFirstPerson()}>
+      //     <MdDirectionsRun />
+      //   </ToolbarButton>
+      // },
+      {
         index: 7, condition: true, dom: React.createElement(
           ToolbarButton,
           {
@@ -186,6 +184,17 @@ var Toolbar = function (_Component) {
               return projectActions.openProjectConfigurator();
             } },
           React.createElement(MdSettings, null)
+        )
+      }, {
+        index: 9, condition: true, dom: React.createElement(
+          ToolbarButton,
+          {
+            active: [MODE_AGENTS_VIEWER].includes(mode),
+            tooltip: translator.t('View agents'),
+            onClick: function onClick(event) {
+              return projectActions.openAgentsVIew();
+            } },
+          React.createElement(MdDirectionsRun, null)
         )
       }];
 

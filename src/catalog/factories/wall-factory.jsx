@@ -2,7 +2,6 @@ import { buildWall, updatedWall } from './wall-factory-3d';
 import React from 'react';
 import * as SharedStyle from '../../shared-style';
 import * as Geometry from '../../utils/geometry';
-
 // const epsilon = 3;
 const STYLE_BASE = {stroke: '#8E9BA2', strokeWidth: '1px', fill: '#8E9BA2'};
 const STYLE_SELECTED = {stroke: '#99c3fb', strokeWidth: '5px', fill: SharedStyle.COLORS.black};
@@ -16,27 +15,29 @@ export default function WallFactory(name, info, textures) {
     prototype: 'lines',
     info,
     properties: {
-      height: {
-        label: 'Height',
-        type: 'length-measure',
-        defaultValue: {
-          length: 300,
-        }
-      },
+      // height: {
+      //   label: 'Height',
+      //   type: 'length-measure',
+      //   defaultValue: {
+      //     length: 300,
+      //   }
+      // },
       thickness: {
-        label: 'Thickness',
+        label: 'Ширина',
         type: 'length-measure',
         defaultValue: {
           length: 3,
         }
       }
-    },
+     },
 
     render2D: function (element, layer, scene) {
       let {x:x1,  y:y1} = layer.vertices.get(element.vertices.get(0));
       let {x:x2, y: y2} = layer.vertices.get(element.vertices.get(1));
+
       let thickness = element.properties.getIn(['thickness', 'length']);
       let epsilon = thickness;
+
       let length = Geometry.pointsDistance(x1, y1, x2, y2);
       let path = `M${0} ${ -epsilon}  L${length} ${-epsilon}  L${length} ${epsilon}  L${0} ${epsilon}  z`;
       let length_5 = length / 5;
@@ -62,31 +63,31 @@ export default function WallFactory(name, info, textures) {
 
   };
 
-  if (textures && textures !== {}) {
+  // if (textures && textures !== {}) {
+  //
+  //   let textureValues = {
+  //     'none': 'None'
+  //   };
+  //
+  //   for (let textureName in textures) {
+  //     textureValues[textureName] = textures[textureName].name
+  //   }
+  //
+  //   wallElement.properties.textureA = {
+  //     label: 'Covering A',
+  //     type: 'enum',
+  //     defaultValue: 'none',
+  //     values: textureValues
+  //   };
+  //
+  //   wallElement.properties.textureB = {
+  //     label: 'Covering B',
+  //     type: 'enum',
+  //     defaultValue: 'none',
+  //     values: textureValues
+    //};
 
-    let textureValues = {
-      'none': 'None'
-    };
-
-    for (let textureName in textures) {
-      textureValues[textureName] = textures[textureName].name
-    }
-
-    wallElement.properties.textureA = {
-      label: 'Covering A',
-      type: 'enum',
-      defaultValue: 'none',
-      values: textureValues
-    };
-
-    wallElement.properties.textureB = {
-      label: 'Covering B',
-      type: 'enum',
-      defaultValue: 'none',
-      values: textureValues
-    };
-
-  }
+ // }
 
   return wallElement;
 

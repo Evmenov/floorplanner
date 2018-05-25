@@ -373,12 +373,12 @@ export default class ElementEditor extends Component {
           state={appState}
         />
 
-        <div style={attrPorpSeparatorStyle}>
-          <div style={headActionStyle}>
-            <div title={translator.t('Copy')} style={iconHeadStyle} onClick={ e => this.copyProperties(element.properties) }><MdContentCopy /></div>
-            { appState.get('clipboardProperties') ? <div title={translator.t('Paste')} style={iconHeadStyle} onClick={ e => this.pasteProperties() }><MdContentPaste /></div> : null }
-          </div>
-        </div>
+        {/*<div style={attrPorpSeparatorStyle}>*/}
+          {/*<div style={headActionStyle}>*/}
+            {/*<div title={translator.t('Copy')} style={iconHeadStyle} onClick={ e => this.copyProperties(element.properties) }><MdContentCopy /></div>*/}
+            {/*{ appState.get('clipboardProperties') ? <div title={translator.t('Paste')} style={iconHeadStyle} onClick={ e => this.pasteProperties() }><MdContentPaste /></div> : null }*/}
+          {/*</div>*/}
+        {/*</div>*/}
 
         {propertiesFormData.entrySeq()
           .map(([propertyName, data]) => {

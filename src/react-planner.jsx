@@ -14,12 +14,14 @@ import {
   FooterBarComponents
 } from './components/export';
 import {VERSION} from './version';
+import AgentViewer from "./components/agents/agent-viewer";
 
 const {Toolbar} = ToolbarComponents;
 const {Sidebar} = SidebarComponents;
 const {FooterBar} = FooterBarComponents;
 
 const toolbarW = 50;
+const agentViewW = 300;
 const sidebarW = 300;
 const footerBarH= 20;
 
@@ -57,16 +59,21 @@ class ReactPlanner extends Component {
   render() {
     let {width, height, state, stateExtractor, ...props} = this.props;
 
-    let contentW = width - toolbarW - sidebarW;
+
     let toolbarH = height - footerBarH;
-    let contentH = height - footerBarH;
     let sidebarH = height - footerBarH;
+    let contentH = height - footerBarH;
+    let agentViewH = height - footerBarH;
+
+    let contentW = width - toolbarW - sidebarW;
 
     let extractedState = stateExtractor(state);
 
     return (
       <div style={{...wrapperStyle, height}}>
         <Toolbar width={toolbarW} height={toolbarH} state={extractedState} {...props} />
+        <AgentViewer width={agentViewW} height={agentViewH} state={extractedState}/>
+
         <Content width={contentW} height={contentH} state={extractedState} {...props} onWheel={event => event.preventDefault()} />
         <Sidebar width={sidebarW} height={sidebarH} state={extractedState} {...props} />
         <FooterBar width={width} height={footerBarH} state={extractedState} {...props} />
