@@ -1,0 +1,111 @@
+{
+  "name": "react-planner",
+  "version": "1.8.5",
+  "description": "react-planner is a React Component for plans design. Draw a 2D floorplan and navigate it in 3D mode.",
+  "main": "lib/index.js",
+  "module": "es/index.js",
+  "jsnext:main": "es/index.js",
+  "scripts": {
+    "start": "webpack-dev-server --inline --config demo/webpack.config.js --port 9000 --mode development",
+    "build-demo": "webpack --config demo/webpack.config.js --mode production",
+    "build-commonjs": "cross-env BABEL_ENV=commonjs babel src --out-dir lib",
+    "build-es": "cross-env BABEL_ENV=es babel src --out-dir es",
+    "build": "npm run clean && npm run build-demo && npm run build-commonjs && npm run build-es",
+    "add-build-to-vcs": "git add -A src/version.js && git add -A es && git add -A lib && git add -A demo/dist",
+    "clean": "rimraf lib es demo/dist",
+    "website-update": "gh-pages -m 'Update gh-pages' -d ./demo/dist/",
+    "update-version-file": "const-version ./package.json ./src/version.js",
+    "version": "npm run update-version-file && npm run build && npm run add-build-to-vcs",
+    "postpublish": "npm run website-update",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cvdlab/react-planner.git"
+  },
+  "keywords": [
+    "floorplanner",
+    "plan",
+    "svg",
+    "3d",
+    "home design",
+    "interior design",
+    "react",
+    "react-component",
+    "react.js",
+    "ui",
+    "interface",
+    "component"
+  ],
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/cvdlab/react-planner/issues"
+  },
+  "maintainers": [
+    {
+      "url": "https://github.com/chrvadala",
+      "name": "chrvadala"
+    },
+    {
+      "url": "https://github.com/danilosalvati",
+      "name": "danilosalvati"
+    },
+    {
+      "url": "https://github.com/enricomarino",
+      "name": "enricomarino"
+    },
+    {
+      "url": "https://github.com/federicospini",
+      "name": "federicospini"
+    },
+    {
+      "url": "https://github.com/alessiocarrafa",
+      "name": "alessiocarrafa"
+    }
+  ],
+  "homepage": "https://github.com/cvdlab/react-planner#readme",
+  "dependencies": {
+    "@mapbox/react-range": "0.0.7",
+    "area-polygon": "1.0.1",
+    "convert-units": "2.3.4",
+    "html-webpack-plugin": "3.2.0",
+    "immutable": "3.8.2",
+    "immutablediff": "0.4.4",
+    "immutablepatch": "0.4.2",
+    "polylabel": "1.0.2",
+    "prop-types": "15.6.1",
+    "react-icons": "2.2.7",
+    "react-redux": "5.0.7",
+    "react-svg-pan-zoom": "2.16.1",
+    "redux": "4.0.0",
+    "shortid": "2.2.8"
+  },
+  "devDependencies": {
+    "babel-cli": "6.26.0",
+    "babel-core": "6.26.0",
+    "babel-loader": "7.1.4",
+    "babel-plugin-import-glob": "2.0.0",
+    "babel-plugin-transform-object-rest-spread": "6.26.0",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-es2015-webpack2": "1.0.0",
+    "babel-preset-react": "^6.24.1",
+    "const-version": "1.0.1",
+    "cross-env": "5.1.4",
+    "file-loader": "1.1.11",
+    "gh-pages": "1.1.0",
+    "open-browser-webpack-plugin": "0.0.5",
+    "react": "^16.3.2",
+    "react-container-dimensions": "1.3.3",
+    "react-dom": "16.3.2",
+    "rimraf": "2.6.2",
+    "three": "0.92.0",
+    "webpack": "4.6.0",
+    "webpack-cli": "2.0.14",
+    "webpack-dev-server": "3.1.3"
+  },
+  "peerDependencies": {
+    "react": "16.x",
+    "react-dom": "16.x",
+    "three": "0.87.x"
+  }
+}
