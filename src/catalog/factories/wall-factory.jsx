@@ -10,6 +10,7 @@ const STYLE_LINE = {stroke: '#99c3fb'};
 
 export default function WallFactory(name, info, textures) {
 
+
   let wallElement = {
     name,
     prototype: 'lines',

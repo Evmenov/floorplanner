@@ -25,6 +25,13 @@ export default function AreaFactory(name, info, textures) {
         defaultValue: {
           length: 0,
         }
+      },
+      agent:{
+        label:'Текущий агент',
+        type:'enum',
+        defaultValue: 'none',
+
+
       }
     },
     render2D: function (element, layer, scene) {

@@ -72,7 +72,8 @@ class ReactPlanner extends Component {
     return (
       <div style={{...wrapperStyle, height}}>
         <Toolbar width={toolbarW} height={toolbarH} state={extractedState} {...props} />
-        <AgentViewer width={agentViewW} height={agentViewH} state={extractedState}/>
+
+        {/*<AgentViewer width={agentViewW} height={agentViewH} state={extractedState}/>*/}
 
         <Content width={contentW} height={contentH} state={extractedState} {...props} onWheel={event => event.preventDefault()} />
         <Sidebar width={sidebarW} height={sidebarH} state={extractedState} {...props} />
