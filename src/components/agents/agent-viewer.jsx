@@ -6,6 +6,7 @@ import {
   ContentContainer,
   CancelButton
 } from '../style/export';
+import AgentsList from "./agents-list";
 
 export default class AgentViewer extends Component {
 
@@ -28,9 +29,7 @@ export default class AgentViewer extends Component {
 const body = this.state.isOpen &&
   <ContentContainer width={width} height={height}>
   <ContentTitle>{translator.t('Agents list')}</ContentTitle>
-    <li>
-      <Agent agent={agents[0]}></Agent>
-    </li>
+  <AgentsList agents={agents}/>
 
     <table style={{float: 'right'}}>
       <tbody>
@@ -59,4 +58,5 @@ AgentViewer.propTypes = {
 AgentViewer.contextTypes = {
   projectActions: PropTypes.object.isRequired,
   translator: PropTypes.object.isRequired,
+  agents: PropTypes.object.isRequired,
 };
