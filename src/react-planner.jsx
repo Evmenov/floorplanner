@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
+import jsonTest from './jsonTest'
 
 import Translator from './translator/translator';
 import Catalog from './catalog/catalog';
@@ -37,6 +38,7 @@ class ReactPlanner extends Component {
       ...objectsMap(actions, actionNamespace => this.props[actionNamespace]),
       translator: this.props.translator,
       catalog: this.props.catalog,
+      agents: jsonTest
     }
   }
 
@@ -108,6 +110,7 @@ ReactPlanner.childContextTypes = {
   ...objectsMap(actions, () => PropTypes.object),
   translator: PropTypes.object,
   catalog: PropTypes.object,
+  agents: PropTypes.array
 };
 
 ReactPlanner.defaultProps = {
@@ -120,6 +123,7 @@ ReactPlanner.defaultProps = {
   sidebarComponents: [],
   footerbarComponents: [],
   customContents: {},
+
 };
 
 //redux connect

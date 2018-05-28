@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
+import Agent from './agent'
 import {
   ContentTitle,
   ContentContainer,
@@ -23,15 +24,12 @@ export default class AgentViewer extends Component {
   render() {
     let {width, height} = this.props;
     let {dataWidth, dataHeight} = this.state;
-    let {projectActions, translator} = this.context;
+    let {projectActions, translator, agents} = this.context;
 const body = this.state.isOpen &&
   <ContentContainer width={width} height={height}>
   <ContentTitle>{translator.t('Agents list')}</ContentTitle>
     <li>
-      <h3>Агент номер 1</h3>
-      <h3>Агент номер 2</h3>
-      <h3>Агент номер 3</h3>
-      <h3>Агент номер 4</h3>
+      <Agent agent={agents[0]}></Agent>
     </li>
 
     <table style={{float: 'right'}}>
