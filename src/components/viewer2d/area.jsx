@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import polylabel from 'polylabel';
 import areapolygon from 'area-polygon';
+import AgentViewer from "../agents/agent-viewer";
 
 const STYLE_TEXT = {
   textAnchor: 'middle',
@@ -20,7 +21,6 @@ const STYLE_TEXT = {
 
 
 export default function Area({layer, area, catalog}) {
-
   let rendered = catalog.getElement(area.type).render2D(area, layer);
 
   let renderedAreaSize = null;
@@ -83,5 +83,4 @@ Area.propTypes = {
   layer: PropTypes.object.isRequired,
   catalog: PropTypes.object.isRequired
 };
-
 

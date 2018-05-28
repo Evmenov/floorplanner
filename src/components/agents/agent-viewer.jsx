@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import Agent from './agent'
 import {
   ContentTitle,
   ContentContainer,

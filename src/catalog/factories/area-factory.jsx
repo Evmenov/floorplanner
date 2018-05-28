@@ -34,9 +34,9 @@ export default function AreaFactory(name, info, textures) {
 
       }
     },
-    render2D: function (element, layer, scene) {
-      let path = '';
 
+    render2D: function (element, layer,scene) {
+      let path = '';
       ///print area path
       element.vertices.forEach((vertexID, ind) => {
         let vertex = layer.vertices.get(vertexID);
@@ -86,8 +86,17 @@ export default function AreaFactory(name, info, textures) {
       values: textureValues
     };
 
+    // areaElement.properties.agent = {
+    //   label: 'Текущий агент',
+    //   type: 'enum',
+    //   defaultValue: 'none',
+    //   values: agents
+    // };
+
   }
 
   return areaElement
 
 }
+
+
