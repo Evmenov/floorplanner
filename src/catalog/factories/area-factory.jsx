@@ -1,7 +1,8 @@
 import { createArea, updatedArea } from './area-factory-3d';
 import React from 'react';
 
-export default function AreaFactory(name, info, textures) {
+export default function AreaFactory (name, info, textures) {
+
 
   let areaElement = {
     name,
@@ -35,7 +36,24 @@ export default function AreaFactory(name, info, textures) {
       }
     },
 
-    render2D: function (element, layer,scene) {
+    render2D: function (element, layer, agents, scene) {
+
+      let agentsValues = {
+        'none': 'None'
+      };
+
+      for (let agentName in agents) {
+        agentsValues[agentName] = agents[agentName].name +' ' + agents[agentName].surname
+      }
+
+      areaElement.properties.agent = {
+        label: 'Текущий агент',
+        type: 'enum',
+        defaultValue: 'none',
+        values: agentsValues
+      };
+
+
       let path = '';
       ///print area path
       element.vertices.forEach((vertexID, ind) => {
@@ -86,17 +104,11 @@ export default function AreaFactory(name, info, textures) {
       values: textureValues
     };
 
-    // areaElement.properties.agent = {
-    //   label: 'Текущий агент',
-    //   type: 'enum',
-    //   defaultValue: 'none',
-    //   values: agents
-    // };
+
 
   }
 
   return areaElement
 
 }
-
 

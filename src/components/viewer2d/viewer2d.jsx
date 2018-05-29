@@ -91,7 +91,6 @@ function extractElementData(node) {
 export default function Viewer2D({state, width, height},
                                  {viewer2DActions, linesActions, holesActions, verticesActions, itemsActions, areaActions, projectActions, catalog}) {
 
-
   let {viewer2D, mode, scene} = state;
 
   let layerID = scene.selectedLayer;

@@ -5,7 +5,6 @@ import Snap from './snap';
 import * as SharedStyle from '../../shared-style';
 
 export default function State({state, catalog}) {
-
   let {viewer2D, mode, activeSnapElement, snapElements, scene} = state;
   let {width, height} = scene;
 
@@ -28,5 +27,6 @@ export default function State({state, catalog}) {
 
 State.propTypes = {
   state: PropTypes.object.isRequired,
-  catalog: PropTypes.object.isRequired
+  catalog: PropTypes.object.isRequired,
 };
+
