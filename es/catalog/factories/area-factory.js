@@ -26,11 +26,33 @@ export default function AreaFactory(name, info, textures) {
         defaultValue: {
           length: 0
         }
+      },
+      agent: {
+        label: 'Текущий агент',
+        type: 'enum',
+        defaultValue: 'none'
+
       }
     },
-    render2D: function render2D(element, layer, scene) {
-      var path = '';
 
+    render2D: function render2D(element, layer, agents, scene) {
+
+      var agentsValues = {
+        'none': 'None'
+      };
+
+      for (var agentName in agents) {
+        agentsValues[agentName] = agents[agentName].name + ' ' + agents[agentName].surname;
+      }
+
+      areaElement.properties.agent = {
+        label: 'Текущий агент',
+        type: 'enum',
+        defaultValue: 'none',
+        values: agentsValues
+      };
+
+      var path = '';
       ///print area path
       element.vertices.forEach(function (vertexID, ind) {
         var vertex = layer.vertices.get(vertexID);

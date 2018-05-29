@@ -51,5 +51,7 @@ export default {
   "Mouse X Coordinate": "X-координата курсора",
   "Mouse Y Coordinate": "Y-координата курсора",
   "Scene Zoom Level": "Уровень приближениия сцены",
-  "View agents": "Посмотреть агентов"
+  "View agents": "Посмотреть агентов",
+  "Agents list": "Список агентов",
+  "Close": "Закрыть"
 };

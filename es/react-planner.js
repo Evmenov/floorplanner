@@ -14,6 +14,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import jsonTest from './jsonTest';
 
 import Translator from './translator/translator';
 import Catalog from './catalog/catalog';
@@ -21,6 +22,7 @@ import actions from './actions/export';
 import { objectsMap } from './utils/objects-utils';
 import { ToolbarComponents, Content, SidebarComponents, FooterBarComponents } from './components/export';
 import { VERSION } from './version';
+import AgentViewer from "./components/agents/agent-viewer";
 
 var Toolbar = ToolbarComponents.Toolbar;
 var Sidebar = SidebarComponents.Sidebar;
@@ -28,6 +30,7 @@ var FooterBar = FooterBarComponents.FooterBar;
 
 
 var toolbarW = 50;
+var agentViewW = 300;
 var sidebarW = 300;
 var footerBarH = 20;
 
@@ -54,7 +57,8 @@ var ReactPlanner = function (_Component) {
         return _this2.props[actionNamespace];
       }), {
         translator: this.props.translator,
-        catalog: this.props.catalog
+        catalog: this.props.catalog,
+        agents: jsonTest
       });
     }
   }, {
@@ -96,10 +100,12 @@ var ReactPlanner = function (_Component) {
           stateExtractor = _props2.stateExtractor,
           props = _objectWithoutProperties(_props2, ['width', 'height', 'state', 'stateExtractor']);
 
-      var contentW = width - toolbarW - sidebarW;
       var toolbarH = height - footerBarH;
-      var contentH = height - footerBarH;
       var sidebarH = height - footerBarH;
+      var contentH = height - footerBarH;
+      var agentViewH = height - footerBarH;
+
+      var contentW = width - toolbarW - sidebarW;
 
       var extractedState = stateExtractor(state);
 
@@ -144,7 +150,8 @@ ReactPlanner.childContextTypes = _extends({}, objectsMap(actions, function () {
   return PropTypes.object;
 }), {
   translator: PropTypes.object,
-  catalog: PropTypes.object
+  catalog: PropTypes.object,
+  agents: PropTypes.array
 });
 
 ReactPlanner.defaultProps = {
@@ -157,6 +164,7 @@ ReactPlanner.defaultProps = {
   sidebarComponents: [],
   footerbarComponents: [],
   customContents: {}
+
 };
 
 //redux connect

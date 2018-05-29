@@ -18,13 +18,14 @@ var STYLE_TEXT = {
   userSelect: 'none'
 };
 
-export default function Area(_ref) {
+export default function Area(_ref, _ref2) {
   var layer = _ref.layer,
       area = _ref.area,
       catalog = _ref.catalog;
+  var agents = _ref2.agents;
 
 
-  var rendered = catalog.getElement(area.type).render2D(area, layer);
+  var rendered = catalog.getElement(area.type).render2D(area, layer, agents);
 
   var renderedAreaSize = null;
 
@@ -95,4 +96,8 @@ Area.propTypes = {
   area: PropTypes.object.isRequired,
   layer: PropTypes.object.isRequired,
   catalog: PropTypes.object.isRequired
+};
+
+Area.contextTypes = {
+  agents: PropTypes.array.isRequired
 };
