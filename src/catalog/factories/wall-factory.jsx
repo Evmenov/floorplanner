@@ -40,7 +40,7 @@ export default function WallFactory(name, info, textures) {
       let epsilon = thickness;
 
       let length = Geometry.pointsDistance(x1, y1, x2, y2);
-      let path = `M${0} ${ -epsilon}  L${length} ${-epsilon}  L${length} ${epsilon}  L${0} ${epsilon}  z`;
+      let path = `M${0} ${ -thickness}  L${length} ${-thickness}  L${length} ${thickness}  L${0} ${thickness}  z`;
       let length_5 = length / 5;
 
       return (element.selected) ?
