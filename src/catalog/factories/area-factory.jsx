@@ -53,7 +53,8 @@ export default function AreaFactory (name, info, textures) {
         values: agentsValues
       };
 
-
+//console.log(element.properties.getIn(['agent']).name)
+console.log("пытался вывести имя агента класс ареа и фактори")
       let path = '';
       ///print area path
       element.vertices.forEach((vertexID, ind) => {

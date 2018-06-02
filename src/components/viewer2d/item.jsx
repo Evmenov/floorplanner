@@ -24,7 +24,6 @@ const STYLE_CIRCLE2 = {
 export default function Item({layer, item, scene, catalog}) {
 
   let {x, y, rotation} = item;
-
   let renderedItem = catalog.getElement(item.type).render2D(item, layer, scene);
 
   return (

@@ -1,11 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import PanelElementEditor from './panel-element-editor/panel-element-editor';
-import PanelLayers from './panel-layers';
-import PanelGuides from './panel-guides';
-import PanelLayerElements from './panel-layer-elements';
 import * as SharedStyle from '../../shared-style';
 import If from '../../utils/react-if';
+import {
+  FormSubmitButton,
+} from '../style/export';
 
 const STYLE = {
   backgroundColor: SharedStyle.PRIMARY_COLOR.main,
@@ -29,7 +29,7 @@ const sortButtonsCb = (a, b) => {
 
 const mapButtonsCb = (el, ind) => <If key={ind} condition={el.condition} style={{ position: 'relative' }}>{el.dom}</If>;
 
-export default function Sidebar({ state, width, height, sidebarComponents }) {
+export default function Sidebar({ state, width, height, sidebarComponents }, {translator, projectActions, viewer3DActions}) {
 
   let sorter = [
    // { index: 0, condition: true, dom: <PanelLayers state={state} /> },
@@ -51,7 +51,18 @@ export default function Sidebar({ state, width, height, sidebarComponents }) {
       };
   }));
 
+  let save = event => {
+    viewer3DActions.selectTool3DView();
+    setTimeout(st,1);
+  };
+
+  function st() {
+    projectActions.rollback();
+  }
+
   return (
+    <div>
+      <FormSubmitButton onClick={save} size='large'>{translator.t('Apply changes')}</FormSubmitButton>
     <aside
       style={{ width, height, ...STYLE }}
       onKeyDown={event => event.stopPropagation()}
@@ -59,7 +70,7 @@ export default function Sidebar({ state, width, height, sidebarComponents }) {
       className="sidebar"
     >
       {sorter.sort(sortButtonsCb).map(mapButtonsCb)}
-    </aside>
+    </aside></div>
   );
 }
 
@@ -67,4 +78,10 @@ Sidebar.propTypes = {
   state: PropTypes.object.isRequired,
   width: PropTypes.number.isRequired,
   height: PropTypes.number.isRequired
+};
+
+Sidebar.contextTypes = {
+  projectActions: PropTypes.object.isRequired,
+  translator: PropTypes.object.isRequired,
+  viewer3DActions: PropTypes.object.isRequired,
 };

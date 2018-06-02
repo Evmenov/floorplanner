@@ -8,6 +8,7 @@ import {unselectAll} from '../../utils/layer-operations';
 export default function ToolbarSaveButton({state}, {translator, projectActions}) {
 
   let saveProjectToFile = event => {
+
     event.preventDefault();
     let scene = state
       .get('scene')
@@ -16,6 +17,34 @@ export default function ToolbarSaveButton({state}, {translator, projectActions})
 
     browserDownload(scene);
   };
+
+
+//   function save() {
+//     setTimeout(setopenCatalog, 1000);
+//
+//     setTimeout(setrollback, 2000);
+//
+//     setTimeout(setSave, 3000);
+//
+//   }
+//
+// function setopenCatalog() {
+//   projectActions.openCatalog();
+// }
+//
+// function setrollback() {
+//   projectActions.rollback();
+// }
+//
+// function setSave() {
+//   let scene = state
+//     .get('scene')
+//     .update('layers', layers => layers.map(layer => unselectAll(layer)))
+//     .toJS();
+//
+//   browserDownload(scene);
+//   }
+
 
   return (
     <ToolbarButton active={false} tooltip={translator.t("Save project")} onClick={saveProjectToFile}>
