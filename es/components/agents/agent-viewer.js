@@ -96,5 +96,5 @@ AgentViewer.propTypes = {
 AgentViewer.contextTypes = {
   projectActions: PropTypes.object.isRequired,
   translator: PropTypes.object.isRequired,
-  agents: PropTypes.object.isRequired
+  agents: PropTypes.array.isRequired
 };

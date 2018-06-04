@@ -245,20 +245,20 @@ export default {
 
   info: {
     tag: ['furnishings', 'metal'],
-    title: 'air conditioner',
-    description: 'air conditioner',
+    title: 'Кондиционер',
+    description: 'Кондиционер',
     image: require('./air_conditioner.png')
   },
-  properties: {
-    altitude: {
-      label: 'quota',
-      type: 'length-measure',
-      defaultValue: {
-        length: 220,
-        unit: 'cm'
-      }
-    }
-  },
+  // properties: {
+  //   altitude: {
+  //     label: 'quota',
+  //     type: 'length-measure',
+  //     defaultValue: {
+  //       length: 220,
+  //       unit: 'cm'
+  //     }
+  //   }
+  // },
 
   render2D: function (element, layer, scene) {
 

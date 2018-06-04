@@ -198,14 +198,6 @@ var FooterBar = function (_Component) {
         this.props.footerbarComponents.map(function (Component, index) {
           return React.createElement(Component, { state: state, key: index });
         }),
-        this.props.softwareSignature ? React.createElement(
-          'div',
-          {
-            style: rightTextStyle,
-            title: this.props.softwareSignature + (this.props.softwareSignature.includes('React-Planner') ? '' : ' using React-Planner ' + VERSION)
-          },
-          this.props.softwareSignature
-        ) : null,
         React.createElement(
           'div',
           { style: rightTextStyle },

@@ -16,16 +16,16 @@ export default function AreaFactory (name, info, textures) {
     },
     properties: {
       patternColor: {
-        label: 'Color',
+        label: 'Цвет',
         type: 'color',
         defaultValue: '#f5f4f4'
-      },
-      thickness: {
-        label: 'Thickness',
-        type: 'length-measure',
-        defaultValue: {
-          length: 0,
-        }
+      // },
+      // thickness: {
+      //   label: 'Thickness',
+      //   type: 'length-measure',
+      //   defaultValue: {
+      //     length: 0,
+      //   }
       },
       agent:{
         label:'Текущий агент',
@@ -53,8 +53,6 @@ export default function AreaFactory (name, info, textures) {
         values: agentsValues
       };
 
-//console.log(element.properties.getIn(['agent']).name)
-console.log("пытался вывести имя агента класс ареа и фактори")
       let path = '';
       ///print area path
       element.vertices.forEach((vertexID, ind) => {
@@ -88,26 +86,23 @@ console.log("пытался вывести имя агента класс аре
 
   };
 
-  if (textures && textures !== {}) {
-
-    let textureValues = {
-      'none': 'None'
-    };
-
-    for (let textureName in textures) {
-      textureValues[textureName] = textures[textureName].name
-    }
-
-    areaElement.properties.texture = {
-      label: 'Floor',
-      type: 'enum',
-      defaultValue: 'none',
-      values: textureValues
-    };
-
-
-
-  }
+  // if (textures && textures !== {}) {
+  //
+  //   let textureValues = {
+  //     'none': 'None'
+  //   };
+  //
+  //   for (let textureName in textures) {
+  //     textureValues[textureName] = textures[textureName].name
+  //   }
+  //
+  //   areaElement.properties.texture = {
+  //     label: 'Floor',
+  //     type: 'enum',
+  //     defaultValue: 'none',
+  //     values: textureValues
+  //   };
+//  }
 
   return areaElement
 

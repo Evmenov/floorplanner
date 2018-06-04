@@ -238,27 +238,27 @@ export default {
 
   info: {
     tag: ['furnishings', 'wood'],
-    title: 'armchairs',
-    description: 'armchairs',
+    title: 'Сиденья',
+    description: 'Сиденья',
     image: require('./armchairs.png')
   },
 
-  properties: {
-    altitude: {
-      label: 'altitude',
-      type: 'length-measure',
-      defaultValue: {
-        length: 0,
-        unit: 'cm'
-      }
-    },
+   properties: {
+  //   altitude: {
+  //     label: 'altitude',
+  //     type: 'length-measure',
+  //     defaultValue: {
+  //       length: 0,
+  //       unit: 'cm'
+  //     }
+  //   },
     seat: {
-      label: 'seats',
+      label: 'Количество мест ',
       type: 'number',
       defaultValue: 1
     },
     flip: {
-      label: 'flip',
+      label: 'Отразить',
       type: 'checkbox',
       defaultValue: false,
       values: {

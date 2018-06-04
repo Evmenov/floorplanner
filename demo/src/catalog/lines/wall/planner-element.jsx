@@ -1,9 +1,9 @@
 import {ElementsFactories} from 'react-planner';
 
 const info = {
-  title: 'wall',
+  title: 'Стена',
   tag: ['wall'],
-  description: 'Wall with bricks or painted',
+  description: 'Стена',
   image: require('./wall.png'),
   visibility: {
     catalog: true,

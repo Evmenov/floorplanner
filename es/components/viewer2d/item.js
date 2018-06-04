@@ -30,7 +30,6 @@ export default function Item(_ref) {
       y = item.y,
       rotation = item.rotation;
 
-
   var renderedItem = catalog.getElement(item.type).render2D(item, layer, scene);
 
   return React.createElement(

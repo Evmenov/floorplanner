@@ -16,8 +16,9 @@ export default function Content(_ref) {
       state = _ref.state,
       customContents = _ref.customContents;
 
-  var mode = state.get('mode');
 
+  var mode = state.get('mode');
+  // console.log(mode)
   switch (mode) {
     case constants.MODE_3D_VIEW:
       return React.createElement(Viewer3D, { state: state, width: width, height: height });

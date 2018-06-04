@@ -3,11 +3,9 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 import React from 'react';
 import PropTypes from 'prop-types';
 import PanelElementEditor from './panel-element-editor/panel-element-editor';
-import PanelLayers from './panel-layers';
-import PanelGuides from './panel-guides';
-import PanelLayerElements from './panel-layer-elements';
 import * as SharedStyle from '../../shared-style';
 import If from '../../utils/react-if';
+import { FormSubmitButton } from '../style/export';
 
 var STYLE = {
   backgroundColor: SharedStyle.PRIMARY_COLOR.main,
@@ -37,11 +35,14 @@ var mapButtonsCb = function mapButtonsCb(el, ind) {
   );
 };
 
-export default function Sidebar(_ref) {
+export default function Sidebar(_ref, _ref2) {
   var state = _ref.state,
       width = _ref.width,
       height = _ref.height,
       sidebarComponents = _ref.sidebarComponents;
+  var translator = _ref2.translator,
+      projectActions = _ref2.projectActions,
+      viewer3DActions = _ref2.viewer3DActions;
 
 
   var sorter = [
@@ -61,19 +62,37 @@ export default function Sidebar(_ref) {
     };
   }));
 
+  var save = function save(event) {
+    viewer3DActions.selectTool3DView();
+    setTimeout(st, 1);
+  };
+
+  function st() {
+    projectActions.rollback();
+  }
+
   return React.createElement(
-    'aside',
-    {
-      style: _extends({ width: width, height: height }, STYLE),
-      onKeyDown: function onKeyDown(event) {
-        return event.stopPropagation();
+    'div',
+    null,
+    React.createElement(
+      FormSubmitButton,
+      { onClick: save, size: 'large' },
+      translator.t('Apply changes')
+    ),
+    React.createElement(
+      'aside',
+      {
+        style: _extends({ width: width, height: height }, STYLE),
+        onKeyDown: function onKeyDown(event) {
+          return event.stopPropagation();
+        },
+        onKeyUp: function onKeyUp(event) {
+          return event.stopPropagation();
+        },
+        className: 'sidebar'
       },
-      onKeyUp: function onKeyUp(event) {
-        return event.stopPropagation();
-      },
-      className: 'sidebar'
-    },
-    sorter.sort(sortButtonsCb).map(mapButtonsCb)
+      sorter.sort(sortButtonsCb).map(mapButtonsCb)
+    )
   );
 }
 
@@ -81,4 +100,10 @@ Sidebar.propTypes = {
   state: PropTypes.object.isRequired,
   width: PropTypes.number.isRequired,
   height: PropTypes.number.isRequired
+};
+
+Sidebar.contextTypes = {
+  projectActions: PropTypes.object.isRequired,
+  translator: PropTypes.object.isRequired,
+  viewer3DActions: PropTypes.object.isRequired
 };

@@ -77,6 +77,13 @@ export default function Area(_ref, _ref2) {
       String.fromCharCode(0xb2)
     );
   }
+  // else {
+  //   renderedAreaSize = (
+  //     <text x="0" y="0" transform={`translate(${center[0]} ${center[1]}) scale(1, -1)`} style={STYLE_TEXT}>
+  //       {area.properties.getIn(['agent', 'value'])}
+  //     </text>
+  //   )
+  //}
 
   return React.createElement(
     'g',

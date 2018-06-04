@@ -71,45 +71,45 @@ export default {
 
   info: {
     tag: ['furnishings', 'metal'],
-    title: 'balcony',
-    description: 'balcony',
+    title: 'Балкон',
+    description: 'Балкон',
     image: require('./balcony.png')
   },
   properties: {
     width: {
-      label: 'width',
+      label: 'Ширина',
       type: 'length-measure',
       defaultValue: {
         length: 500,
         unit: 'cm'
       }
-    },
-    depth: {
-      label: 'depth',
-      type: 'length-measure',
-      defaultValue: {
-        length: 100,
-        unit: 'cm'
-      }
-    },
+     },
+    // depth: {
+    //   label: 'depth',
+    //   type: 'length-measure',
+    //   defaultValue: {
+    //     length: 100,
+    //     unit: 'cm'
+    //   }
+    // },
     height: {
-      label: 'height',
+      label: 'Высота',
       type: 'length-measure',
       defaultValue: {
         length: 100,
         unit: 'cm'
       }
     },
-    altitude: {
-      label: 'altitude',
-      type: 'length-measure',
-      defaultValue: {
-        length: 0,
-        unit: 'cm'
-      }
-    },
+    // altitude: {
+    //   label: 'altitude',
+    //   type: 'length-measure',
+    //   defaultValue: {
+    //     length: 0,
+    //     unit: 'cm'
+    //   }
+    // },
     patternColor: {
-      label: '2D color',
+      label: 'Цвет',
       type: 'color',
       defaultValue: '#f5f4f4'
     }

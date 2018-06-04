@@ -23,7 +23,7 @@ export default function WallFactory(name, info, textures) {
       //   }
       // },
       thickness: {
-        label: 'Ширина',
+        label: 'Толщина',
         type: 'length-measure',
         defaultValue: {
           length: 3
@@ -44,7 +44,7 @@ export default function WallFactory(name, info, textures) {
       var epsilon = thickness;
 
       var length = Geometry.pointsDistance(x1, y1, x2, y2);
-      var path = 'M' + 0 + ' ' + -epsilon + '  L' + length + ' ' + -epsilon + '  L' + length + ' ' + epsilon + '  L' + 0 + ' ' + epsilon + '  z';
+      var path = 'M' + 0 + ' ' + -thickness + '  L' + length + ' ' + -thickness + '  L' + length + ' ' + thickness + '  L' + 0 + ' ' + thickness + '  z';
       var length_5 = length / 5;
 
       return element.selected ? React.createElement(

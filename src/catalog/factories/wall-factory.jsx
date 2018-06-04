@@ -24,7 +24,7 @@ export default function WallFactory(name, info, textures) {
       //   }
       // },
       thickness: {
-        label: 'Ширина',
+        label: 'Толщина',
         type: 'length-measure',
         defaultValue: {
           length: 3,

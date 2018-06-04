@@ -58,6 +58,7 @@ export default function Line(_ref) {
 
 
   var renderedLine = catalog.getElement(line.type).render2D(line, layer);
+
   var renderedRuler = line.selected ? React.createElement(Ruler, { unit: unit, length: length, transform: 'translate(0, 15)' }) : null;
 
   return React.createElement(

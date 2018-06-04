@@ -53,5 +53,6 @@ export default {
   "Scene Zoom Level": "Уровень приближениия сцены",
   "View agents": "Посмотреть агентов",
   "Agents list": "Список агентов",
-  "Close": "Закрыть"
+  "Close": "Закрыть",
+  "Apply changes": "Применить изменения"
 };
