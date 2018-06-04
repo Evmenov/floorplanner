@@ -32,6 +32,32 @@ const wrapperStyle = {
 };
 
 class ReactPlanner extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      error: null,
+      isLoaded: false,
+      items: []
+    };
+  }
+
+
+  componentDidMount(){
+    fetch("localhost")
+      .then(value => value.json())
+      .then((value) => {
+        this.setState({
+          isLoaded: true,
+          items: value.items
+      });
+  },
+        (error) => {
+          this.setState({
+            isLoaded: true,
+            error
+          });
+        }
+      )}
 
   getChildContext() {
     return {
