@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { MdSettings, MdUndo, MdDirectionsRun } from 'react-icons/lib/md';
+import { MdSettings, MdUndo, MdDirectionsRun, MdAddCircleOutline, MdSave, MdFolderOpen, MdKeyboardArrowRight, MdDehaze, MdGridOn, MdSettingsApplications, MdPeople, MdPhoto } from 'react-icons/lib/md';
 import { FaFileO, FaMousePointer, FaPlus } from 'react-icons/lib/fa';
 import ToolbarButton from './toolbar-button';
 import ToolbarSaveButton from './toolbar-save-button';
@@ -27,8 +27,8 @@ const Icon2D = () => <p style={iconTextStyle}>2D</p>;
 const Icon3D = () => <p style={iconTextStyle}>3D</p>;
 
 const ASIDE_STYLE = {
-  backgroundColor: SharedStyle.PRIMARY_COLOR.main,
-  padding: '10px'
+  backgroundColor: '#9799ac',
+  padding: '0px'
 };
 
 const sortButtonsCb = (a, b) => {
@@ -83,7 +83,7 @@ export default class Toolbar extends Component {
           active={false}
           tooltip={translator.t('New project')}
           onClick={event => confirm(translator.t('Would you want to start a new Project?')) ? projectActions.newProject() : null}>
-          <FaFileO />
+          <MdAddCircleOutline />
         </ToolbarButton>
       },
       {
@@ -100,7 +100,7 @@ export default class Toolbar extends Component {
           active={[MODE_VIEWING_CATALOG].includes(mode)}
           tooltip={translator.t('Open catalog')}
           onClick={event => projectActions.openCatalog()}>
-          <FaPlus />
+          <MdKeyboardArrowRight />
         </ToolbarButton>
       },
      // {
@@ -116,7 +116,7 @@ export default class Toolbar extends Component {
           active={[MODE_IDLE].includes(mode)}
           tooltip={translator.t('2D View')}
           onClick={event => projectActions.rollback()}>
-          {[MODE_3D_FIRST_PERSON, MODE_3D_VIEW].includes(mode) ? <Icon2D /> : <FaMousePointer />}
+          {[MODE_3D_FIRST_PERSON, MODE_3D_VIEW].includes(mode) ? <MdGridOn /> : <MdGridOn />}
         </ToolbarButton>
       },
       // {
@@ -140,7 +140,7 @@ export default class Toolbar extends Component {
           active={[MODE_CONFIGURING_PROJECT].includes(mode)}
           tooltip={translator.t('Configure project')}
           onClick={event => projectActions.openProjectConfigurator()}>
-          <MdSettings />
+          <MdSettingsApplications />
         </ToolbarButton>
       },
       {
@@ -148,7 +148,7 @@ export default class Toolbar extends Component {
           active={[MODE_AGENTS_VIEWER].includes(mode)}
           tooltip={translator.t('View agents')}
           onClick={event => projectActions.openAgentsVIew()}>
-          <MdDirectionsRun />
+          <MdPeople />
         </ToolbarButton>
       }
     ];

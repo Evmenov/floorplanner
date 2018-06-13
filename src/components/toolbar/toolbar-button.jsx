@@ -7,10 +7,15 @@ import * as SharedStyle from '../../shared-style';
 const STYLE = {
   width: '30px',
   height: '30px',
+  borderStyle: 'solid',
+  borderColor: 'transparent',
+  borderBottomColor:'#ffffff',
+  borderBottomWidth: '2px',
+  padding: '20px',
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
-  marginBottom: '5px',
+  marginBottom: '0px',
   fontSize: '25px',
   position: 'relative',
   cursor: 'pointer'
@@ -56,7 +61,7 @@ export default class ToolbarButton extends Component {
 
   render() {
     let { state, props } = this;
-    let color = props.active || state.active ? SharedStyle.SECONDARY_COLOR.icon : SharedStyle.PRIMARY_COLOR.icon;
+    let color = props.active || state.active ? SharedStyle.SECONDARY_COLOR.icon : '#ffffff';
 
     return (
       <div style={STYLE}

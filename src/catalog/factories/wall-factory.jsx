@@ -3,7 +3,7 @@ import React from 'react';
 import * as SharedStyle from '../../shared-style';
 import * as Geometry from '../../utils/geometry';
 // const epsilon = 3;
-const STYLE_BASE = {stroke: '#8E9BA2', strokeWidth: '1px', fill: '#8E9BA2'};
+const STYLE_BASE = {stroke: '#010101', strokeWidth: '1px', fill: '#010101'};
 const STYLE_SELECTED = {stroke: '#99c3fb', strokeWidth: '5px', fill: SharedStyle.COLORS.black};
 const STYLE_TEXT = {textAnchor: 'middle'};
 const STYLE_LINE = {stroke: '#99c3fb'};

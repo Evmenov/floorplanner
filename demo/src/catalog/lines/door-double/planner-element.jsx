@@ -165,9 +165,9 @@ export default {
 
   render2D: function (element, layer, scene) {
 
-    const STYLE_HOLE_BASE = {stroke: '#ff0000', strokeWidth: '3px', fill: '#ff0000'};
+    const STYLE_HOLE_BASE = {stroke: '#aaaaaa', strokeWidth: '3px', fill: '#aaaaaa'};
     const STYLE_HOLE_SELECTED = {stroke: '#ff0000', strokeWidth: '4px', fill: '#ff0000', cursor: 'move'};
-    const STYLE_ARC_BASE = {stroke: '#ff0000', strokeWidth: '3px', strokeDasharray: '5,5', fill: 'none'};
+    const STYLE_ARC_BASE = {stroke: '#aaaaaass', strokeWidth: '3px', strokeDasharray: '5,5', fill: 'none'};
     const STYLE_ARC_SELECTED = {stroke: '#ff0000', strokeWidth: '4px', strokeDasharray: '5,5', fill: 'none', cursor: 'move'};
 
     let epsilon = 3;

@@ -13,7 +13,9 @@ export default function ToolbarLoadButton(_ref, _ref2) {
   var loadProjectFromFile = function loadProjectFromFile(event) {
     event.preventDefault();
     browserUpload().then(function (data) {
-      projectActions.loadProject(JSON.parse(data));
+      var parsed = JSON.parse(data);
+      projectActions.loadProject(parsed);
+      // console.log(parsed.layers[0].ID);
     });
   };
 

@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import {MdSave } from 'react-icons/lib/md';
 import IconSave from 'react-icons/lib/fa/floppy-o';
 import ToolbarButton from './toolbar-button';
 import {browserDownload}  from '../../utils/browser';
@@ -48,7 +49,7 @@ export default function ToolbarSaveButton({state}, {translator, projectActions})
 
   return (
     <ToolbarButton active={false} tooltip={translator.t("Save project")} onClick={saveProjectToFile}>
-      <IconSave />
+      <MdSave />
     </ToolbarButton>
   );
 }
