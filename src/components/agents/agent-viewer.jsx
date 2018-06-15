@@ -22,11 +22,17 @@ export default class AgentViewer extends Component {
   }
 
   render() {
-    let {width, height} = this.props;
+    let {width, height, sidebarH} = this.props;
     let {dataWidth, dataHeight} = this.state;
     let {projectActions, translator, agents} = this.context;
+    const Style = {
+      width: width,
+      height: height,
+      position: 'relative',
+      top: sidebarH,
+    };
 const body = this.state.isOpen &&
-  <ContentContainer width={width} height={height}>
+  <ContentContainer width={width} height={height} style={Style}>
   <ContentTitle>{translator.t('Agents list')}</ContentTitle>
   <AgentsList agents={agents}/>
 

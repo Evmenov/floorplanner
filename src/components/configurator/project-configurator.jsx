@@ -40,12 +40,19 @@ export default class ProjectConfigurator extends Component {
 
 
   render() {
-    let {width, height} = this.props;
+    let {width, height, sidebarH} = this.props;
     let {dataWidth, dataHeight} = this.state;
     let {projectActions, translator} = this.context;
 
+    const Style = {
+      width: width,
+      height: height,
+      position: 'relative',
+      top: sidebarH,
+    };
+
     return (
-      <ContentContainer width={width} height={height}>
+      <ContentContainer width={width} height={height} style={Style}>
         <ContentTitle>{translator.t('Project config')}</ContentTitle>
 
         <form onSubmit={e => this.onSubmit(e)}>

@@ -6,6 +6,7 @@ import PropTypes from 'prop-types';
 import {ReactSVGPanZoom, TOOL_NONE, TOOL_PAN, TOOL_ZOOM_IN, TOOL_ZOOM_OUT, TOOL_AUTO} from 'react-svg-pan-zoom';
 import * as constants from '../../constants';
 import State from './state';
+import * as SharedStyle from "../../shared-style";
 
 function mode2Tool(mode) {
   switch (mode) {
@@ -88,8 +89,15 @@ function extractElementData(node) {
   }
 }
 
-export default function Viewer2D({state, width, height},
+export default function Viewer2D({state, width, height, sidebarH},
                                  {viewer2DActions, linesActions, holesActions, verticesActions, itemsActions, areaActions, projectActions, catalog}) {
+
+  const Style = {
+    width: width,
+    height: height,
+    position: 'relative',
+    top: sidebarH,
+  };
 
   let {viewer2D, mode, scene} = state;
 
@@ -296,7 +304,7 @@ export default function Viewer2D({state, width, height},
   return (
     <ReactSVGPanZoom
       width={width} height={height}
-
+      style={Style}
       value={viewer2D.isEmpty() ? null : viewer2D.toJS()}
       onChangeValue={onChangeValue}
 

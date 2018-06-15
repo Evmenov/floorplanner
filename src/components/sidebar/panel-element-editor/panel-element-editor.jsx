@@ -33,6 +33,8 @@ export default function PanelElementEditor({state}, {projectActions, translator}
     .map(element => componentRenderer(element, layer))
     .valueSeq();
 
+
+
   return <div>{scene.layers.valueSeq().map(layerRenderer)}</div>
 
 }

@@ -19,7 +19,6 @@ const iconTextStyle = {
   fontSize: '19px',
   textDecoration: 'none',
   fontWeight: 'bold',
-  margin: '0px',
   userSelect: 'none'
 };
 
@@ -28,7 +27,6 @@ const Icon3D = () => <p style={iconTextStyle}>3D</p>;
 
 const ASIDE_STYLE = {
   backgroundColor: '#9799ac',
-  padding: '0px'
 };
 
 const sortButtonsCb = (a, b) => {

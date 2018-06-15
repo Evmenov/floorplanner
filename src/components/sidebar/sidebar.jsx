@@ -9,10 +9,13 @@ import {
 
 const STYLE = {
   backgroundColor: SharedStyle.PRIMARY_COLOR.main,
-  display: 'block',
+  display: 'absolute',
   overflowY: 'auto',
+  position: 'absolute',
+  left: 50,
+  visibility: 'visible',
   overflowX: 'hidden',
-  paddingBottom: '20px'
+  paddingBottom: '0px'
 };
 
 const sortButtonsCb = (a, b) => {
@@ -31,10 +34,11 @@ const mapButtonsCb = (el, ind) => <If key={ind} condition={el.condition} style={
 
 export default function Sidebar({ state, width, height, sidebarComponents }, {translator, projectActions, viewer3DActions}) {
 
+let ele = <PanelElementEditor state={state} />;
   let sorter = [
    // { index: 0, condition: true, dom: <PanelLayers state={state} /> },
    // { index: 1, condition: true, dom: <PanelLayerElements mode={state.mode} layers={state.scene.layers} selectedLayer={state.scene.selectedLayer} /> },
-    { index: 2, condition: true, dom: <PanelElementEditor state={state} /> },
+    { index: 2, condition: true, dom: ele },
     //{ index: 999999, condition: true, dom: <PanelGuides state={state}/> },
   ];
 
@@ -51,6 +55,11 @@ export default function Sidebar({ state, width, height, sidebarComponents }, {tr
       };
   }));
 
+  if(sorter[0].dom == null){
+
+    console.log("2d12")
+  }
+
   let save = event => {
     viewer3DActions.selectTool3DView();
     setTimeout(st,1);
@@ -61,16 +70,17 @@ export default function Sidebar({ state, width, height, sidebarComponents }, {tr
   }
 
   return (
-    <div>
-      <FormSubmitButton onClick={save} size='large'>{translator.t('Apply changes')}</FormSubmitButton>
-    <aside
+   <aside
       style={{ width, height, ...STYLE }}
       onKeyDown={event => event.stopPropagation()}
       onKeyUp={event => event.stopPropagation()}
       className="sidebar"
     >
+      <div>
+        <FormSubmitButton onClick={save} size='large'>{translator.t('Apply changes')}</FormSubmitButton>
+      </div>
       {sorter.sort(sortButtonsCb).map(mapButtonsCb)}
-    </aside></div>
+    </aside>
   );
 }
 

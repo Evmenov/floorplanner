@@ -12,11 +12,11 @@ import { VERSION } from '../../version';
 const footerBarStyle = {
   position: 'absolute',
   bottom: 0,
-  lineHeight: '14px',
+  lineHeight: '18px',
   fontSize: '12px',
   color: SharedStyle.COLORS.white,
   backgroundColor: SharedStyle.SECONDARY_COLOR.alt,
-  padding: '3px 1em',
+
   margin: 0,
   boxSizing: 'border-box',
   cursor: 'default',

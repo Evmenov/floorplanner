@@ -5,8 +5,8 @@ import * as SharedStyle from '../../shared-style';
 //http://www.cssportal.com/css-tooltip-generator/
 
 const STYLE = {
-  width: '30px',
-  height: '30px',
+
+  height: '80px',
   borderStyle: 'solid',
   borderColor: 'transparent',
   borderBottomColor:'#ffffff',
