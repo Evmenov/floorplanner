@@ -21,8 +21,11 @@ const {Sidebar} = SidebarComponents;
 const {FooterBar} = FooterBarComponents;
 
 const toolbarW = 50;
-const sidebarH = 100;
+const sidebarH = 400;
+const sidebarW = 300;
 const footerBarH= 20;
+
+let selectedObject = null;
 
 const wrapperStyle = {
   display: 'flex',
@@ -32,12 +35,15 @@ const wrapperStyle = {
 class ReactPlanner extends Component {
   constructor(props) {
     super(props);
+
     this.state = {
       error: null,
       isLoaded: false,
-      items: []
+      items: [],
     };
   }
+
+
 
   componentDidMount () {
     $.ajax({
@@ -75,7 +81,7 @@ class ReactPlanner extends Component {
       ...objectsMap(actions, actionNamespace => this.props[actionNamespace]),
       translator: this.props.translator,
       catalog: this.props.catalog,
-      agents: jsonTest
+      agents: jsonTest,
     }
   }
 
@@ -95,24 +101,28 @@ class ReactPlanner extends Component {
     }
   }
 
+  updateData (value)
+  {
+    selectedObject = value;
+
+
+
+  };
+
   render() {
     let {width, height, state, stateExtractor, ...props} = this.props;
 
-
     let toolbarH = height - footerBarH;
-
-    let sidebarW = width - toolbarW;
-    let contentH = height - footerBarH - sidebarH;
+    let contentH = height - footerBarH;
     let contentW = width - toolbarW;
-
     let extractedState = stateExtractor(state);
 
     return (
       <div style={{...wrapperStyle, height}}>
         <Toolbar width={toolbarW} height={toolbarH} state={extractedState} {...props} />
-
-        <Content width={contentW} height={contentH} state={extractedState} sidebarH={sidebarH} {...props} onWheel={event => event.preventDefault()} />
-        <Sidebar width={sidebarW} height={sidebarH} state={extractedState} {...props} />
+        <Content width={contentW} height={contentH} state={extractedState}
+                 sidebarH={sidebarH} updateData={this.updateData} {...props} onWheel={event => event.preventDefault()} />
+        <Sidebar width={sidebarW} height={sidebarH} state={extractedState} selectedObject={selectedObject} {...props} />
         <FooterBar width={width} height={footerBarH} state={extractedState} {...props} />
       </div>
     );
@@ -133,7 +143,7 @@ ReactPlanner.propTypes = {
   sidebarComponents: PropTypes.array,
   footerbarComponents: PropTypes.array,
   customContents: PropTypes.object,
-  softwareSignature: PropTypes.string
+  softwareSignature: PropTypes.string,
 };
 
 ReactPlanner.contextTypes = {
@@ -144,7 +154,7 @@ ReactPlanner.childContextTypes = {
   ...objectsMap(actions, () => PropTypes.object),
   translator: PropTypes.object,
   catalog: PropTypes.object,
-  agents: PropTypes.array
+  agents: PropTypes.array,
 };
 
 ReactPlanner.defaultProps = {

@@ -21,11 +21,13 @@ export default function PanelElementEditor({state}, {projectActions, translator}
       MODE_ROTATING_ITEM, MODE_UPLOADING_IMAGE, MODE_FITTING_IMAGE].includes(mode)) return null;
 
   let componentRenderer = (element, layer) =>
-    <Panel key={element.id} name={translator.t("Properties: [{0}] {1}", element.type, element.id)} opened={true}>
-      <div style={{padding: "5px 15px"}}>
+    <Panel  key={element.id} name={translator.t("Properties: [{0}] {1}", element.type, element.id)} opened={true}>
+      <div style={{background:'#32394f', padding: "5px 15px"}}>
         <ElementEditor element={element} layer={layer} state={state}/>
       </div>
     </Panel>;
+
+
 
   let layerRenderer = layer => Seq()
     .concat(layer.lines, layer.holes, layer.areas, layer.items)
@@ -33,9 +35,7 @@ export default function PanelElementEditor({state}, {projectActions, translator}
     .map(element => componentRenderer(element, layer))
     .valueSeq();
 
-
-
-  return <div>{scene.layers.valueSeq().map(layerRenderer)}</div>
+  return <div style={{background:'#32394f', padding: "10px 15px"}}>{scene.layers.valueSeq().map(layerRenderer)}</div>
 
 }
 

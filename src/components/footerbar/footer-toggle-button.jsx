@@ -16,7 +16,7 @@ const toggleButtonStyle = {
 
 const toggleButtonStyleOver = {
   ...toggleButtonStyle,
-  backgroundColor: '#1c82c6',
+  backgroundColor: '#9799ac',
   border: '1px solid #FFF',
   color: SharedStyle.COLORS.white
 };

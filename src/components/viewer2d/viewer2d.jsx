@@ -89,14 +89,14 @@ function extractElementData(node) {
   }
 }
 
-export default function Viewer2D({state, width, height, sidebarH},
+export default function Viewer2D({state, width, height, sidebarH, updateData},
                                  {viewer2DActions, linesActions, holesActions, verticesActions, itemsActions, areaActions, projectActions, catalog}) {
 
   const Style = {
     width: width,
     height: height,
     position: 'relative',
-    top: sidebarH,
+    top: 0,
   };
 
   let {viewer2D, mode, scene} = state;
@@ -168,6 +168,9 @@ export default function Viewer2D({state, width, height, sidebarH},
     if( mode === constants.MODE_IDLE )
     {
       let elementData = extractElementData(event.target);
+
+      updateData(elementData);
+
       if ( !elementData || !elementData.selected ) return;
 
       switch ( elementData.prototype ) {

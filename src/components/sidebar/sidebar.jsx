@@ -1,18 +1,32 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import PanelElementEditor from './panel-element-editor/panel-element-editor';
+import FooterContentButton from '../footerbar/footer-content-button';
 import * as SharedStyle from '../../shared-style';
 import If from '../../utils/react-if';
 import {
   FormSubmitButton,
 } from '../style/export';
+import * as constants from "../../constants";
+import {MdAddCircle} from "react-icons/lib/md/index";
 
-const STYLE = {
-  backgroundColor: SharedStyle.PRIMARY_COLOR.main,
+const STYLE_TITLE = {
+  fontSize: '16px',
+  color: SharedStyle.PRIMARY_COLOR.text_alt,
+  padding: '15px 25px 18px 15px',
+  backgroundColor: '#32394f',
+  textShadow: '-1px -1px 2px rgba(0, 0, 0, 1)',
+  boxShadow: 'inset 0px -3px 19px 0px rgba(0,0,0,0.5)',
+  margin: '0px',
+};
+
+let STYLE = {
+  backgroundColor: '#32394f',
   display: 'absolute',
   overflowY: 'auto',
   position: 'absolute',
-  left: 50,
+  right: 0,
+  bottom: 20,
   visibility: 'visible',
   overflowX: 'hidden',
   paddingBottom: '0px'
@@ -32,13 +46,20 @@ const sortButtonsCb = (a, b) => {
 
 const mapButtonsCb = (el, ind) => <If key={ind} condition={el.condition} style={{ position: 'relative' }}>{el.dom}</If>;
 
-export default function Sidebar({ state, width, height, sidebarComponents }, {translator, projectActions, viewer3DActions}) {
+export default function Sidebar({ state, width, height, sidebarComponents, selectedObject },
+                                {translator, projectActions, viewer3DActions}) {
 
-let ele = <PanelElementEditor state={state} />;
+if(selectedObject == null){
+  STYLE.visibility = 'hidden';
+}
+else  STYLE.visibility = 'visible';
+
+
+let elements = <PanelElementEditor state={state} />;
   let sorter = [
    // { index: 0, condition: true, dom: <PanelLayers state={state} /> },
    // { index: 1, condition: true, dom: <PanelLayerElements mode={state.mode} layers={state.scene.layers} selectedLayer={state.scene.selectedLayer} /> },
-    { index: 2, condition: true, dom: ele },
+    { index: 2, condition: true, dom: elements },
     //{ index: 999999, condition: true, dom: <PanelGuides state={state}/> },
   ];
 
@@ -55,19 +76,16 @@ let ele = <PanelElementEditor state={state} />;
       };
   }));
 
-  if(sorter[0].dom == null){
-
-    console.log("2d12")
-  }
-
-  let save = event => {
+    let save = event => {
     viewer3DActions.selectTool3DView();
     setTimeout(st,1);
   };
 
+
   function st() {
     projectActions.rollback();
   }
+
 
   return (
    <aside
@@ -76,10 +94,10 @@ let ele = <PanelElementEditor state={state} />;
       onKeyUp={event => event.stopPropagation()}
       className="sidebar"
     >
-      <div>
-        <FormSubmitButton onClick={save} size='large'>{translator.t('Apply changes')}</FormSubmitButton>
-      </div>
-      {sorter.sort(sortButtonsCb).map(mapButtonsCb)}
+     <h2 style={STYLE_TITLE}>{translator.t('Settings')}</h2>
+     {sorter.sort(sortButtonsCb).map(mapButtonsCb)}
+
+        <FormSubmitButton onClick={save} >{translator.t('Apply changes')}</FormSubmitButton>
     </aside>
   );
 }
