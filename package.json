@@ -75,8 +75,11 @@
     "polylabel": "1.0.2",
     "prop-types": "15.6.1",
     "react-icons": "2.2.7",
+    "react-native": "^0.55.4",
+    "react-native-elements": "^0.19.1",
     "react-redux": "5.0.7",
     "react-svg-pan-zoom": "2.16.1",
+    "react-triangle": "^0.3.0",
     "redux": "4.0.0",
     "shortid": "2.2.8"
   },

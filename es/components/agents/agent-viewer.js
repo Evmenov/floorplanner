@@ -34,7 +34,8 @@ var AgentViewer = function (_Component) {
     value: function render() {
       var _props = this.props,
           width = _props.width,
-          height = _props.height;
+          height = _props.height,
+          sidebarH = _props.sidebarH;
       var _state = this.state,
           dataWidth = _state.dataWidth,
           dataHeight = _state.dataHeight;
@@ -43,9 +44,15 @@ var AgentViewer = function (_Component) {
           translator = _context.translator,
           agents = _context.agents;
 
+      var Style = {
+        width: width,
+        height: height,
+        position: 'relative',
+        top: sidebarH
+      };
       var body = this.state.isOpen && React.createElement(
         ContentContainer,
-        { width: width, height: height },
+        { width: width, height: height, style: Style },
         React.createElement(
           ContentTitle,
           null,

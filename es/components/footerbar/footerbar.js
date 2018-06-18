@@ -22,11 +22,10 @@ import { VERSION } from '../../version';
 var footerBarStyle = {
   position: 'absolute',
   bottom: 0,
-  lineHeight: '14px',
+  lineHeight: '18px',
   fontSize: '12px',
-  color: SharedStyle.COLORS.white,
-  backgroundColor: SharedStyle.SECONDARY_COLOR.alt,
-  padding: '3px 1em',
+  color: '#ffffff',
+  backgroundColor: '#000000',
   margin: 0,
   boxSizing: 'border-box',
   cursor: 'default',
@@ -44,6 +43,7 @@ export var leftTextStyle = {
 
 export var rightTextStyle = {
   position: 'relative',
+  color: '#000000',
   borderLeft: '1px solid #FFF',
   float: 'right',
   padding: '0 1em',

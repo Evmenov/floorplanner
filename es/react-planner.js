@@ -22,7 +22,7 @@ import actions from './actions/export';
 import { objectsMap } from './utils/objects-utils';
 import { ToolbarComponents, Content, SidebarComponents, FooterBarComponents } from './components/export';
 import { VERSION } from './version';
-import AgentViewer from "./components/agents/agent-viewer";
+import RoomAditionalPanel from "./components/room-additional/room-additional";
 
 var Toolbar = ToolbarComponents.Toolbar;
 var Sidebar = SidebarComponents.Sidebar;
@@ -30,9 +30,11 @@ var FooterBar = FooterBarComponents.FooterBar;
 
 
 var toolbarW = 50;
-var agentViewW = 300;
+var sidebarH = 400;
 var sidebarW = 300;
 var footerBarH = 20;
+
+var selectedObject = null;
 
 var wrapperStyle = {
   display: 'flex',
@@ -42,19 +44,60 @@ var wrapperStyle = {
 var ReactPlanner = function (_Component) {
   _inherits(ReactPlanner, _Component);
 
-  function ReactPlanner() {
+  function ReactPlanner(props) {
     _classCallCheck(this, ReactPlanner);
 
-    return _possibleConstructorReturn(this, (ReactPlanner.__proto__ || Object.getPrototypeOf(ReactPlanner)).apply(this, arguments));
+    var _this = _possibleConstructorReturn(this, (ReactPlanner.__proto__ || Object.getPrototypeOf(ReactPlanner)).call(this, props));
+
+    _this.state = {
+      error: null,
+      isLoaded: false,
+      items: []
+    };
+    return _this;
   }
 
   _createClass(ReactPlanner, [{
-    key: 'getChildContext',
-    value: function getChildContext() {
+    key: 'componentDidMount',
+    value: function componentDidMount() {
+      $.ajax({
+        url: this.props.url,
+        dataType: 'json',
+        cache: false,
+        success: function (data) {
+          this.setState({ data: data });
+        }.bind(this),
+        error: function (xhr, status, err) {
+          console.error(this.props.url, status, err.toString());
+        }.bind(this)
+      });
+    }
+  }, {
+    key: 'componentDidMount',
+    value: function componentDidMount() {
       var _this2 = this;
 
+      fetch("localhost").then(function (value) {
+        return value.json();
+      }).then(function (value) {
+        _this2.setState({
+          isLoaded: true,
+          items: value.items
+        });
+      }, function (error) {
+        _this2.setState({
+          isLoaded: true,
+          error: error
+        });
+      });
+    }
+  }, {
+    key: 'getChildContext',
+    value: function getChildContext() {
+      var _this3 = this;
+
       return _extends({}, objectsMap(actions, function (actionNamespace) {
-        return _this2.props[actionNamespace];
+        return _this3.props[actionNamespace];
       }), {
         translator: this.props.translator,
         catalog: this.props.catalog,
@@ -91,6 +134,11 @@ var ReactPlanner = function (_Component) {
       }
     }
   }, {
+    key: 'updateData',
+    value: function updateData(value) {
+      selectedObject = value;
+    }
+  }, {
     key: 'render',
     value: function render() {
       var _props2 = this.props,
@@ -101,22 +149,19 @@ var ReactPlanner = function (_Component) {
           props = _objectWithoutProperties(_props2, ['width', 'height', 'state', 'stateExtractor']);
 
       var toolbarH = height - footerBarH;
-      var sidebarH = height - footerBarH;
       var contentH = height - footerBarH;
-      var agentViewH = height - footerBarH;
-
-      var contentW = width - toolbarW - sidebarW;
-
+      var contentW = width - toolbarW;
       var extractedState = stateExtractor(state);
 
       return React.createElement(
         'div',
         { style: _extends({}, wrapperStyle, { height: height }) },
         React.createElement(Toolbar, _extends({ width: toolbarW, height: toolbarH, state: extractedState }, props)),
-        React.createElement(Content, _extends({ width: contentW, height: contentH, state: extractedState }, props, { onWheel: function onWheel(event) {
+        React.createElement(Content, _extends({ width: contentW, height: contentH, state: extractedState,
+          sidebarH: sidebarH, updateData: this.updateData }, props, { onWheel: function onWheel(event) {
             return event.preventDefault();
           } })),
-        React.createElement(Sidebar, _extends({ width: sidebarW, height: sidebarH, state: extractedState }, props)),
+        React.createElement(RoomAditionalPanel, _extends({ width: sidebarW, height: sidebarH, state: extractedState, selectedObject: selectedObject }, props)),
         React.createElement(FooterBar, _extends({ width: width, height: footerBarH, state: extractedState }, props))
       );
     }

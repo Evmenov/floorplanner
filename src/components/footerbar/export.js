@@ -5,11 +5,11 @@ import FooterBar from './footerbar';
 export {
   FooterToggleButton,
   FooterContentButton,
-  FooterBar
+  FooterBar,
 };
 
 export default {
   FooterToggleButton,
   FooterContentButton,
-  FooterBar
+  FooterBar,
 };

@@ -10,7 +10,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { MdSettings, MdUndo, MdDirectionsRun } from 'react-icons/lib/md';
+import { MdSettings, MdUndo, MdDirectionsRun, MdAddCircleOutline, MdSave, MdFolderOpen, MdKeyboardArrowRight, MdDehaze, MdGridOn, MdSettingsApplications, MdPeople, MdPhoto } from 'react-icons/lib/md';
 import { FaFileO, FaMousePointer, FaPlus } from 'react-icons/lib/fa';
 import ToolbarButton from './toolbar-button';
 import ToolbarSaveButton from './toolbar-save-button';
@@ -23,7 +23,6 @@ var iconTextStyle = {
   fontSize: '19px',
   textDecoration: 'none',
   fontWeight: 'bold',
-  margin: '0px',
   userSelect: 'none'
 };
 
@@ -43,8 +42,7 @@ var Icon3D = function Icon3D() {
 };
 
 var ASIDE_STYLE = {
-  backgroundColor: SharedStyle.PRIMARY_COLOR.main,
-  padding: '10px'
+  backgroundColor: '#9799ac'
 };
 
 var sortButtonsCb = function sortButtonsCb(a, b) {
@@ -114,7 +112,7 @@ var Toolbar = function (_Component) {
             onClick: function onClick(event) {
               return confirm(translator.t('Would you want to start a new Project?')) ? projectActions.newProject() : null;
             } },
-          React.createElement(FaFileO, null)
+          React.createElement(MdAddCircleOutline, null)
         )
       }, {
         index: 1, condition: allowProjectFileSupport,
@@ -132,7 +130,7 @@ var Toolbar = function (_Component) {
             onClick: function onClick(event) {
               return projectActions.openCatalog();
             } },
-          React.createElement(FaPlus, null)
+          React.createElement(MdKeyboardArrowRight, null)
         )
       },
       // {
@@ -152,7 +150,7 @@ var Toolbar = function (_Component) {
             onClick: function onClick(event) {
               return projectActions.rollback();
             } },
-          [MODE_3D_FIRST_PERSON, MODE_3D_VIEW].includes(mode) ? React.createElement(Icon2D, null) : React.createElement(FaMousePointer, null)
+          [MODE_3D_FIRST_PERSON, MODE_3D_VIEW].includes(mode) ? React.createElement(MdGridOn, null) : React.createElement(MdGridOn, null)
         )
       },
       // {
@@ -183,7 +181,7 @@ var Toolbar = function (_Component) {
             onClick: function onClick(event) {
               return projectActions.openProjectConfigurator();
             } },
-          React.createElement(MdSettings, null)
+          React.createElement(MdSettingsApplications, null)
         )
       }, {
         index: 9, condition: true, dom: React.createElement(
@@ -194,7 +192,7 @@ var Toolbar = function (_Component) {
             onClick: function onClick(event) {
               return projectActions.openAgentsVIew();
             } },
-          React.createElement(MdDirectionsRun, null)
+          React.createElement(MdPeople, null)
         )
       }];
 

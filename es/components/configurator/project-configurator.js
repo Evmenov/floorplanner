@@ -52,7 +52,8 @@ var ProjectConfigurator = function (_Component) {
 
       var _props = this.props,
           width = _props.width,
-          height = _props.height;
+          height = _props.height,
+          sidebarH = _props.sidebarH;
       var _state2 = this.state,
           dataWidth = _state2.dataWidth,
           dataHeight = _state2.dataHeight;
@@ -61,9 +62,16 @@ var ProjectConfigurator = function (_Component) {
           translator = _context.translator;
 
 
+      var Style = {
+        width: width,
+        height: height,
+        position: 'relative',
+        top: sidebarH
+      };
+
       return React.createElement(
         ContentContainer,
-        { width: width, height: height },
+        { width: width, height: height, style: Style },
         React.createElement(
           ContentTitle,
           null,

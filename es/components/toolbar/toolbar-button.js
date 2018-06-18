@@ -13,12 +13,17 @@ import * as SharedStyle from '../../shared-style';
 //http://www.cssportal.com/css-tooltip-generator/
 
 var STYLE = {
-  width: '30px',
-  height: '30px',
+
+  height: '80px',
+  borderStyle: 'solid',
+  borderColor: 'transparent',
+  borderBottomColor: '#ffffff',
+  borderBottomWidth: '2px',
+  padding: '20px',
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
-  marginBottom: '5px',
+  marginBottom: '0px',
   fontSize: '25px',
   position: 'relative',
   cursor: 'pointer'
@@ -75,7 +80,7 @@ var ToolbarButton = function (_Component) {
       var state = this.state,
           props = this.props;
 
-      var color = props.active || state.active ? SharedStyle.SECONDARY_COLOR.icon : SharedStyle.PRIMARY_COLOR.icon;
+      var color = props.active || state.active ? SharedStyle.SECONDARY_COLOR.icon : '#ffffff';
 
       return React.createElement(
         'div',

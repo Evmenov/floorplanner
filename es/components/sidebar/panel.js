@@ -14,26 +14,27 @@ import * as SharedStyle from '../../shared-style';
 import { FaAngleDown, FaAngleUp } from 'react-icons/lib/fa';
 
 var STYLE = {
-  borderTop: '1px solid #222',
-  borderBottom: '1px solid #48494E',
-  userSelect: 'none'
+  borderTop: '1px solid #32394f',
+  borderBottom: '1px solid #32394f',
+  userSelect: 'none',
+  background: '#32394f'
 };
 var STYLE_TITLE = {
-  fontSize: '11px',
+  fontSize: '13px',
   color: SharedStyle.PRIMARY_COLOR.text_alt,
   padding: '5px 15px 8px 15px',
-  backgroundColor: SharedStyle.PRIMARY_COLOR.alt,
+  backgroundColor: '#32394f',
   textShadow: '-1px -1px 2px rgba(0, 0, 0, 1)',
   boxShadow: 'inset 0px -3px 19px 0px rgba(0,0,0,0.5)',
   margin: '0px',
   cursor: 'pointer'
 };
 var STYLE_CONTENT = {
-  fontSize: '11px',
+  fontSize: '13px',
   color: SharedStyle.PRIMARY_COLOR.text_alt,
   border: '1px solid #222',
   padding: '0px',
-  backgroundColor: SharedStyle.PRIMARY_COLOR.alt,
+  backgroundColor: '#32394f',
   textShadow: '-1px -1px 2px rgba(0, 0, 0, 1)'
 };
 var STYLE_ARROW = {

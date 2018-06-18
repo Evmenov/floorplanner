@@ -15,6 +15,7 @@ import {
   FooterBarComponents
 } from './components/export';
 import {VERSION} from './version';
+import RoomAdditionalPanel from './components/room-additional/room-additional';
 
 const {Toolbar} = ToolbarComponents;
 const {Sidebar} = SidebarComponents;
@@ -104,9 +105,6 @@ class ReactPlanner extends Component {
   updateData (value)
   {
     selectedObject = value;
-
-
-
   };
 
   render() {
@@ -122,7 +120,8 @@ class ReactPlanner extends Component {
         <Toolbar width={toolbarW} height={toolbarH} state={extractedState} {...props} />
         <Content width={contentW} height={contentH} state={extractedState}
                  sidebarH={sidebarH} updateData={this.updateData} {...props} onWheel={event => event.preventDefault()} />
-        <Sidebar width={sidebarW} height={sidebarH} state={extractedState} selectedObject={selectedObject} {...props} />
+       <RoomAdditionalPanel width={sidebarW} height={sidebarH} state={extractedState} selectedObject={selectedObject} {...props} />
+        {/*<Sidebar width={sidebarW} height={sidebarH} state={extractedState} selectedObject={selectedObject} {...props} />*/}
         <FooterBar width={width} height={footerBarH} state={extractedState} {...props} />
       </div>
     );

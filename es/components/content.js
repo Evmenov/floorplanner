@@ -14,7 +14,9 @@ export default function Content(_ref) {
   var width = _ref.width,
       height = _ref.height,
       state = _ref.state,
-      customContents = _ref.customContents;
+      customContents = _ref.customContents,
+      sidebarH = _ref.sidebarH,
+      updateData = _ref.updateData;
 
 
   var mode = state.get('mode');
@@ -42,13 +44,13 @@ export default function Content(_ref) {
     case constants.MODE_DRAWING_ITEM:
     case constants.MODE_DRAGGING_HOLE:
     case constants.MODE_ROTATING_ITEM:
-      return React.createElement(Viewer2D, { state: state, width: width, height: height });
+      return React.createElement(Viewer2D, { state: state, width: width, height: height, sidebarH: sidebarH, updateData: updateData });
 
     case constants.MODE_CONFIGURING_PROJECT:
-      return React.createElement(ProjectConfigurator, { width: width, height: height, state: state });
+      return React.createElement(ProjectConfigurator, { width: width, height: height, state: state, sidebarH: sidebarH });
 
     case constants.MODE_AGENTS_VIEWER:
-      return React.createElement(AgentViewer, { width: width, height: height, state: state });
+      return React.createElement(AgentViewer, { width: width, height: height, state: state, sidebarH: sidebarH });
 
     default:
       if (customContents.hasOwnProperty(mode)) {
