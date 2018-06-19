@@ -25,6 +25,8 @@ const toolbarW = 50;
 const sidebarH = 400;
 const sidebarW = 300;
 const footerBarH= 20;
+const roomInfoH= 300;
+const roomInfoW= 400;
 
 let selectedObject = null;
 
@@ -120,7 +122,7 @@ class ReactPlanner extends Component {
         <Toolbar width={toolbarW} height={toolbarH} state={extractedState} {...props} />
         <Content width={contentW} height={contentH} state={extractedState}
                  sidebarH={sidebarH} updateData={this.updateData} {...props} onWheel={event => event.preventDefault()} />
-       <RoomAdditionalPanel width={sidebarW} height={sidebarH} state={extractedState} selectedObject={selectedObject} {...props} />
+       <RoomAdditionalPanel width={roomInfoW} height={roomInfoH} state={extractedState} selectedObject={selectedObject} {...props} />
         {/*<Sidebar width={sidebarW} height={sidebarH} state={extractedState} selectedObject={selectedObject} {...props} />*/}
         <FooterBar width={width} height={footerBarH} state={extractedState} {...props} />
       </div>

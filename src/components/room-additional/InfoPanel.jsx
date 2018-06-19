@@ -21,12 +21,11 @@ const STYLE_TITLE = {
 };
 const STYLE_CONTENT = {
   fontSize: '13px',
-  color: SharedStyle.PRIMARY_COLOR.text_alt,
+  color: '#000000',
   border: '1px solid #222',
   padding: '0px',
   height: 120,
   backgroundColor: '#ffffff',
-  textShadow: '-1px -1px 2px rgba(0, 0, 0, 1)'
 };
 const STYLE_ARROW = {
   float: 'right'
@@ -53,24 +52,11 @@ export default class InfoPanel extends Component {
 
   render() {
 
-    let { name, headComponents, children } = this.props;
-    let { opened, hover } = this.state;
+    let { children, width, height } = this.props;
+    let { opened } = this.state;
+
     return (
-      <div style={STYLE}>
-        <h3
-          style={{...STYLE_TITLE, color: hover ? SharedStyle.SECONDARY_COLOR.main : SharedStyle.PRIMARY_COLOR.text_alt}}
-          onMouseEnter={() => this.toggleHover()}
-          onMouseLeave={() => this.toggleHover()}
-          onClick={() => this.toggleOpen()}
-        >
-          {name}
-          {headComponents}
-          {
-            opened ?
-            <FaAngleUp style={STYLE_ARROW} /> :
-            <FaAngleDown style={STYLE_ARROW} />
-          }
-        </h3>
+      <div style={{width, height, ...STYLE}}>
 
         <div style={{...STYLE_CONTENT, display: opened ? 'block' : 'none'}}>
           {children}

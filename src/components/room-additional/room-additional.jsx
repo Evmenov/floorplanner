@@ -38,13 +38,13 @@ export default class RoomAdditionalPanel extends Component {
 
     return (
       <div style={{width, height, ...STYLE}}>
-        <InfoPanel name={'Window #1'} opened={true}>
+        <InfoPanel width={width} height={height/3} opened={true}>
           <h2>Test</h2>
         </InfoPanel>
-        <InfoPanel name={'Window #2'} opened={true}>
+        <InfoPanel width={width} height={height/3} opened={true}>
           <h2>Test</h2>
         </InfoPanel>
-        <InfoPanel name={'Window #3'} opened={true}>
+        <InfoPanel width={width} height={height/3} opened={true}>
           <h2>Test</h2>
         </InfoPanel>
       </div>

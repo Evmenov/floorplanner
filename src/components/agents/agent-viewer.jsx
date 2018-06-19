@@ -25,6 +25,8 @@ export default class AgentViewer extends Component {
     let {width, height, sidebarH} = this.props;
     let {dataWidth, dataHeight} = this.state;
     let {projectActions, translator, agents} = this.context;
+
+    console.log(agents)
     const Style = {
       width: width,
       height: height,
