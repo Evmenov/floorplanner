@@ -26,7 +26,6 @@ export default class AgentViewer extends Component {
     let {dataWidth, dataHeight} = this.state;
     let {projectActions, translator, agents} = this.context;
 
-    console.log(agents)
     const Style = {
       width: width,
       height: height,

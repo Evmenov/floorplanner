@@ -9,27 +9,6 @@ const STYLE = {
   userSelect: 'none',
   background:'#ffffff',
 };
-const STYLE_TITLE = {
-  fontSize: '13px',
-  color: '#000000',
-  padding: '5px 15px 8px 15px',
-  backgroundColor: '#32394f',
-  textShadow: '-1px -1px 2px rgba(0, 0, 0, 1)',
-  boxShadow: 'inset 0px -3px 19px 0px rgba(0,0,0,0.5)',
-  margin: '0px',
-  cursor: 'pointer'
-};
-const STYLE_CONTENT = {
-  fontSize: '13px',
-  color: '#000000',
-  border: '1px solid #222',
-  padding: '0px',
-  height: 120,
-  backgroundColor: '#ffffff',
-};
-const STYLE_ARROW = {
-  float: 'right'
-};
 
 export default class InfoPanel extends Component {
 
@@ -54,6 +33,14 @@ export default class InfoPanel extends Component {
 
     let { children, width, height } = this.props;
     let { opened } = this.state;
+
+    let STYLE_CONTENT = {
+      fontSize: '13px',
+      color: '#000000',
+      border: '1px solid #222',
+      height: height,
+      backgroundColor: '#ffffff',
+    };
 
     return (
       <div style={{width, height, ...STYLE}}>

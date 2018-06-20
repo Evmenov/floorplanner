@@ -1,15 +1,26 @@
 import React, {Component} from 'react';
 import PropTypes from "prop-types";
-import Panel from "../../../es/components/sidebar/panel";
 import InfoPanel from "./InfoPanel";
 
-let STYLE = {
+let style = {
   position: 'absolute',
-  right: 100,
-  bottom: 100,
+  top: 0,
+  left: 0,
   visibility: 'visible',
 };
 
+let headerTextStyle ={
+  fontSize: '20px',
+  color: '#000000',
+  padding: '20px 15px 8px 15px',
+  margin: '0px',
+};
+let contentTextStyle ={
+  fontSize: '15px',
+  color: '#000000',
+  padding: '15px 35px 8px 15px',
+  margin: '0px',
+};
 
 
 export default class RoomAdditionalPanel extends Component {
@@ -23,29 +34,69 @@ export default class RoomAdditionalPanel extends Component {
 
     let {
       props: {state, width, height, selectedObject},
-      context: {projectActions, viewer3DActions, translator}
+      context: {projectActions, viewer3DActions, translator, agents}
     } = this;
 
+
+
     if(selectedObject == null){
-      STYLE.visibility = 'hidden';
+      style.visibility = 'hidden';
     }
     else if(selectedObject.prototype == 'areas'){
-      STYLE.visibility = 'visible';
+      style.visibility = 'visible';
     }
     else{
-      STYLE.visibility = 'hidden';
+      style.visibility = 'hidden';
     }
 
     return (
-      <div style={{width, height, ...STYLE}}>
+      <div style={{width, height, ...style}}>
         <InfoPanel width={width} height={height/3} opened={true}>
-          <h2>Test</h2>
+          <div>
+            <h2 style={headerTextStyle}>Офис 347</h2>
+            <i style={contentTextStyle}>офисное помещение</i>
+          </div>
+
+          <div style={{
+            height: height/3,
+            left: 200,
+            right:0,
+            border: '1px solid #32394f',
+            top:0,
+            bottom: 0,
+            position: 'absolute',
+            background:'#9283d4'}}>
+            <h2 style={headerTextStyle}>311 кв. м.</h2>
+          </div>
         </InfoPanel>
+
         <InfoPanel width={width} height={height/3} opened={true}>
-          <h2>Test</h2>
+          <div>
+            <h2 style={headerTextStyle}>Би Лайн</h2>
+            <i style={contentTextStyle}>сеть мобильной связи</i>
+          </div>
+          <div style={{
+            height: height/3,
+            left: 200,
+            border: '1px solid #32394f',
+            right:0,
+            top:height/3,
+            position: 'absolute',
+            background:'#fad36c'}}>
+            <h2 style={headerTextStyle}>446 400 р.</h2>
+            <i style={contentTextStyle}>1 200 р/кв. м.</i>
+          </div>
         </InfoPanel>
+
         <InfoPanel width={width} height={height/3} opened={true}>
-          <h2>Test</h2>
+          <div style={{
+            height: height/3,
+            width: width
+          }}>
+            <h2 style={headerTextStyle}>ООО "Таттелеком Россия"<br/></h2>
+            <i style={contentTextStyle}>срок до 23.2023 года<br/></i>
+            <i style={contentTextStyle}>контакт: Наталья +7 (967) 351 28 61 </i>
+          </div>
         </InfoPanel>
       </div>
 
@@ -68,4 +119,5 @@ RoomAdditionalPanel.contextTypes = {
   holesActions: PropTypes.object.isRequired,
   itemsActions: PropTypes.object.isRequired,
   translator: PropTypes.object.isRequired,
+  agents: PropTypes.array.isRequired,
 };
