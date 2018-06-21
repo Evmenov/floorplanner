@@ -89,7 +89,7 @@ function extractElementData(node) {
   }
 }
 
-export default function Viewer2D({state, width, height, sidebarH, updateData},
+export default function Viewer2D({state, width, height, sidebarH, updateData, updateCoordinats},
                                  {viewer2DActions, linesActions, holesActions, verticesActions, itemsActions, areaActions, projectActions, catalog}) {
 
   const Style = {
@@ -109,15 +109,14 @@ export default function Viewer2D({state, width, height, sidebarH, updateData},
 
   let onMouseMove = viewerEvent => {
 
+
     //workaround that allow imageful component to work
     let evt = new Event('mousemove-planner-event');
     evt.viewerEvent = viewerEvent;
     document.dispatchEvent(evt);
 
     let {x, y} = mapCursorPosition(viewerEvent);
-
     projectActions.updateMouseCoord({x, y});
-
     switch (mode) {
       case constants.MODE_DRAWING_LINE:
         linesActions.updateDrawingLine(x, y, state.snapMask);
@@ -156,6 +155,7 @@ export default function Viewer2D({state, width, height, sidebarH, updateData},
   };
 
   let onMouseDown = viewerEvent => {
+    updateCoordinats(viewerEvent.originalEvent.pageX, viewerEvent.originalEvent.pageY);
     let event = viewerEvent.originalEvent;
 
     //workaround that allow imageful component to work
@@ -317,13 +317,13 @@ export default function Viewer2D({state, width, height, sidebarH, updateData},
       detectAutoPan={mode2DetectAutopan(mode)}
 
       onMouseDown={onMouseDown}
-      onMouseMove={onMouseMove}
+      onMouseMove={onMouseMove.bind(this)}
       onMouseUp={onMouseUp}
 
       miniaturePosition='none'
       toolbarPosition='right'>
 
-      <svg width={scene.width} height={scene.height}>
+      <svg onMouseMove={onMouseMove.bind(this)} width={scene.width} height={scene.height}>
         <g style={Object.assign(mode2Cursor(mode), mode2PointerEvents(mode))}>
           <State state={state} catalog={catalog}/>
         </g>

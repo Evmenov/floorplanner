@@ -25,10 +25,12 @@ const toolbarW = 50;
 const sidebarH = 400;
 const sidebarW = 300;
 const footerBarH= 20;
-const roomInfoH= 300;
+const roomInfoH= 240;
 const roomInfoW= 400;
 
 let selectedObject = null;
+let X = 0;
+let Y = 0;
 
 const wrapperStyle = {
   display: 'flex',
@@ -109,7 +111,12 @@ class ReactPlanner extends Component {
     selectedObject = value;
   };
 
-  render() {
+  updateCoordinats (x, y){
+    X = x;
+    Y = y;
+  };
+
+   render() {
     let {width, height, state, stateExtractor, ...props} = this.props;
 
     let toolbarH = height - footerBarH;
@@ -121,8 +128,8 @@ class ReactPlanner extends Component {
       <div style={{...wrapperStyle, height}}>
         <Toolbar width={toolbarW} height={toolbarH} state={extractedState} {...props} />
         <Content width={contentW} height={contentH} state={extractedState}
-                 sidebarH={sidebarH} updateData={this.updateData} {...props} onWheel={event => event.preventDefault()} />
-       <RoomAdditionalPanel width={roomInfoW} height={roomInfoH} state={extractedState} selectedObject={selectedObject} {...props} />
+                 sidebarH={sidebarH} updateData={this.updateData} updateCoordinats={this.updateCoordinats} {...props} onWheel={event => event.preventDefault()} />
+       <RoomAdditionalPanel width={roomInfoW} height={roomInfoH} state={extractedState} selectedObject={selectedObject} x={X} y={Y} {...props} />
         {/*<Sidebar width={sidebarW} height={sidebarH} state={extractedState} selectedObject={selectedObject} {...props} />*/}
         <FooterBar width={width} height={footerBarH} state={extractedState} {...props} />
       </div>

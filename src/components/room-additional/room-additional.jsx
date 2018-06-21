@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import PropTypes from "prop-types";
 import InfoPanel from "./InfoPanel";
+import styles from '../CSS/OpacityTransaction.css'
 
 let style = {
   position: 'absolute',
@@ -12,7 +13,7 @@ let style = {
 let headerTextStyle ={
   fontSize: '20px',
   color: '#000000',
-  padding: '20px 15px 8px 15px',
+  padding: '10px 15px 8px 15px',
   margin: '0px',
 };
 let contentTextStyle ={
@@ -21,6 +22,7 @@ let contentTextStyle ={
   padding: '15px 35px 8px 15px',
   margin: '0px',
 };
+
 
 
 export default class RoomAdditionalPanel extends Component {
@@ -32,17 +34,21 @@ export default class RoomAdditionalPanel extends Component {
 
   render() {
 
-    let {
-      props: {state, width, height, selectedObject},
+  let {
+      props: {state, width, height, selectedObject, x, y},
       context: {projectActions, viewer3DActions, translator, agents}
     } = this;
-
 
 
     if(selectedObject == null){
       style.visibility = 'hidden';
     }
     else if(selectedObject.prototype == 'areas'){
+      // if(style.visibility == 'hidden'){
+        style.top = y;
+        style.left = x;
+      // }
+
       style.visibility = 'visible';
     }
     else{
@@ -50,9 +56,9 @@ export default class RoomAdditionalPanel extends Component {
     }
 
     return (
-      <div style={{width, height, ...style}}>
+      <div className="item" style={{width, height, ...style}}>
         <InfoPanel width={width} height={height/3} opened={true}>
-          <div>
+          <div >
             <h2 style={headerTextStyle}>Офис 347</h2>
             <i style={contentTextStyle}>офисное помещение</i>
           </div>
