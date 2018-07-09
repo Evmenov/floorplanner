@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import PropTypes from "prop-types";
 import InfoPanel from "./InfoPanel";
-import styles from '../CSS/OpacityTransaction.css'
 
 let style = {
   position: 'absolute',
@@ -56,7 +55,7 @@ export default class RoomAdditionalPanel extends Component {
     }
 
     return (
-      <div className="item" style={{width, height, ...style}}>
+      <div style={{width, height, ...style}}>
         <InfoPanel width={width} height={height/3} opened={true}>
           <div >
             <h2 style={headerTextStyle}>Офис 347</h2>

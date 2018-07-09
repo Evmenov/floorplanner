@@ -19,6 +19,45 @@ export default function ToolbarSaveButton({state}, {translator, projectActions})
     browserDownload(scene);
   };
 
+  let sendProjectToServer = event => {
+
+          const url = 'http://rentservice.getwider.com/corpsupdate/';
+
+
+        let body = {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'text/plain;charset=UTF-8',
+        },
+        body: JSON.stringify({
+          curlid:"50237c98-720c-4753-9d62-c9d294ad121c",  //todo
+          jsonstring: state
+            .get('scene')
+            .update('layers', layers => layers.map(layer => unselectAll(layer)))
+            .toJS()
+        }),
+      }
+
+    var request = new Request(url,body);
+
+      fetch(request)
+        .then(function(response) {
+          if (response.status !== 200) {
+            console.log('Looks like there was a problem. Status Code: ' +
+              response.status);
+            return;
+          }
+          response.json().then(function(data) {
+            let incoming = data.jsonstring;
+
+           // console.log(x);
+            // console.log(incoming);
+
+            //projectActions.loadProject(x);
+          });
+        })
+
+  }
 
 //   function save() {
 //     setTimeout(setopenCatalog, 1000);
@@ -48,7 +87,7 @@ export default function ToolbarSaveButton({state}, {translator, projectActions})
 
 
   return (
-    <ToolbarButton active={false} tooltip={translator.t("Save project")} onClick={saveProjectToFile}>
+    <ToolbarButton active={false} tooltip={translator.t("Save project")} onClick={sendProjectToServer}>
       <MdSave />
     </ToolbarButton>
   );

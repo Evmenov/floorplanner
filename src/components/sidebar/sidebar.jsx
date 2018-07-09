@@ -1,14 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import PanelElementEditor from './panel-element-editor/panel-element-editor';
-import FooterContentButton from '../footerbar/footer-content-button';
 import * as SharedStyle from '../../shared-style';
 import If from '../../utils/react-if';
 import {
   FormSubmitButton,
 } from '../style/export';
-import * as constants from "../../constants";
-import {MdAddCircle} from "react-icons/lib/md/index";
 
 const STYLE_TITLE = {
   fontSize: '16px',
