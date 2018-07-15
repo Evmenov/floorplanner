@@ -21,15 +21,14 @@ export default function ToolbarSaveButton({state}, {translator, projectActions})
 
   let sendProjectToServer = event => {
 
-          const url = 'http://rentservice.getwider.com/corpsupdate/';
+    const url = 'http://rentservice.getwider.com/corpsupdate/';
 
-
-        let body = {
-        method: 'POST',
-        headers: {
+    let body = {
+      method: 'POST',
+      headers: {
           'Content-Type': 'text/plain;charset=UTF-8',
         },
-        body: JSON.stringify({
+      body: JSON.stringify({
           curlid:"50237c98-720c-4753-9d62-c9d294ad121c",  //todo
           jsonstring: state
             .get('scene')
@@ -37,6 +36,8 @@ export default function ToolbarSaveButton({state}, {translator, projectActions})
             .toJS()
         }),
       }
+
+    // console.log(body.body.jsonstring);
 
     var request = new Request(url,body);
 
@@ -49,11 +50,6 @@ export default function ToolbarSaveButton({state}, {translator, projectActions})
           }
           response.json().then(function(data) {
             let incoming = data.jsonstring;
-
-           // console.log(x);
-            // console.log(incoming);
-
-            //projectActions.loadProject(x);
           });
         })
 
