@@ -37,13 +37,9 @@ const wrapperStyle = {
   display: 'flex',
   flexFlow: 'row nowrap'
 };
+function getMoviesFromApiAsync(path) {
+  console.log("sdfs")
 
-function download(content, fileName, contentType) {
-  var a = document.createElement("a");
-  var file = new Blob([content], {type: contentType});
-  a.href = URL.createObjectURL(file);
-  a.download = fileName;
-  a.click();
 }
 
 class ReactPlanner extends Component {
@@ -61,7 +57,6 @@ class ReactPlanner extends Component {
      let {projectActions} = this.props;
 
      const url = 'http://rentservice.getwider.com/corpsget/';
-    console.log("sdasd")
      var request = new Request(url, {
         method: 'POST',
        headers: {
@@ -82,47 +77,12 @@ class ReactPlanner extends Component {
          response.json().then(function(data) {
 
            fetch(data.filejs)
-             .then(response => response.json())
-             .then(data1 => {
-             console.log(data1)
+             .then((res) => res.json())
+             .then((data) => {
+               projectActions.loadProject(data);
+               console.log('data:', data);
              })
-             .catch(err => console.error(this.props.url, err.toString()));
-
-           // const url = data.filejs;
-           // var request1 = new Request(url, {
-           //   method: 'POST',
-           //   headers: {
-           //     'Content-Type': 'text/plain;charset=UTF-8',
-           //   },
-           //   mode: "no-cors",
-           // });
-           //
-           // fetch(request1)
-           //   .then((response) => response.json())
-           //   .then((responseJson) => {
-           //     return responseJson;
-           //   })
-           //   .catch((error) => {
-           //     console.error(error);
-           //   });
-
-           // var xhttp = new XMLHttpRequest();
-           // xhttp.onreadystatechange = function() {
-           //   if (xhttp.readyState == 4 && xhttp.status == 200) {
-           //     console.log(xhttp.responseText);
-           //   }
-           // };
-           // xhttp.open("GET", data.filejs, true);
-           // xhttp.send();
-
-          // let incoming = JSON.parse(data.filejs);
-
-           //let x = {"unit":"cm","layers":{"layer-1":{"id":"layer-1","altitude":0,"order":0,"opacity":1,"name":"default","visible":true,"vertices":{"ByKx2S71ZQX":{"id":"ByKx2S71ZQX","type":"","prototype":"vertices","name":"Vertex","misc":{},"selected":false,"properties":{},"x":1461.64500802373,"y":160.1167763653675,"lines":["HkdxhrQ1b7m"],"areas":[]},"rJ9x3BQyZm7":{"id":"rJ9x3BQyZm7","type":"","prototype":"vertices","name":"Vertex","misc":{},"selected":false,"properties":{},"x":1461.64500802373,"y":1895.1770668325203,"lines":["HkdxhrQ1b7m"],"areas":[]}},"lines":{"HkdxhrQ1b7m":{"id":"HkdxhrQ1b7m","type":"wall","prototype":"lines","name":"Стена","misc":{},"selected":false,"properties":{"thickness":{"length":3}},"vertices":["ByKx2S71ZQX","rJ9x3BQyZm7"],"holes":[]}},"holes":{},"areas":{},"items":{},"selected":{"vertices":[],"lines":[],"holes":[],"areas":[],"items":[]}}},"guides":{"h1":{"id":"h1","type":"horizontal-streak","properties":{"step":20,"colors":["#808080","#ddd","#ddd","#ddd","#ddd"]}},"v1":{"id":"v1","type":"vertical-streak","properties":{"step":20,"colors":["#808080","#ddd","#ddd","#ddd","#ddd"]}}},"selectedLayer":"layer-1","width":3000,"height":2000,"meta":{}};
-          // console.log(x);
-          // console.log(incoming);
-
-           //projectActions.loadProject(x);
-         });
+          });
        })}
 
 
