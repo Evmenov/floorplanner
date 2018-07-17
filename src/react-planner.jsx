@@ -70,7 +70,7 @@ class ReactPlanner extends Component {
      fetch(request)
        .then(function(response) {
          if (response.status !== 200) {
-           console.log('Looks like there was a problem. Status Code: ' +
+           console.log('There was a problem. Status code: ' +
              response.status);
            return;
          }
