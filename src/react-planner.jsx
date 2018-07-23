@@ -76,12 +76,14 @@ class ReactPlanner extends Component {
          }
          response.json().then(function(data) {
 
-           fetch(data.filejs)
-             .then((res) => res.json())
-             .then((data) => {
-               projectActions.loadProject(data);
-               console.log('data:', data);
-             })
+           projectActions.loadProject(data);
+
+           // fetch(data.filejs)
+           //   .then((res) => res.json())
+           //   .then((data) => {
+           //     projectActions.loadProject(data);
+           //     console.log('data:', data);
+           //   })
           });
        })}
 

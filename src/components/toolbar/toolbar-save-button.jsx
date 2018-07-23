@@ -20,131 +20,34 @@ export default function ToolbarSaveButton({state}, {translator, projectActions})
   };
 
   let uploadAction = event => {
-    //   var data = new FormData();
-    //   var imagedata = state
-    //     .get('scene')
-    //     .update('layers', layers => layers.map(layer => unselectAll(layer)))
-    //     .toJS();
-    //   data.append("data", imagedata);
-    //
-    //   fetch("http://rentservice.getwider.com/corpsupdate/", {
-    //     mode: 'no-cors',
-    //     method: "POST",
-    //     headers: {
-    //       "Content-Type": "multipart/form-data",
-    //       "Accept": "application/json",
-    //       "type": "formData"
-    //     },
-    //     body: data
-    //   }).then(function (res) {
-    //     if (res.ok) {
-    //       alert("Perfect! ");
-    //     } else if (res.status == 401) {
-    //       alert("Oops! ");
-    //     }
-    //   }, function (e) {
-    //     alert("Error submitting form!");
-    //   });
-    // };
-
-    // let sendProjectToServer = event => {
-    //
-
     const url = 'http://rentservice.getwider.com/corpsupdate/';
 
-    var data = new FormData();
-    data.append("filejs", state
+    let scene = state
       .get('scene')
       .update('layers', layers => layers.map(layer => unselectAll(layer)))
-      .toJS());
+      .toJS();
 
-    let body = {
-      mode: 'no-cors',
-      method: "POST",
-      headers: {
-        "Content-Type": "multipart/form-data",
-        "Accept": "application/json",
-        "type": "formData"
-      },
-      body: JSON.stringify({
-        curlid: "50237c98-720c-4753-9d62-c9d294ad121c",  //todo
-        filejs: data
-      }),
-    };
+      event.preventDefault();
+      const datas = new FormData(event.target);
 
-    var request = new Request(url,body);
+      datas.set('curlid', '50237c98-720c-4753-9d62-c9d294ad121c');
+      datas.set('jsstring', JSON.stringify(scene));
 
-    fetch(request).then(function (res) {
-      if (res.ok) {
-        alert("Perfect! ");
-      } else if (res.status == 401) {
-        alert("Oops! ");
-      }
-    }, function (e) {
-      alert("Error submitting form!");
-    });
+      var request = new Request(url,{
+      method: 'POST',
+      body: datas,
+      });
+
+     fetch(request).then(function (res) {
+       if (res.ok) {
+         alert("Сохранение прошло успешно!");
+       } else if (res.status == 401) {
+         alert("Сервер отклонил собранение. Код ошибки " + res.status);
+       }
+     }, function (e) {
+       alert("Error submitting form!");
+     });
   }
-    //
-    // const url = 'http://rentservice.getwider.com/corpsupdate/';
-    //
-    // let body = {
-    //   method: 'POST',
-    //   headers: {
-    //       'Content-Type': 'text/plain;charset=UTF-8',
-    //     },
-    //   body: JSON.stringify({
-    //       curlid:"50237c98-720c-4753-9d62-c9d294ad121c",  //todo
-    //       filejs: state
-    //         .get('scene')
-    //         .update('layers', layers => layers.map(layer => unselectAll(layer)))
-    //         .toJS()
-    //     }),
-    //   }
-    //
-    //  console.log(body.body.filejs);
-    //
-    // var request = new Request(url,body);
-    //
-    //   fetch(request)
-    //     .then(function(response) {
-    //       if (response.status !== 200) {
-    //         console.log('Looks like there was a problem. Status Code: ' +
-    //           response.status);
-    //         return;
-    //       }
-    //       response.json().then(function(data) {
-    //         let incoming = data.jsonstring;
-    //       });
-    //     })};
-
-  // }
-
-//   function save() {
-//     setTimeout(setopenCatalog, 1000);
-//
-//     setTimeout(setrollback, 2000);
-//
-//     setTimeout(setSave, 3000);
-//
-//   }
-//
-// function setopenCatalog() {
-//   projectActions.openCatalog();
-// }
-//
-// function setrollback() {
-//   projectActions.rollback();
-// }
-//
-// function setSave() {
-//   let scene = state
-//     .get('scene')
-//     .update('layers', layers => layers.map(layer => unselectAll(layer)))
-//     .toJS();
-//
-//   browserDownload(scene);
-//   }
-
 
   return (
     <ToolbarButton active={false} tooltip={translator.t("Save project")} onClick={uploadAction}>
