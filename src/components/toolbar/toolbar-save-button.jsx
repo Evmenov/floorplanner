@@ -30,7 +30,10 @@ export default function ToolbarSaveButton({state}, {translator, projectActions})
       event.preventDefault();
       const datas = new FormData(event.target);
 
-      datas.set('curlid', '50237c98-720c-4753-9d62-c9d294ad121c');
+      const searchParams = new URLSearchParams(location.search);
+      let id = {curlid: searchParams.get('curlid') || ''};
+
+      datas.set('curlid', id.curlid);
       datas.set('jsstring', JSON.stringify(scene));
 
       var request = new Request(url,{
@@ -42,7 +45,7 @@ export default function ToolbarSaveButton({state}, {translator, projectActions})
        if (res.ok) {
          alert("Сохранение прошло успешно!");
        } else if (res.status == 401) {
-         alert("Сервер отклонил собранение. Код ошибки " + res.status);
+         alert("Сервер отклонил сохранение. Код ошибки " + res.status);
        }
      }, function (e) {
        alert("Error submitting form!");
