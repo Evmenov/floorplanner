@@ -35,7 +35,8 @@ export default function ToolbarSaveButton({state}, {translator, projectActions})
 
       datas.set('curlid', id.curlid);
       datas.set('jsstring', JSON.stringify(scene));
-
+      console.log(scene)
+return;
       var request = new Request(url,{
       method: 'POST',
       body: datas,

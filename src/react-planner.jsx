@@ -56,6 +56,7 @@ class ReactPlanner extends Component {
    componentDidMount(){
      let {projectActions} = this.props;
 
+     projectActions.newProject();
      const searchParams = new URLSearchParams(location.search);
      let id = {curlid: searchParams.get('curlid') || ''};
 
@@ -77,7 +78,9 @@ class ReactPlanner extends Component {
              response.status);
            return;
          }
+
          response.json().then(function(data) {
+
            projectActions.loadProject(data);
           });
        })}
@@ -130,19 +133,19 @@ class ReactPlanner extends Component {
 
     return (
 
-    //    <div style={{...wrapperStyle, height}}>
-    //   <Toolbar width={toolbarW} height={toolbarH} state={extractedState} {...props} />
-    //     <Content width={contentW} height={contentH} state={extractedState}
-    //             sidebarH={sidebarH} updateData={this.updateData} updateCoordinats={this.updateCoordinats} {...props} onWheel={event => event.preventDefault()} />
-    //    <Sidebar width={sidebarW} height={sidebarH} state={extractedState} selectedObject={selectedObject} {...props} />
-    //    <FooterBar width={width} height={footerBarH} state={extractedState} {...props} />
-    //   </div>
+           <div style={{...wrapperStyle, height}}>
+      <Toolbar width={toolbarW} height={toolbarH} state={extractedState} {...props} />
+        <Content width={contentW} height={contentH} state={extractedState}
+                sidebarH={sidebarH} updateData={this.updateData} updateCoordinats={this.updateCoordinats} {...props} onWheel={event => event.preventDefault()} />
+       <Sidebar width={sidebarW} height={sidebarH} state={extractedState} selectedObject={selectedObject} {...props} />
+       <FooterBar width={width} height={footerBarH} state={extractedState} {...props} />
+      </div>
 
-      <div style={{...wrapperStyle, height}}>
-      <Content width={contentW + toolbarW} height={contentH + footerBarH} state={extractedState}
-              sidebarH={sidebarH} updateData={this.updateData} updateCoordinats={this.updateCoordinats} {...props} onWheel={event => event.preventDefault()} />
-     <RoomAdditionalPanel width={roomInfoW} height={roomInfoH} state={extractedState} selectedObject={selectedObject} x={X} y={Y} {...props} />
-   </div>
+ //     <div style={{...wrapperStyle, height}}>
+ //     <Content width={contentW + toolbarW} height={contentH + footerBarH} state={extractedState}
+ //             sidebarH={sidebarH} updateData={this.updateData} updateCoordinats={this.updateCoordinats} {...props} onWheel={event => event.preventDefault()} />
+ //    <RoomAdditionalPanel width={roomInfoW} height={roomInfoH} state={extractedState} selectedObject={selectedObject} x={X} y={Y} {...props} />
+ //  </div>
     );
   }
 }

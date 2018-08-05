@@ -76,6 +76,9 @@ export default function Area(_ref, _ref2) {
       ' m',
       String.fromCharCode(0xb2)
     );
+    var square = renderedAreaSize.props.children[0] + renderedAreaSize.props.children[1] + renderedAreaSize.props.children[2];
+
+    catalog.getElement(area.type).render2D(area, layer, agents, square);
   }
   // else {
   //   renderedAreaSize = (

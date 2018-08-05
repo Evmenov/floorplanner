@@ -21,7 +21,7 @@ let contentTextStyle ={
   padding: '15px 35px 8px 15px',
   margin: '0px',
 };
-
+let additionalData;
 
 
 export default class RoomAdditionalPanel extends Component {
@@ -31,7 +31,7 @@ export default class RoomAdditionalPanel extends Component {
     this.state = {};
   }
 
-  render() {
+    render() {
 
   let {
       props: {state, width, height, selectedObject, x, y},
@@ -41,21 +41,48 @@ export default class RoomAdditionalPanel extends Component {
 
     if(selectedObject == null){
       style.visibility = 'hidden';
+      return null;
     }
     else if(selectedObject.prototype == 'areas'){
-      // if(style.visibility == 'hidden'){
         style.top = y;
         style.left = x;
-      // }
+
+      const url = 'http://rentservice.getwider.com/roomget/';
+      var request = new Request(url, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'text/plain;charset=UTF-8',
+        },
+        body: JSON.stringify({
+          curlid: selectedObject.id,
+        }),
+      });
+
+      fetch(request)
+        .then(function(response) {
+          if (response.status !== 200) {
+            console.log('There was a problem. Status code: ' +
+              response.status);
+            return;
+          }
+
+          response.json().then(function(data) {
+            additionalData = data;
+          });
+        })
 
       style.visibility = 'visible';
     }
     else{
       style.visibility = 'hidden';
+      return null;
     }
+    if(additionalData == null) return null;
 
-    return (
-      <div style={{width, height, ...style}}>
+    let body;
+
+    if(additionalData.status){
+      body =  <div style={{width, height, ...style}}>
         <InfoPanel width={width} height={height/3} opened={true}>
           <div >
             <h2 style={headerTextStyle}>Офис 347</h2>
@@ -77,8 +104,8 @@ export default class RoomAdditionalPanel extends Component {
 
         <InfoPanel width={width} height={height/3} opened={true}>
           <div>
-            <h2 style={headerTextStyle}>Би Лайн</h2>
-            <i style={contentTextStyle}>сеть мобильной связи</i>
+            <h2 style={headerTextStyle}>{additionalData.brand}</h2>
+            <i style={contentTextStyle}>{additionalData.fullname}</i>
           </div>
           <div style={{
             height: height/3,
@@ -98,13 +125,27 @@ export default class RoomAdditionalPanel extends Component {
             height: height/3,
             width: width
           }}>
-            <h2 style={headerTextStyle}>ООО "Таттелеком Россия"<br/></h2>
-            <i style={contentTextStyle}>срок до 23.2023 года<br/></i>
-            <i style={contentTextStyle}>контакт: Наталья +7 (967) 351 28 61 </i>
+            <h2 style={headerTextStyle}>{additionalData.title}<br/></h2>
+            <i style={contentTextStyle}>срок до {additionalData.srok_dogovora}<br/></i>
+            <i style={contentTextStyle}>контакт: {additionalData.name_contact1} {additionalData.phone_contact1} </i>
           </div>
         </InfoPanel>
       </div>
+    }
+    else {
+      body =  <div style={{width, height, ...style}}>
+        <InfoPanel width={width} height={height/3} opened={true}>
+          <div >
+            <h2 style={headerTextStyle}>Свободно</h2>
+            <i style={contentTextStyle}>к помещению никто не прикреплен</i>
+          </div>
+        </InfoPanel>
+      </div>
+    }
 
+
+    return (
+      body
     );
   }
 }

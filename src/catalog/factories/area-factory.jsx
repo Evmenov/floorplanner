@@ -7,7 +7,7 @@ export default function AreaFactory (name, info, textures) {
   let areaElement = {
     name,
     prototype: 'areas',
-    info: {
+        info: {
       ...info,
       visibility: {
         catalog: false,
@@ -31,12 +31,15 @@ export default function AreaFactory (name, info, textures) {
         label:'Текущий агент',
         type:'enum',
         defaultValue: 'none',
-
-
-      }
+      },
+      square:{
+        label:'Площадь',
+        type: 'string',
+        defaultValue: '0'
+      },
     },
 
-    render2D: function (element, layer, agents, scene) {
+    render2D: function (element, layer, agents, square, scene) {
 
       let agentsValues = {
         'none': 'None'
@@ -52,6 +55,22 @@ export default function AreaFactory (name, info, textures) {
         defaultValue: 'none',
         values: agentsValues
       };
+
+      // if(square != null) {
+      //   areaElement.info.square = square;
+      // }
+     // console.log(areaElement.info.square)
+
+      if(square != null){
+        areaElement.properties.square = {
+          label:'Площадь',
+          type: 'string',
+          defaultValue: square
+        };
+       // console.log(areaElement.properties.square.defaultValue)
+      }
+      //
+      // console.log(element.properties.getIn(['square', 'length']))
 
       let path = '';
       ///print area path
@@ -71,7 +90,7 @@ export default function AreaFactory (name, info, textures) {
 
       });
 
-      let fill = element.selected ? '#99c3fb' : element.properties.get('patternColor');
+      let fill = element.selected ? '#797979' : element.properties.get('patternColor');
 
       return (<path d={path} fill={fill}/>);
     },

@@ -71,6 +71,7 @@ var ReactPlanner = function (_Component) {
       var projectActions = this.props.projectActions;
 
 
+      projectActions.newProject();
       var searchParams = new URLSearchParams(location.search);
       var id = { curlid: searchParams.get('curlid') || '' };
 
@@ -90,7 +91,9 @@ var ReactPlanner = function (_Component) {
           console.log('There was a problem. Status code: ' + response.status);
           return;
         }
+
         response.json().then(function (data) {
+
           projectActions.loadProject(data);
         });
       });
@@ -163,26 +166,24 @@ var ReactPlanner = function (_Component) {
       var contentW = width - toolbarW;
       var extractedState = stateExtractor(state);
 
-      return (
+      return React.createElement(
+        'div',
+        { style: _extends({}, wrapperStyle, { height: height }) },
+        React.createElement(Toolbar, _extends({ width: toolbarW, height: toolbarH, state: extractedState }, props)),
+        React.createElement(Content, _extends({ width: contentW, height: contentH, state: extractedState,
+          sidebarH: sidebarH, updateData: this.updateData, updateCoordinats: this.updateCoordinats }, props, { onWheel: function onWheel(event) {
+            return event.preventDefault();
+          } })),
+        React.createElement(Sidebar, _extends({ width: sidebarW, height: sidebarH, state: extractedState, selectedObject: selectedObject }, props)),
+        React.createElement(FooterBar, _extends({ width: width, height: footerBarH, state: extractedState }, props))
+      )
 
-        //    <div style={{...wrapperStyle, height}}>
-        //   <Toolbar width={toolbarW} height={toolbarH} state={extractedState} {...props} />
-        //     <Content width={contentW} height={contentH} state={extractedState}
-        //             sidebarH={sidebarH} updateData={this.updateData} updateCoordinats={this.updateCoordinats} {...props} onWheel={event => event.preventDefault()} />
-        //    <Sidebar width={sidebarW} height={sidebarH} state={extractedState} selectedObject={selectedObject} {...props} />
-        //    <FooterBar width={width} height={footerBarH} state={extractedState} {...props} />
-        //   </div>
-
-        React.createElement(
-          'div',
-          { style: _extends({}, wrapperStyle, { height: height }) },
-          React.createElement(Content, _extends({ width: contentW + toolbarW, height: contentH + footerBarH, state: extractedState,
-            sidebarH: sidebarH, updateData: this.updateData, updateCoordinats: this.updateCoordinats }, props, { onWheel: function onWheel(event) {
-              return event.preventDefault();
-            } })),
-          React.createElement(RoomAdditionalPanel, _extends({ width: roomInfoW, height: roomInfoH, state: extractedState, selectedObject: selectedObject, x: X, y: Y }, props))
-        )
-      );
+      //     <div style={{...wrapperStyle, height}}>
+      //     <Content width={contentW + toolbarW} height={contentH + footerBarH} state={extractedState}
+      //             sidebarH={sidebarH} updateData={this.updateData} updateCoordinats={this.updateCoordinats} {...props} onWheel={event => event.preventDefault()} />
+      //    <RoomAdditionalPanel width={roomInfoW} height={roomInfoH} state={extractedState} selectedObject={selectedObject} x={X} y={Y} {...props} />
+      //  </div>
+      ;
     }
   }]);
 

@@ -60,7 +60,14 @@ export default function Area({layer, area, catalog},{agents}) {
       <text x="0" y="0" transform={`translate(${center[0]} ${center[1]}) scale(1, -1)`} style={STYLE_TEXT}>
         {(areaSize / 10000).toFixed(2)} m{String.fromCharCode(0xb2)}
       </text>
+
+
     )
+
+   // console.log(catalog.getElement(area.type))
+    let square = renderedAreaSize.props.children[0] + renderedAreaSize.props.children[1] + renderedAreaSize.props.children[2];
+
+    catalog.getElement(area.type).render2D(area, layer, agents, square);
   }
   // else {
   //   renderedAreaSize = (

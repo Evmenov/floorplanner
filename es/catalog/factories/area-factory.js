@@ -31,11 +31,15 @@ export default function AreaFactory(name, info, textures) {
         label: 'Текущий агент',
         type: 'enum',
         defaultValue: 'none'
-
+      },
+      square: {
+        label: 'Площадь',
+        type: 'length-measure',
+        defaultValue: 'not calculated'
       }
     },
 
-    render2D: function render2D(element, layer, agents, scene) {
+    render2D: function render2D(element, layer, agents, square, scene) {
 
       var agentsValues = {
         'none': 'None'
@@ -45,12 +49,18 @@ export default function AreaFactory(name, info, textures) {
         agentsValues[agentName] = agents[agentName].name + ' ' + agents[agentName].surname;
       }
 
-      areaElement.properties.agent = {
-        label: 'Текущий агент',
-        type: 'enum',
-        defaultValue: 'none',
-        values: agentsValues
-      };
+      // areaElement.properties.agent = {
+      //   label: 'Текущий агент',
+      //   type: 'enum',
+      //   defaultValue: 'none',
+      //   values: agentsValues
+      // };
+
+      if (square != null) {
+        areaElement.properties.square = square;
+      }
+
+      console.log(areaElement.properties.square);
 
       var path = '';
       ///print area path
@@ -69,7 +79,7 @@ export default function AreaFactory(name, info, textures) {
         });
       });
 
-      var fill = element.selected ? '#99c3fb' : element.properties.get('patternColor');
+      var fill = element.selected ? '#797979' : element.properties.get('patternColor');
 
       return React.createElement('path', { d: path, fill: fill });
     },
