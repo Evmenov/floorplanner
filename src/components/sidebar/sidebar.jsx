@@ -5,6 +5,7 @@ import * as SharedStyle from '../../shared-style';
 import If from '../../utils/react-if';
 import {
   FormSubmitButton,
+  FormGetMoreInfoButton
 } from '../style/export';
 
 const STYLE_TITLE = {
@@ -46,7 +47,7 @@ const mapButtonsCb = (el, ind) => <If key={ind} condition={el.condition} style={
 export default function Sidebar({ state, width, height, sidebarComponents, selectedObject },
                                 {translator, projectActions, viewer3DActions}) {
 
-if(selectedObject == null){
+ if(selectedObject == null){
   STYLE.visibility = 'hidden';
 }
 else  STYLE.visibility = 'visible';
@@ -82,7 +83,12 @@ let elements = <PanelElementEditor state={state} />;
   function st() {
     projectActions.rollback();
   }
-
+  let redirectUrl;
+  if(selectedObject != null){
+    const searchParams = new URLSearchParams(location.search);
+    let id = {curlid: searchParams.get('curlid') || ''};
+    redirectUrl = "http://rentservice.getwider.com/edit_room/?curlid={" + id.curlid + "}&id_room={" + selectedObject.id + "}"
+  }
 
   return (
    <aside
@@ -94,7 +100,12 @@ let elements = <PanelElementEditor state={state} />;
      <h2 style={STYLE_TITLE}>{translator.t('Settings')}</h2>
      {sorter.sort(sortButtonsCb).map(mapButtonsCb)}
 
-        <FormSubmitButton onClick={save} >{translator.t('Apply changes')}</FormSubmitButton>
+     <FormSubmitButton onClick={save} >{translator.t('Apply changes')}</FormSubmitButton>
+<div>
+     <form  action={redirectUrl}>
+       <FormGetMoreInfoButton >Подробнее о помещении</FormGetMoreInfoButton>
+     </form>
+</div>
     </aside>
   );
 }

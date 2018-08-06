@@ -16,6 +16,6 @@ const STYLE_HOVER = {
   padding: '5px 15px 8px 15px',
   };
 
-export default function FormSubmitButton({children, ...rest}) {
+export default function FormGetMoreInfoButton({children, ...rest}) {
   return <Button type="submit" style={STYLE} styleHover={STYLE_HOVER} {...rest}>{children}</Button>
 }

@@ -10,6 +10,7 @@ import FormNumberInput from './form-number-input';
 import FormSelect from './form-select';
 import FormSlider from './form-slider';
 import FormSubmitButton from './form-submit-button';
+import FormGetMoreInfoButton from './form-get-more-info';
 import FormTextInput from './form-text-input';
 
 export {
@@ -25,6 +26,7 @@ export {
   FormSelect,
   FormSlider,
   FormSubmitButton,
+  FormGetMoreInfoButton,
   FormTextInput
 };
 
@@ -41,5 +43,6 @@ export default {
   FormSelect,
   FormSlider,
   FormSubmitButton,
+  FormGetMoreInfoButton,
   FormTextInput
 };

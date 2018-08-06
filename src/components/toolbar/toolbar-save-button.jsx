@@ -36,6 +36,7 @@ export default function ToolbarSaveButton({state}, {translator, projectActions})
       datas.set('curlid', id.curlid);
       datas.set('jsstring', JSON.stringify(scene));
       console.log(scene)
+
 return;
       var request = new Request(url,{
       method: 'POST',
@@ -45,6 +46,7 @@ return;
      fetch(request).then(function (res) {
        if (res.ok) {
          alert("Сохранение прошло успешно!");
+         window.location.href='http://rentservice.getwider.com/company/objects/?curlid={' + id.curlid + '}';
        } else if (res.status == 401) {
          alert("Сервер отклонил сохранение. Код ошибки " + res.status);
        }
