@@ -15,6 +15,24 @@ import {
 } from '../../constants';
 import * as SharedStyle from '../../shared-style';
 
+
+import MenuList from '@material-ui/core/MenuList';
+import MenuItem from '@material-ui/core/MenuItem';
+import Paper from '@material-ui/core/Paper';
+import { withStyles } from '@material-ui/core/styles';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
+import ListItemText from '@material-ui/core/ListItemText';
+import GridOnIcon from '@material-ui/icons/GridOn';
+import BackIcon from '@material-ui/icons/Replay';
+import SettingsIcon from '@material-ui/icons/SettingsApplicationsOutlined';
+import AgentsIcon from '@material-ui/icons/Group';
+import DraftsIcon from '@material-ui/icons/KeyboardArrowRight';
+import SaveIcon from '@material-ui/icons/Save';
+import {unselectAll} from "../../utils/layer-operations";
+
+
+
+
 const iconTextStyle = {
   fontSize: '19px',
   textDecoration: 'none',
@@ -53,6 +71,10 @@ const mapButtonsCb = (el, ind) => {
   );
 };
 
+const classes={
+  root: 'classes-state-root', };
+
+
 export default class Toolbar extends Component {
 
   constructor(props, context) {
@@ -72,6 +94,42 @@ export default class Toolbar extends Component {
       props: { state, width, height, toolbarButtons, allowProjectFileSupport },
       context: { projectActions, viewer3DActions, translator }
     } = this;
+
+    let uploadAction = event => {
+      const url = 'http://rentservice.getwider.com/corpsupdate/';
+
+      let scene = state
+        .get('scene')
+        .update('layers', layers => layers.map(layer => unselectAll(layer)))
+        .toJS();
+
+      event.preventDefault();
+      const datas = new FormData(event.target);
+
+      const searchParams = new URLSearchParams(location.search);
+      let id = {curlid: searchParams.get('curlid') || ''};
+
+      datas.set('curlid', id.curlid);
+      datas.set('jsstring', JSON.stringify(scene));
+      console.log(scene);
+
+      return;
+      var request = new Request(url,{
+        method: 'POST',
+        body: datas,
+      });
+
+      fetch(request).then(function (res) {
+        if (res.ok) {
+          alert("Сохранение прошло успешно!");
+          window.location.href='http://rentservice.getwider.com/company/objects/?curlid={' + id.curlid + '}';
+        } else if (res.status == 401) {
+          alert("Сервер отклонил сохранение. Код ошибки " + res.status);
+        }
+      }, function (e) {
+        alert("Error submitting form!");
+      });
+    };
 
     let mode = state.get('mode');
 
@@ -164,10 +222,58 @@ export default class Toolbar extends Component {
         };
     }));
 
+
     return (
-      <aside style={{ ...ASIDE_STYLE, maxWidth: width, maxHeight: height }} className='toolbar'>
-        {sorter.sort(sortButtonsCb).map(mapButtonsCb)}
-      </aside>
+     // <aside style={{ ...ASIDE_STYLE, maxWidth: width, maxHeight: height }} className='toolbar'>
+     //   {sorter.sort(sortButtonsCb).map(mapButtonsCb)}
+     // </aside>
+      <Paper>
+      <MenuList>
+
+      <MenuItem className={classes.menuItem} onClick={uploadAction}>
+  <ListItemIcon className={classes.icon}>
+  <SaveIcon />
+    </ListItemIcon>
+    <ListItemText classes={{ primary: classes.primary }} inset primary="Сохранить" />
+    </MenuItem>
+
+    <MenuItem className={classes.menuItem} onClick={event => projectActions.openCatalog()}>
+      <ListItemIcon className={classes.icon}>
+        <DraftsIcon />
+      </ListItemIcon>
+      <ListItemText classes={{ primary: classes.primary }} inset primary="Каталог" />
+    </MenuItem>
+
+    <MenuItem className={classes.menuItem} onClick={event => projectActions.rollback()}>
+      <ListItemIcon className={classes.icon}>
+         <GridOnIcon />
+     </ListItemIcon>
+    <ListItemText classes={{ primary: classes.primary }} inset primary="Схема" />
+    </MenuItem>
+
+    <MenuItem className={classes.menuItem} onClick={event => projectActions.undo()}>
+      <ListItemIcon className={classes.icon}>
+        <BackIcon />
+      </ListItemIcon>
+      <ListItemText classes={{ primary: classes.primary }} inset primary="Назад" />
+    </MenuItem>
+
+    <MenuItem className={classes.menuItem} onClick={event => projectActions.openProjectConfigurator()}>
+      <ListItemIcon className={classes.icon}>
+        <SettingsIcon />
+      </ListItemIcon>
+      <ListItemText classes={{ primary: classes.primary }} inset primary="Настройки" />
+    </MenuItem>
+
+    <MenuItem className={classes.menuItem} onClick={event => projectActions.openAgentsVIew()}>
+      <ListItemIcon className={classes.icon}>
+        <AgentsIcon />
+      </ListItemIcon>
+      <ListItemText classes={{ primary: classes.primary }} inset primary="Агенты" />
+    </MenuItem>
+
+    </MenuList>
+  </Paper>
     )
   }
 }
