@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import PanelElementEditor from './panel-element-editor/panel-element-editor';
 import * as SharedStyle from '../../shared-style';
 import If from '../../utils/react-if';
+import Button from '@material-ui/core/Button';
 import {
   FormSubmitButton,
   FormGetMoreInfoButton
@@ -106,6 +107,7 @@ let elements = <PanelElementEditor state={state} />;
        <FormGetMoreInfoButton >Подробнее о помещении</FormGetMoreInfoButton>
      </form>
 </div>
+     <Button variant="contained" color="blueGrey">Test Button</Button>
     </aside>
   );
 }

@@ -63,20 +63,20 @@ export default class ToolbarButton extends Component {
     let { state, props } = this;
     let color = props.active || state.active ? SharedStyle.SECONDARY_COLOR.icon : '#ffffff';
 
-    return (
-      <div style={STYLE}
-        onMouseOver={event => this.setState({ active: true })}
-        onMouseOut={event => this.setState({ active: false })}>
-        <div style={{ color }} onClick={props.onClick}>
+          return (
+          <div style={STYLE}
+          onMouseOver={event => this.setState({ active: true })}
+          onMouseOut={event => this.setState({ active: false })}>
+          <div style={{ color }} onClick={props.onClick}>
           {props.children}
-        </div>
-
-        {
-          state.active ?
-          <div style={STYLE_TOOLTIP}>
-            <span style={STYLE_TOOLTIP_PIN} />
-            {props.tooltip}
           </div>
+
+          {
+            state.active ?
+              <div style={STYLE_TOOLTIP}>
+                <span style={STYLE_TOOLTIP_PIN} />
+                {props.tooltip}
+              </div>
           : null
         }
 

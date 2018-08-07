@@ -17,6 +17,7 @@ import {
 import {VERSION} from './version';
 import RoomAdditionalPanel from './components/room-additional/room-additional';
 import {browserUpload} from "./utils/browser";
+import SimpleBottomNavigation from "./components/modal-window/menu";
 
 const {Toolbar} = ToolbarComponents;
 const {Sidebar} = SidebarComponents;
@@ -134,6 +135,10 @@ class ReactPlanner extends Component {
     return (
 
            <div style={{...wrapperStyle, height}}>
+             <SimpleBottomNavigation classes={{
+               root: 'classes-state-root',
+               disabled: 'disabled', }
+             }/>
       <Toolbar width={toolbarW} height={toolbarH} state={extractedState} {...props} />
         <Content width={contentW} height={contentH} state={extractedState}
                 sidebarH={sidebarH} updateData={this.updateData} updateCoordinats={this.updateCoordinats} {...props} onWheel={event => event.preventDefault()} />
