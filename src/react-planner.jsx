@@ -148,7 +148,7 @@ class ReactPlanner extends Component {
               dialogIsOpen={this.state.dialogIsOpen}
               onInvertSettings={() => this.setState({ dialogIsOpen: !this.state.dialogIsOpen})}
               tabValue={this.state.tabValue}
-              ontabValueChanged={(event, value) => this.setState({ value})}
+              ontabValueChanged={(value) => this.setState({ tabValue: value})}
               width={toolbarW} height={toolbarH} state={extractedState}  {...prop} />
         <Content width={contentW} height={contentH} state={extractedState}
                 sidebarH={sidebarH} updateData={this.updateData}

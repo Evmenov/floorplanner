@@ -281,7 +281,7 @@ export default class Toolbar extends Component {
     </MenuList>
         <Listmenu checked={this.props.checked}
                   tabValue={this.props.tabValue}
-                  ontabValueChanged={(event, value) => this.props.ontabValueChanged()}
+                  ontabValueChanged={() => this.props.ontabValueChanged()}
                   state={state} />
 
 

@@ -1,80 +1,66 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
-import SwipeableViews from 'react-swipeable-views';
 import AppBar from '@material-ui/core/AppBar';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Typography from '@material-ui/core/Typography';
 
-function TabContainer({ children, dir }) {
+function TabContainer(props) {
   return (
-    <Typography component="div" dir={dir} style={{ padding: 8 * 3 }}>
-      {children}
+    <Typography component="div" style={{ padding: 8 * 3 }}>
+      {props.children}
     </Typography>
   );
 }
 
 TabContainer.propTypes = {
   children: PropTypes.node.isRequired,
-  dir: PropTypes.string.isRequired,
 };
 
 const styles = theme => ({
   root: {
+    flexGrow: 1,
     backgroundColor: theme.palette.background.paper,
-    width: 500,
   },
 });
 
-class FullWidthTabs extends React.Component {
-  // state = {
-  //   value: 0,
-  // };
-  //
-  // handleChange = (event, value) => {
-  //   this.setState({ value });
-  // };
-  //
-  // handleChangeIndex = index => {
-  //   this.setState({ value: index });
-  // };
+class SimpleTabs extends React.Component {
+
+   shouldComponentUpdate(nextProps){
+    if(nextProps.tabValue === this.props.tabValue){
+      return false;
+    }
+    else return true;
+  }
 
   render() {
-    const { classes, theme } = this.props;
+    const { classes } = this.props;
+    // const { value } = this.state;
+
+    let handleChange = (event, value) => {
+      this.setState( {value} );
+    };
 
     return (
       <div className={classes.root}>
-        <AppBar position="static" color="default">
-          <Tabs
-            // value={this.state.value}
-            // onChange={this.handleChange}
-            indicatorColor="primary"
-            textColor="primary"
-            fullWidth
-          >
+        <AppBar position="static">
+          <Tabs value={this.props.tabValue} onChange={handleChange}>
             <Tab label="Item One" />
             <Tab label="Item Two" />
-            <Tab label="Item Three" />
+            <Tab label="Item Three" href="#basic-tabs" />
           </Tabs>
         </AppBar>
-        <SwipeableViews
-          axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'}
-          // index={this.state.value}
-          // onChangeIndex={this.handleChangeIndex}
-        >
-          <TabContainer dir={theme.direction}>Item One</TabContainer>
-          <TabContainer dir={theme.direction}>Item Two</TabContainer>
-          <TabContainer dir={theme.direction}>Item Three</TabContainer>
-        </SwipeableViews>
+        {this.props.tabValue === 0 && <TabContainer>Item One</TabContainer>}
+        {this.props.tabValue === 1 && <TabContainer>Item Two</TabContainer>}
+        {this.props.tabValue === 2 && <TabContainer>Item Three</TabContainer>}
       </div>
     );
   }
 }
 
-FullWidthTabs.propTypes = {
+SimpleTabs.propTypes = {
   classes: PropTypes.object.isRequired,
-  theme: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles, { withTheme: true })(FullWidthTabs);
+export default withStyles(styles)(SimpleTabs);
