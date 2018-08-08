@@ -19,6 +19,7 @@ import RoomAdditionalPanel from './components/room-additional/room-additional';
 import {browserUpload} from "./utils/browser";
 import SimpleBottomNavigation from "./components/modal-window/menu";
 import MiniDrawer from "./components/modal-window/Drawer";
+import SimpleCard from "./components/modal-window/Modal";
 
 const {Toolbar} = ToolbarComponents;
 const {Sidebar} = SidebarComponents;
@@ -125,7 +126,7 @@ class ReactPlanner extends Component {
   };
 
    render() {
-    let {width, height, state, stateExtractor, ...props} = this.props;
+    let {width, height, state, stateExtractor, ...prop} = this.props;
 
 
     let toolbarH = height - footerBarH;
@@ -135,20 +136,22 @@ class ReactPlanner extends Component {
 
     return (
 
-           <div style={{...wrapperStyle, height}}>
-             {/*<MiniDrawer classes={{*/}
-               {/*root: 'classes-state-root', }*/}
-             {/*}/>*/}
-             {/*<SimpleBottomNavigation classes={{*/}
-               {/*root: 'classes-state-root',*/}
-               {/*disabled: 'disabled', }*/}
-             {/*}/>*/}
-     <Toolbar  width={toolbarW} height={toolbarH} state={extractedState}  {...props} />
+
+      <div style={{...wrapperStyle, height}}>
+     <Toolbar  width={toolbarW} height={toolbarH} state={extractedState}  {...prop} />
         <Content width={contentW} height={contentH} state={extractedState}
-                sidebarH={sidebarH} updateData={this.updateData} updateCoordinats={this.updateCoordinats} {...props} onWheel={event => event.preventDefault()} />
-       <Sidebar width={sidebarW} height={sidebarH} state={extractedState} selectedObject={selectedObject} {...props} />
-       <FooterBar width={width} height={footerBarH} state={extractedState} {...props} />
-      </div>
+                sidebarH={sidebarH} updateData={this.updateData}
+                 updateCoordinats={this.updateCoordinats} {...prop}
+                 onWheel={event => event.preventDefault()} />
+        <SimpleCard classes={{root: 'classes-state-root', }} width={sidebarW} height={sidebarH} state={extractedState}
+                 selectedObject={selectedObject} {...prop}  />
+       <FooterBar width={width} height={footerBarH} state={extractedState} {...prop} />
+           </div>
+
+       // {/*<Sidebar  width={sidebarW} height={sidebarH} state={extractedState}*/}
+       //           {/*selectedObject={selectedObject} {...prop} />*/}
+
+
 
  //     <div style={{...wrapperStyle, height}}>
  //     <Content width={contentW + toolbarW} height={contentH + footerBarH} state={extractedState}

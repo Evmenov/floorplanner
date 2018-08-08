@@ -2,30 +2,23 @@ import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import * as SharedStyle from '../../shared-style';
 import { FaAngleDown, FaAngleUp } from 'react-icons/lib/fa';
+import Typography from '@material-ui/core/Typography';
 
 const STYLE = {
-  borderTop: '1px solid #32394f',
-  borderBottom: '1px solid #32394f',
   userSelect: 'none',
-  background:'#32394f',
+  background:'#ffffff',
+  backgroundColor: '#ffffff',
 };
 const STYLE_TITLE = {
   fontSize: '13px',
-  color: SharedStyle.PRIMARY_COLOR.text_alt,
-  padding: '5px 15px 8px 15px',
-  backgroundColor: '#32394f',
-  textShadow: '-1px -1px 2px rgba(0, 0, 0, 1)',
-  boxShadow: 'inset 0px -3px 19px 0px rgba(0,0,0,0.5)',
+  backgroundColor: '#ffffff',
   margin: '0px',
   cursor: 'pointer'
 };
 const STYLE_CONTENT = {
-  fontSize: '13px',
-  color: SharedStyle.PRIMARY_COLOR.text_alt,
-  border: '1px solid #222',
+  fontSize: '15px',
   padding: '0px',
-  backgroundColor: '#32394f',
-  textShadow: '-1px -1px 2px rgba(0, 0, 0, 1)'
+  backgroundColor: '#ffffff',
 };
 const STYLE_ARROW = {
   float: 'right'
@@ -57,24 +50,17 @@ export default class Panel extends Component {
 
     return (
       <div style={STYLE}>
-        <h3
-          style={{...STYLE_TITLE, color: hover ? SharedStyle.SECONDARY_COLOR.main : SharedStyle.PRIMARY_COLOR.text_alt}}
-          onMouseEnter={() => this.toggleHover()}
+        <Typography  color="textSecondary"
+           onMouseEnter={() => this.toggleHover()}
           onMouseLeave={() => this.toggleHover()}
-          onClick={() => this.toggleOpen()}
         >
           {name}
           {headComponents}
-          {
-            opened ?
-            <FaAngleUp style={STYLE_ARROW} /> :
-            <FaAngleDown style={STYLE_ARROW} />
-          }
-        </h3>
+        </Typography>
 
-        <div style={{...STYLE_CONTENT, display: opened ? 'block' : 'none'}}>
+        <Typography  color="textSecondary" style={{...STYLE_CONTENT, display: opened ? 'block' : 'none'}}>
           {children}
-        </div>
+        </Typography>
       </div>
     )
   }
