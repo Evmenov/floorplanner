@@ -5,6 +5,7 @@ import Switch from '@material-ui/core/Switch';
 import Paper from '@material-ui/core/Paper';
 import Slide from '@material-ui/core/Slide';
 import CatalogList from "../catalog-view/catalog-list";
+import FullWidthTabs from "../modal-window/Tabs";
 
 const styles = theme => ({
   root: {
@@ -41,12 +42,15 @@ class SimpleSlide extends React.Component {
     let {props: { state }} = this;
     const { classes } = this.props;
 
-    console.log("catalog")
     return (
       <div className={classes.root}>
         <div className={classes.wrapper}>
           <Slide direction="up" in={this.props.checked} mountOnEnter unmountOnExit>
             <Paper elevation={4} className={classes.paper}>
+
+              <FullWidthTabs classes={{root: 'classes-state-root', }}
+                             tabValue={this.props.tabValue}
+                             ontabValueChanged={(event, value) => this.props.ontabValueChanged()}/>
               <CatalogList state={state} width={250} height={600}/>
               <svg className={classes.svg}>
               </svg>

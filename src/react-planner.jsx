@@ -57,13 +57,14 @@ class ReactPlanner extends Component {
       items: [],
       checked: false,
       dialogIsOpen: false,
+      tabValue: 0,
     };
   }
 
    componentDidMount(){
      let {projectActions} = this.props;
 
-     //projectActions.newProject();
+     projectActions.newProject();
      const searchParams = new URLSearchParams(location.search);
      let id = {curlid: searchParams.get('curlid') || ''};
 
@@ -146,6 +147,8 @@ class ReactPlanner extends Component {
               onInvertCatalog={() => this.setState({ checked: !this.state.checked})}
               dialogIsOpen={this.state.dialogIsOpen}
               onInvertSettings={() => this.setState({ dialogIsOpen: !this.state.dialogIsOpen})}
+              tabValue={this.state.tabValue}
+              ontabValueChanged={(event, value) => this.setState({ value})}
               width={toolbarW} height={toolbarH} state={extractedState}  {...prop} />
         <Content width={contentW} height={contentH} state={extractedState}
                 sidebarH={sidebarH} updateData={this.updateData}

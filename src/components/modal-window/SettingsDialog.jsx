@@ -24,7 +24,6 @@ class AlertDialogSlide extends React.Component {
   render() {
     let {props: { state }} = this;
 
-    console.log("dialog")
     return (
       <div>
        <Dialog

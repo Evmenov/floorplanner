@@ -90,6 +90,7 @@ export default class Toolbar extends Component {
       this.props.height !== nextProps.height ||
       this.props.width !== nextProps.width ||
       nextProps.checked !== this.props.checked ||
+      nextProps.tabValue !== this.props.tabValue ||
       nextProps.dialogIsOpen !== this.props.dialogIsOpen
   }
 
@@ -119,7 +120,6 @@ export default class Toolbar extends Component {
       datas.set('jsstring', JSON.stringify(scene));
       console.log(scene);
 
-      return;
       var request = new Request(url,{
         method: 'POST',
         body: datas,
@@ -228,7 +228,7 @@ export default class Toolbar extends Component {
         };
     }));
 
-    console.log(this.props.dialogIsOpen)
+    console.log(this.props.tabValue)
     return (
      // <aside style={{ ...ASIDE_STYLE, maxWidth: width, maxHeight: height }} className='toolbar'>
      //   {sorter.sort(sortButtonsCb).map(mapButtonsCb)}
@@ -279,7 +279,11 @@ export default class Toolbar extends Component {
     </MenuItem>
 
     </MenuList>
-        <Listmenu checked={this.props.checked} state={state} />
+        <Listmenu checked={this.props.checked}
+                  tabValue={this.props.tabValue}
+                  ontabValueChanged={(event, value) => this.props.ontabValueChanged()}
+                  state={state} />
+
 
         <AlertDialogSlide state={state} dialogIsOpen={this.props.dialogIsOpen} onInvertSettings={() => this.props.onInvertSettings()} />
   </Paper>
