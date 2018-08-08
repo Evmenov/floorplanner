@@ -5,8 +5,8 @@ import {Seq} from 'immutable';
 import * as SharedStyle from '../../shared-style';
 
 const STYLE_BOX = {
-  width: '14em',
-  height: '14em',
+  width: '13em',
+  height: '13em',
   padding: '0.625em',
   background: '#f7f7f9',
   border: '1px solid #e1e1e8',
@@ -17,12 +17,12 @@ const STYLE_BOX = {
   transition: 'all .15s ease-in-out',
   WebkitTransition: 'all .15s ease-in-out',
   alignSelf: 'center',
-  justifySelf: 'center',
+  justifySelf: 'left',
 };
 
 const STYLE_BOX_HOVER = {
   ...STYLE_BOX,
-  background: SharedStyle.SECONDARY_COLOR.main
+  background: '#cccccc',
 };
 
 const STYLE_TITLE = {
@@ -35,7 +35,6 @@ const STYLE_TITLE = {
 
 const STYLE_TITLE_HOVER = {
   ...STYLE_TITLE,
-  color:SharedStyle.COLORS.white
 };
 
 const STYLE_IMAGE_CONTAINER = {
@@ -68,7 +67,7 @@ const STYLE_IMAGE_HOVER = {
 
 const STYLE_PLUS_HOVER = {
   marginTop:'1.5em',
-  color: SharedStyle.SECONDARY_COLOR.main,
+  color: '#f7f7f9',
   fontSize: '2em',
   opacity: '0.7',
   width: '100%'

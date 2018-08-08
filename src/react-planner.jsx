@@ -20,6 +20,7 @@ import {browserUpload} from "./utils/browser";
 import SimpleBottomNavigation from "./components/modal-window/menu";
 import MiniDrawer from "./components/modal-window/Drawer";
 import SimpleCard from "./components/modal-window/Modal";
+import Listmenu from "./components/modal-window/Listmenu";
 
 const {Toolbar} = ToolbarComponents;
 const {Sidebar} = SidebarComponents;
@@ -53,13 +54,14 @@ class ReactPlanner extends Component {
       error: null,
       isLoaded: false,
       items: [],
+      checked: false,
     };
   }
 
    componentDidMount(){
      let {projectActions} = this.props;
 
-    // projectActions.newProject();
+     //projectActions.newProject();
      const searchParams = new URLSearchParams(location.search);
      let id = {curlid: searchParams.get('curlid') || ''};
 
@@ -138,14 +140,15 @@ class ReactPlanner extends Component {
 
 
       <div style={{...wrapperStyle, height}}>
-     <Toolbar  width={toolbarW} height={toolbarH} state={extractedState}  {...prop} />
+     <Toolbar checked={this.state.checked} onChange={() => this.setState({ checked: !this.state.checked})} width={toolbarW} height={toolbarH} state={extractedState}  {...prop} />
         <Content width={contentW} height={contentH} state={extractedState}
                 sidebarH={sidebarH} updateData={this.updateData}
                  updateCoordinats={this.updateCoordinats} {...prop}
                  onWheel={event => event.preventDefault()} />
-        <SimpleCard classes={{root: 'classes-state-root', }} width={sidebarW} height={sidebarH} state={extractedState}
+        <SimpleCard  width={sidebarW} height={sidebarH} state={extractedState}
                  selectedObject={selectedObject} {...prop}  />
        <FooterBar width={width} height={footerBarH} state={extractedState} {...prop} />
+        {/*<Listmenu classes={{root: 'classes-state-root', }} checked={this.state.checked} onChange={() => this.setState({ checked: !this.state.checked})} />*/}
            </div>
 
        // {/*<Sidebar  width={sidebarW} height={sidebarH} state={extractedState}*/}

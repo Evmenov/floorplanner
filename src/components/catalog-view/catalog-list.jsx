@@ -10,11 +10,8 @@ import * as SharedStyle from '../../shared-style';
 
 const containerStyle = {
   position: 'fixed',
-  width:'calc( 100% - 51px)',
-  height:'calc( 100% - 20px)',
   backgroundColor:'#FFF',
   padding:'1em',
-  left:50,
   overflowY:'auto',
   overflowX:'hidden',
   zIndex:10
@@ -22,6 +19,7 @@ const containerStyle = {
 
 const itemsStyle = {
   display: 'grid',
+  left:50,
   gridTemplateColumns: 'repeat(auto-fit, minmax(14em, 1fr))',
   gridGap: '10px',
   marginTop: '1em'
@@ -37,6 +35,7 @@ const searchContainer = {
   position: 'relative',
   boxShadow: '0 1px 6px 0 rgba(0, 0, 0, 0.11), 0 1px 4px 0 rgba(0, 0, 0, 0.11)',
   borderRadius: '2px',
+  fontSize:12,
   transition: 'all .2s ease-in-out',
   WebkitTransition: 'all .2s ease-in-out',
   marginBottom: '1em'
@@ -184,17 +183,17 @@ export default class CatalogList extends Component {
       <ContentContainer width={this.props.width} height={this.props.height} style={{...containerStyle, ...this.props.style}}>
         <ContentTitle>{this.context.translator.t('Catalog')}</ContentTitle>
         {breadcrumbComponent}
-        <div style={searchContainer}>
-          <span style={searchText}>{this.context.translator.t('Search Element')}</span>
-          <input type="text" style={searchInput} onChange={( e ) => { this.matcharray( e.target.value ); } }/>
-        </div>
-        { selectedHistory.size ?
-          <div style={historyContainer}>
-            <span>{this.context.translator.t('Last Selected')}</span>
-            {selectedHistoryElements}
-          </div> :
-          null
-        }
+        {/*<div style={searchContainer}>*/}
+          {/*<span style={searchText}>{this.context.translator.t('Search Element')}</span>*/}
+          {/*<input type="text" style={searchInput} onChange={( e ) => { this.matcharray( e.target.value ); } }/>*/}
+        {/*</div>*/}
+        {/*{ selectedHistory.size ?*/}
+          {/*<div style={historyContainer}>*/}
+            {/*<span>{this.context.translator.t('Last Selected')}</span>*/}
+            {/*{selectedHistoryElements}*/}
+          {/*</div> :*/}
+          {/*null*/}
+        {/*}*/}
         <div style={itemsStyle}>
           {
             this.state.matchString === '' ? [
