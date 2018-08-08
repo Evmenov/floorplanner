@@ -19,8 +19,9 @@ import RoomAdditionalPanel from './components/room-additional/room-additional';
 import {browserUpload} from "./utils/browser";
 import SimpleBottomNavigation from "./components/modal-window/menu";
 import MiniDrawer from "./components/modal-window/Drawer";
-import SimpleCard from "./components/modal-window/Modal";
-import Listmenu from "./components/modal-window/Listmenu";
+import SimpleCard from "./components/modal-window/ToolbarMaterial";
+import Listmenu from "./components/modal-window/Catalog";
+import AlertDialogSlide from "./components/modal-window/SettingsDialog";
 
 const {Toolbar} = ToolbarComponents;
 const {Sidebar} = SidebarComponents;
@@ -55,6 +56,7 @@ class ReactPlanner extends Component {
       isLoaded: false,
       items: [],
       checked: false,
+      dialogIsOpen: false,
     };
   }
 
@@ -140,7 +142,11 @@ class ReactPlanner extends Component {
 
 
       <div style={{...wrapperStyle, height}}>
-     <Toolbar checked={this.state.checked} onChange={() => this.setState({ checked: !this.state.checked})} width={toolbarW} height={toolbarH} state={extractedState}  {...prop} />
+     <Toolbar checked={this.state.checked}
+              onInvertCatalog={() => this.setState({ checked: !this.state.checked})}
+              dialogIsOpen={this.state.dialogIsOpen}
+              onInvertSettings={() => this.setState({ dialogIsOpen: !this.state.dialogIsOpen})}
+              width={toolbarW} height={toolbarH} state={extractedState}  {...prop} />
         <Content width={contentW} height={contentH} state={extractedState}
                 sidebarH={sidebarH} updateData={this.updateData}
                  updateCoordinats={this.updateCoordinats} {...prop}
@@ -148,12 +154,12 @@ class ReactPlanner extends Component {
         <SimpleCard  width={sidebarW} height={sidebarH} state={extractedState}
                  selectedObject={selectedObject} {...prop}  />
        <FooterBar width={width} height={footerBarH} state={extractedState} {...prop} />
-        {/*<Listmenu classes={{root: 'classes-state-root', }} checked={this.state.checked} onChange={() => this.setState({ checked: !this.state.checked})} />*/}
+
+
            </div>
 
-       // {/*<Sidebar  width={sidebarW} height={sidebarH} state={extractedState}*/}
-       //           {/*selectedObject={selectedObject} {...prop} />*/}
 
+     //{/*<Listmenu classes={{root: 'classes-state-root', }} checked={this.state.checked} onChange={() => this.setState({ checked: !this.state.checked})} />*/}
 
 
  //     <div style={{...wrapperStyle, height}}>

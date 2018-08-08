@@ -30,7 +30,8 @@ import DraftsIcon from '@material-ui/icons/KeyboardArrowRight';
 import SaveIcon from '@material-ui/icons/Save';
 import {unselectAll} from "../../utils/layer-operations";
 
-import Listmenu from "../modal-window/Listmenu";
+import Listmenu from "../modal-window/Catalog";
+import AlertDialogSlide from "../modal-window/SettingsDialog";
 
 
 
@@ -88,7 +89,8 @@ export default class Toolbar extends Component {
     return this.props.state.mode !== nextProps.state.mode ||
       this.props.height !== nextProps.height ||
       this.props.width !== nextProps.width ||
-      nextProps.checked !== this.props.checked;
+      nextProps.checked !== this.props.checked ||
+      nextProps.dialogIsOpen !== this.props.dialogIsOpen
   }
 
 
@@ -226,7 +228,7 @@ export default class Toolbar extends Component {
         };
     }));
 
-    console.log(this.props.checked)
+    console.log(this.props.dialogIsOpen)
     return (
      // <aside style={{ ...ASIDE_STYLE, maxWidth: width, maxHeight: height }} className='toolbar'>
      //   {sorter.sort(sortButtonsCb).map(mapButtonsCb)}
@@ -241,7 +243,7 @@ export default class Toolbar extends Component {
     <ListItemText classes={{ primary: classes.primary }} inset primary="Сохранить" />
     </MenuItem>
 
-    <MenuItem className={classes.menuItem} onClick={() => this.props.onChange()}>
+    <MenuItem className={classes.menuItem} onClick={() => this.props.onInvertCatalog()}>
       <ListItemIcon className={classes.icon}>
         <DraftsIcon />
       </ListItemIcon>
@@ -262,7 +264,7 @@ export default class Toolbar extends Component {
       <ListItemText classes={{ primary: classes.primary }} inset primary="Назад" />
     </MenuItem>
 
-    <MenuItem className={classes.menuItem} onClick={event => projectActions.openProjectConfigurator()}>
+    <MenuItem className={classes.menuItem} onClick={() => this.props.onInvertSettings()}>
       <ListItemIcon className={classes.icon}>
         <SettingsIcon />
       </ListItemIcon>
@@ -278,6 +280,8 @@ export default class Toolbar extends Component {
 
     </MenuList>
         <Listmenu checked={this.props.checked} state={state} />
+
+        <AlertDialogSlide state={state} dialogIsOpen={this.props.dialogIsOpen} onInvertSettings={() => this.props.onInvertSettings()} />
   </Paper>
 
 

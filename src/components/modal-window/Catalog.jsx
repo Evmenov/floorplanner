@@ -41,7 +41,7 @@ class SimpleSlide extends React.Component {
     let {props: { state }} = this;
     const { classes } = this.props;
 
-    console.log("render")
+    console.log("catalog")
     return (
       <div className={classes.root}>
         <div className={classes.wrapper}>
