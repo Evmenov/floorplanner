@@ -56,15 +56,15 @@ export default {
 
     return (
       <g>
-        <rect
-          x={-width / 2}
-          y={-height / 2}
-          fill="#FFF"
-          width={width}
-          height={height}
-          stroke="#000"
-          strokeWidth="2"
-        />
+        {/*<rect*/}
+          {/*x={-width / 2}*/}
+          {/*y={-height / 2}*/}
+          {/*fill="#FFF"*/}
+          {/*width={width}*/}
+          {/*height={height}*/}
+          {/*stroke="#000"*/}
+          {/*strokeWidth="2"*/}
+        {/*/>*/}
         <text
           x="0"
           y="0"

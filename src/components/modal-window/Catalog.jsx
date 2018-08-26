@@ -54,17 +54,17 @@ class SimpleSlide extends React.Component {
           </Slide>
         </div>
 
-        <div className={classes.wrapper}>
-          <Slide direction="right" in={!this.props.checked} mountOnEnter unmountOnExit>
-            <Paper elevation={4} className={classes.paper}>
+        {/*<div className={classes.wrapper}>*/}
+          {/*<Slide direction="right" in={!this.props.checked} mountOnEnter unmountOnExit>*/}
+            {/*<Paper elevation={4} className={classes.paper}>*/}
 
-             <h1>Test</h1>
+             {/*<h1>Test</h1>*/}
 
-              <svg className={classes.svg}>
-              </svg>
-            </Paper>
-          </Slide>
-        </div>
+              {/*<svg className={classes.svg}>*/}
+              {/*</svg>*/}
+            {/*</Paper>*/}
+          {/*</Slide>*/}
+        {/*</div>*/}
       </div>
     );
   }

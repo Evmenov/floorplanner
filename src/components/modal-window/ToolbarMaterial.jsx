@@ -13,8 +13,8 @@ const styles = {
   card: {
     minWidth: 275,
     position:'absolute',
-    right: 0,
-    top: 0,
+    right: 50,
+    top: 5,
   },
   bullet: {
     display: 'inline-block',

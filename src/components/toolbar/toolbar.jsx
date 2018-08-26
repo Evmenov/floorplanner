@@ -46,10 +46,6 @@ const iconTextStyle = {
 const Icon2D = () => <p style={iconTextStyle}>2D</p>;
 const Icon3D = () => <p style={iconTextStyle}>3D</p>;
 
-const ASIDE_STYLE = {
-  backgroundColor: '#9799ac',
-};
-
 const sortButtonsCb = (a, b) => {
   if (a.index === undefined || a.index === null) {
     a.index = Number.MAX_SAFE_INTEGER;
@@ -228,12 +224,11 @@ export default class Toolbar extends Component {
         };
     }));
 
-    console.log(this.props.tabValue)
     return (
      // <aside style={{ ...ASIDE_STYLE, maxWidth: width, maxHeight: height }} className='toolbar'>
      //   {sorter.sort(sortButtonsCb).map(mapButtonsCb)}
      // </aside>
-      <Paper>
+      <Paper style={{maxWidth: width, maxHeight: height }}>
       <MenuList>
 
       <MenuItem className={classes.menuItem} onClick={uploadAction}>

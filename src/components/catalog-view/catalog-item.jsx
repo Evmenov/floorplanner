@@ -2,13 +2,13 @@ import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import IconAdd from 'react-icons/lib/fa/plus-circle';
 import {Seq} from 'immutable';
+import SaveIcon from '@material-ui/icons/Save';
 import * as SharedStyle from '../../shared-style';
 
 const STYLE_BOX = {
   width: '13em',
-  height: '13em',
+  background: 'transparent',
   padding: '0.625em',
-  background: '#f7f7f9',
   border: '1px solid #e1e1e8',
   cursor: 'pointer',
   position: 'relative',
@@ -28,12 +28,12 @@ const STYLE_BOX_HOVER = {
 const STYLE_TITLE = {
   width:'100%',
   textAlign:'center',
-  display:'block',
-  marginBottom:'.5em',
-  textTransform: 'capitalize'
+  textTransform: 'capitalize',
+  verticalAlign: 'middle'
 };
 
 const STYLE_TITLE_HOVER = {
+  background: 'transparent',
   ...STYLE_TITLE,
 };
 
@@ -114,6 +114,7 @@ export default class CatalogItem extends Component {
   select() {
     let element = this.props.element;
 
+
     switch (element.prototype) {
       case 'lines':
         this.context.linesActions.selectToolDrawingLine(element.name);
@@ -135,21 +136,23 @@ export default class CatalogItem extends Component {
 
     return (
       <div
+
         style={hover ? STYLE_BOX_HOVER : STYLE_BOX}
         onClick={e => this.select()}
+
         onMouseEnter={e => this.setState({hover: true})}
         onMouseLeave={e => this.setState({hover: false})}
       >
         <b style={ !hover ? STYLE_TITLE : STYLE_TITLE_HOVER }>{element.info.title}</b>
-        <div style={ STYLE_IMAGE_CONTAINER }>
-          <div style={{...( !hover ? STYLE_IMAGE: STYLE_IMAGE_HOVER ), backgroundImage: 'url(' + element.info.image + ')'}}>
-            { hover ? <IconAdd style={STYLE_PLUS_HOVER} /> : null }
-          </div>
-        </div>
-        <ul style={STYLE_TAGS}>
-          {element.info.tag.map((tag, index) => <li style={STYLE_TAG} key={index}>{tag}</li>)}
-        </ul>
-        <div style={STYLE_DESCRIPTION}>{element.info.description}</div>
+        {/*<div style={ STYLE_IMAGE_CONTAINER }>*/}
+          {/*<div style={{...( !hover ? STYLE_IMAGE: STYLE_IMAGE_HOVER ), backgroundImage: 'url(' + element.info.image + ')'}}>*/}
+            {/*{ hover ? <IconAdd style={STYLE_PLUS_HOVER} /> : null }*/}
+          {/*</div>*/}
+        {/*</div>*/}
+        {/*<ul style={STYLE_TAGS}>*/}
+          {/*{element.info.tag.map((tag, index) => <li style={STYLE_TAG} key={index}>{tag}</li>)}*/}
+        {/*</ul>*/}
+        {/*<div style={STYLE_DESCRIPTION}>{element.info.description}</div>*/}
       </div>
     );
   }

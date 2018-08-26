@@ -5,6 +5,7 @@ import * as Geometry from '../../utils/geometry';
 // const epsilon = 3;
 const STYLE_BASE = {stroke: '#010101', strokeWidth: '1px', fill: '#010101'};
 const STYLE_SELECTED = {stroke: '#99c3fb', strokeWidth: '5px', fill: SharedStyle.COLORS.black};
+const STYLE_HOVER = {stroke: '#FFFFFF', strokeWidth: '5px', fill: SharedStyle.COLORS.red};
 const STYLE_TEXT = {textAnchor: 'middle'};
 const STYLE_LINE = {stroke: '#99c3fb'};
 
@@ -31,6 +32,8 @@ export default function WallFactory(name, info, textures) {
         }
       }
      },
+
+
 
     render2D: function (element, layer, scene) {
       let {x:x1,  y:y1} = layer.vertices.get(element.vertices.get(0));
