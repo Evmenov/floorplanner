@@ -16,13 +16,13 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import IconAdd from 'react-icons/lib/fa/plus-circle';
 import { Seq } from 'immutable';
+import SaveIcon from '@material-ui/icons/Save';
 import * as SharedStyle from '../../shared-style';
 
 var STYLE_BOX = {
-  width: '14em',
-  height: '14em',
+  width: '13em',
+  background: 'transparent',
   padding: '0.625em',
-  background: '#f7f7f9',
   border: '1px solid #e1e1e8',
   cursor: 'pointer',
   position: 'relative',
@@ -31,24 +31,23 @@ var STYLE_BOX = {
   transition: 'all .15s ease-in-out',
   WebkitTransition: 'all .15s ease-in-out',
   alignSelf: 'center',
-  justifySelf: 'center'
+  justifySelf: 'left'
 };
 
 var STYLE_BOX_HOVER = _extends({}, STYLE_BOX, {
-  background: SharedStyle.SECONDARY_COLOR.main
+  background: '#cccccc'
 });
 
 var STYLE_TITLE = {
   width: '100%',
   textAlign: 'center',
-  display: 'block',
-  marginBottom: '.5em',
-  textTransform: 'capitalize'
+  textTransform: 'capitalize',
+  verticalAlign: 'middle'
 };
 
-var STYLE_TITLE_HOVER = _extends({}, STYLE_TITLE, {
-  color: SharedStyle.COLORS.white
-});
+var STYLE_TITLE_HOVER = _extends({
+  background: 'transparent'
+}, STYLE_TITLE);
 
 var STYLE_IMAGE_CONTAINER = {
   width: '100%',
@@ -79,7 +78,7 @@ var STYLE_IMAGE_HOVER = _extends({}, STYLE_IMAGE, {
 
 var STYLE_PLUS_HOVER = {
   marginTop: '1.5em',
-  color: SharedStyle.SECONDARY_COLOR.main,
+  color: '#f7f7f9',
   fontSize: '2em',
   opacity: '0.7',
   width: '100%'
@@ -148,10 +147,12 @@ var CatalogItem = function (_Component) {
       return React.createElement(
         'div',
         {
+
           style: hover ? STYLE_BOX_HOVER : STYLE_BOX,
           onClick: function onClick(e) {
             return _this2.select();
           },
+
           onMouseEnter: function onMouseEnter(e) {
             return _this2.setState({ hover: true });
           },
@@ -163,31 +164,6 @@ var CatalogItem = function (_Component) {
           'b',
           { style: !hover ? STYLE_TITLE : STYLE_TITLE_HOVER },
           element.info.title
-        ),
-        React.createElement(
-          'div',
-          { style: STYLE_IMAGE_CONTAINER },
-          React.createElement(
-            'div',
-            { style: _extends({}, !hover ? STYLE_IMAGE : STYLE_IMAGE_HOVER, { backgroundImage: 'url(' + element.info.image + ')' }) },
-            hover ? React.createElement(IconAdd, { style: STYLE_PLUS_HOVER }) : null
-          )
-        ),
-        React.createElement(
-          'ul',
-          { style: STYLE_TAGS },
-          element.info.tag.map(function (tag, index) {
-            return React.createElement(
-              'li',
-              { style: STYLE_TAG, key: index },
-              tag
-            );
-          })
-        ),
-        React.createElement(
-          'div',
-          { style: STYLE_DESCRIPTION },
-          element.info.description
         )
       );
     }

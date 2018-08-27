@@ -54,6 +54,7 @@ export default {
   "View agents": "Посмотреть агентов",
   "Agents list": "Список агентов",
   "Close": "Закрыть",
-  "Apply changes": "Применить изменения",
-  "Settings": "Настройки объекта"
+  "Apply changes": "Применить",
+  "Settings": "Настройки объекта",
+  "Edit": "Редактировать"
 };

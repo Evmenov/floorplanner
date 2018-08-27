@@ -24,13 +24,19 @@ import { ToolbarComponents, Content, SidebarComponents, FooterBarComponents } fr
 import { VERSION } from './version';
 import RoomAdditionalPanel from './components/room-additional/room-additional';
 import { browserUpload } from "./utils/browser";
+import SimpleBottomNavigation from "./components/modal-window/menu";
+import MiniDrawer from "./components/modal-window/Drawer";
+import SimpleCard from "./components/modal-window/ToolbarMaterial";
+import RoomInfo from "./components/modal-window/RoomInfo";
+import Listmenu from "./components/modal-window/Catalog";
+import AlertDialogSlide from "./components/modal-window/SettingsDialog";
 
 var Toolbar = ToolbarComponents.Toolbar;
 var Sidebar = SidebarComponents.Sidebar;
 var FooterBar = FooterBarComponents.FooterBar;
 
 
-var toolbarW = 50;
+var toolbarW = 270;
 var sidebarH = 400;
 var sidebarW = 300;
 var footerBarH = 20;
@@ -60,7 +66,12 @@ var ReactPlanner = function (_Component) {
     _this.state = {
       error: null,
       isLoaded: false,
-      items: []
+      items: [],
+      checked: false,
+      dialogIsOpen: false,
+      tabValue: 0,
+      X: 0,
+      Y: 0
     };
     return _this;
   }
@@ -154,12 +165,17 @@ var ReactPlanner = function (_Component) {
   }, {
     key: 'render',
     value: function render() {
+      var _this3 = this;
+
       var _props2 = this.props,
           width = _props2.width,
           height = _props2.height,
           state = _props2.state,
           stateExtractor = _props2.stateExtractor,
-          props = _objectWithoutProperties(_props2, ['width', 'height', 'state', 'stateExtractor']);
+          prop = _objectWithoutProperties(_props2, ['width', 'height', 'state', 'stateExtractor']);
+
+      this.state.X = X;
+      this.state.Y = Y;
 
       var toolbarH = height - footerBarH;
       var contentH = height - footerBarH;
@@ -169,20 +185,39 @@ var ReactPlanner = function (_Component) {
       return React.createElement(
         'div',
         { style: _extends({}, wrapperStyle, { height: height }) },
-        React.createElement(Toolbar, _extends({ width: toolbarW, height: toolbarH, state: extractedState }, props)),
+        React.createElement(Toolbar, _extends({ checked: this.state.checked,
+          onInvertCatalog: function onInvertCatalog() {
+            return _this3.setState({ checked: !_this3.state.checked });
+          },
+          dialogIsOpen: this.state.dialogIsOpen,
+          onInvertSettings: function onInvertSettings() {
+            return _this3.setState({ dialogIsOpen: !_this3.state.dialogIsOpen });
+          },
+          tabValue: this.state.tabValue,
+          ontabValueChanged: function ontabValueChanged(value) {
+            return _this3.setState({ tabValue: value });
+          },
+          width: toolbarW, height: toolbarH, state: extractedState }, prop)),
         React.createElement(Content, _extends({ width: contentW, height: contentH, state: extractedState,
-          sidebarH: sidebarH, updateData: this.updateData, updateCoordinats: this.updateCoordinats }, props, { onWheel: function onWheel(event) {
+          sidebarH: sidebarH, updateData: this.updateData,
+          updateCoordinats: this.updateCoordinats }, prop, {
+          onWheel: function onWheel(event) {
             return event.preventDefault();
           } })),
-        React.createElement(Sidebar, _extends({ width: sidebarW, height: sidebarH, state: extractedState, selectedObject: selectedObject }, props)),
-        React.createElement(FooterBar, _extends({ width: width, height: footerBarH, state: extractedState }, props))
+        React.createElement(SimpleCard, _extends({ width: sidebarW, height: sidebarH, state: extractedState,
+          selectedObject: selectedObject }, prop)),
+        React.createElement(FooterBar, _extends({ width: width, height: footerBarH, state: extractedState }, prop))
       )
 
-      //     <div style={{...wrapperStyle, height}}>
-      //     <Content width={contentW + toolbarW} height={contentH + footerBarH} state={extractedState}
-      //             sidebarH={sidebarH} updateData={this.updateData} updateCoordinats={this.updateCoordinats} {...props} onWheel={event => event.preventDefault()} />
-      //    <RoomAdditionalPanel width={roomInfoW} height={roomInfoH} state={extractedState} selectedObject={selectedObject} x={X} y={Y} {...props} />
-      //  </div>
+      // <div style={{...wrapperStyle, height}}>
+      //    <Content width={contentW + toolbarW} height={contentH + footerBarH} state={extractedState}
+      //            sidebarH={sidebarH} updateData={this.updateData} updateCoordinats={this.updateCoordinats} {...prop} onWheel={event => event.preventDefault()} />
+      //   <RoomInfo width={roomInfoW}
+      //                        height={roomInfoH}
+      //                        state={extractedState}
+      //                        selectedObject={selectedObject}
+      //                        x={this.state.X} y={this.state.Y} {...prop} />
+      // </div>
       ;
     }
   }]);

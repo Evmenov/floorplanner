@@ -10,9 +10,10 @@ import FormNumberInput from './form-number-input';
 import FormSelect from './form-select';
 import FormSlider from './form-slider';
 import FormSubmitButton from './form-submit-button';
+import FormGetMoreInfoButton from './form-get-more-info';
 import FormTextInput from './form-text-input';
 
-export { Button, CancelButton, ContentContainer, ContentTitle, DeleteButton, FormBlock, FormColorInput, FormLabel, FormNumberInput, FormSelect, FormSlider, FormSubmitButton, FormTextInput };
+export { Button, CancelButton, ContentContainer, ContentTitle, DeleteButton, FormBlock, FormColorInput, FormLabel, FormNumberInput, FormSelect, FormSlider, FormSubmitButton, FormGetMoreInfoButton, FormTextInput };
 
 export default {
   Button: Button,
@@ -27,5 +28,6 @@ export default {
   FormSelect: FormSelect,
   FormSlider: FormSlider,
   FormSubmitButton: FormSubmitButton,
+  FormGetMoreInfoButton: FormGetMoreInfoButton,
   FormTextInput: FormTextInput
 };

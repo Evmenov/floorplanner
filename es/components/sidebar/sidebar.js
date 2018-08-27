@@ -5,7 +5,15 @@ import PropTypes from 'prop-types';
 import PanelElementEditor from './panel-element-editor/panel-element-editor';
 import * as SharedStyle from '../../shared-style';
 import If from '../../utils/react-if';
-import { FormSubmitButton } from '../style/export';
+import Button from '@material-ui/core/Button';
+import { FormSubmitButton, FormGetMoreInfoButton } from '../style/export';
+
+import { withStyles } from '@material-ui/core/styles';
+import Card from '@material-ui/core/Card';
+import CardActions from '@material-ui/core/CardActions';
+import CardContent from '@material-ui/core/CardContent';
+import ButtonMD from '@material-ui/core/Button';
+import Typography from '@material-ui/core/Typography';
 
 var STYLE_TITLE = {
   fontSize: '16px',
@@ -44,13 +52,15 @@ var sortButtonsCb = function sortButtonsCb(a, b) {
 var mapButtonsCb = function mapButtonsCb(el, ind) {
   return React.createElement(
     If,
-    { key: ind, condition: el.condition, style: { position: 'relative' } },
+    { key: ind, condition: el.condition,
+      style: { position: 'relative' } },
     el.dom
   );
 };
 
 export default function Sidebar(_ref, _ref2) {
-  var state = _ref.state,
+  var props = _ref.props,
+      state = _ref.state,
       width = _ref.width,
       height = _ref.height,
       sidebarComponents = _ref.sidebarComponents,
@@ -58,7 +68,6 @@ export default function Sidebar(_ref, _ref2) {
   var translator = _ref2.translator,
       projectActions = _ref2.projectActions,
       viewer3DActions = _ref2.viewer3DActions;
-
 
   if (selectedObject == null) {
     STYLE.visibility = 'hidden';
@@ -90,6 +99,14 @@ export default function Sidebar(_ref, _ref2) {
   function st() {
     projectActions.rollback();
   }
+  var redirectUrl = void 0;
+  if (selectedObject != null) {
+    var searchParams = new URLSearchParams(location.search);
+    var id = { curlid: searchParams.get('curlid') || '' };
+    redirectUrl = "http://rentservice.getwider.com/edit_room/?curlid={" + id.curlid + "}&id_room={" + selectedObject.id + "}";
+  }
+
+  var classes = { root: 'classes-state-root' };
 
   return React.createElement(
     'aside',
@@ -113,6 +130,24 @@ export default function Sidebar(_ref, _ref2) {
       FormSubmitButton,
       { onClick: save },
       translator.t('Apply changes')
+    ),
+    React.createElement(
+      'div',
+      null,
+      React.createElement(
+        'form',
+        { action: redirectUrl },
+        React.createElement(
+          FormGetMoreInfoButton,
+          null,
+          '\u041F\u043E\u0434\u0440\u043E\u0431\u043D\u0435\u0435 \u043E \u043F\u043E\u043C\u0435\u0449\u0435\u043D\u0438\u0438'
+        )
+      )
+    ),
+    React.createElement(
+      Button,
+      { variant: 'contained', color: 'blueGrey' },
+      'Test Button'
     )
   );
 }

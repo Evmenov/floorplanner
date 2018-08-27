@@ -20,11 +20,8 @@ import * as SharedStyle from '../../shared-style';
 
 var containerStyle = {
   position: 'fixed',
-  width: 'calc( 100% - 51px)',
-  height: 'calc( 100% - 20px)',
   backgroundColor: '#FFF',
   padding: '1em',
-  left: 50,
   overflowY: 'auto',
   overflowX: 'hidden',
   zIndex: 10
@@ -32,6 +29,7 @@ var containerStyle = {
 
 var itemsStyle = {
   display: 'grid',
+  left: 50,
   gridTemplateColumns: 'repeat(auto-fit, minmax(14em, 1fr))',
   gridGap: '10px',
   marginTop: '1em'
@@ -47,6 +45,7 @@ var searchContainer = {
   position: 'relative',
   boxShadow: '0 1px 6px 0 rgba(0, 0, 0, 0.11), 0 1px 4px 0 rgba(0, 0, 0, 0.11)',
   borderRadius: '2px',
+  fontSize: 12,
   transition: 'all .2s ease-in-out',
   WebkitTransition: 'all .2s ease-in-out',
   marginBottom: '1em'
@@ -217,28 +216,6 @@ var CatalogList = function (_Component) {
           this.context.translator.t('Catalog')
         ),
         breadcrumbComponent,
-        React.createElement(
-          'div',
-          { style: searchContainer },
-          React.createElement(
-            'span',
-            { style: searchText },
-            this.context.translator.t('Search Element')
-          ),
-          React.createElement('input', { type: 'text', style: searchInput, onChange: function onChange(e) {
-              _this2.matcharray(e.target.value);
-            } })
-        ),
-        selectedHistory.size ? React.createElement(
-          'div',
-          { style: historyContainer },
-          React.createElement(
-            'span',
-            null,
-            this.context.translator.t('Last Selected')
-          ),
-          selectedHistoryElements
-        ) : null,
         React.createElement(
           'div',
           { style: itemsStyle },
