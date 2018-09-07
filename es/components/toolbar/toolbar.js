@@ -1,5 +1,3 @@
-var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -18,6 +16,23 @@ import ToolbarLoadButton from './toolbar-load-button';
 import If from '../../utils/react-if';
 import { MODE_IDLE, MODE_3D_VIEW, MODE_3D_FIRST_PERSON, MODE_VIEWING_CATALOG, MODE_CONFIGURING_PROJECT, MODE_AGENTS_VIEWER } from '../../constants';
 import * as SharedStyle from '../../shared-style';
+
+import MenuList from '@material-ui/core/MenuList';
+import MenuItem from '@material-ui/core/MenuItem';
+import Paper from '@material-ui/core/Paper';
+import { withStyles } from '@material-ui/core/styles';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
+import ListItemText from '@material-ui/core/ListItemText';
+import GridOnIcon from '@material-ui/icons/GridOn';
+import BackIcon from '@material-ui/icons/Replay';
+import SettingsIcon from '@material-ui/icons/SettingsApplicationsOutlined';
+import AgentsIcon from '@material-ui/icons/Group';
+import DraftsIcon from '@material-ui/icons/KeyboardArrowRight';
+import SaveIcon from '@material-ui/icons/Save';
+import { unselectAll } from "../../utils/layer-operations";
+
+import Listmenu from "../modal-window/Catalog";
+import AlertDialogSlide from "../modal-window/SettingsDialog";
 
 var iconTextStyle = {
   fontSize: '19px',
@@ -39,10 +54,6 @@ var Icon3D = function Icon3D() {
     { style: iconTextStyle },
     '3D'
   );
-};
-
-var ASIDE_STYLE = {
-  backgroundColor: '#9799ac'
 };
 
 var sortButtonsCb = function sortButtonsCb(a, b) {
@@ -69,6 +80,9 @@ var mapButtonsCb = function mapButtonsCb(el, ind) {
   );
 };
 
+var classes = {
+  root: 'classes-state-root' };
+
 var Toolbar = function (_Component) {
   _inherits(Toolbar, _Component);
 
@@ -84,11 +98,13 @@ var Toolbar = function (_Component) {
   _createClass(Toolbar, [{
     key: 'shouldComponentUpdate',
     value: function shouldComponentUpdate(nextProps, nextState) {
-      return this.props.state.mode !== nextProps.state.mode || this.props.height !== nextProps.height || this.props.width !== nextProps.width;
+      return this.props.state.mode !== nextProps.state.mode || this.props.height !== nextProps.height || this.props.width !== nextProps.width || nextProps.checked !== this.props.checked || nextProps.tabValue !== this.props.tabValue || nextProps.dialogIsOpen !== this.props.dialogIsOpen;
     }
   }, {
     key: 'render',
     value: function render() {
+      var _this2 = this;
+
       var _props = this.props,
           state = _props.state,
           width = _props.width,
@@ -100,6 +116,42 @@ var Toolbar = function (_Component) {
           viewer3DActions = _context.viewer3DActions,
           translator = _context.translator;
 
+
+      var uploadAction = function uploadAction(event) {
+        var url = 'http://rentservice.getwider.com/corpsupdate/';
+
+        var scene = state.get('scene').update('layers', function (layers) {
+          return layers.map(function (layer) {
+            return unselectAll(layer);
+          });
+        }).toJS();
+
+        event.preventDefault();
+        var datas = new FormData(event.target);
+
+        var searchParams = new URLSearchParams(location.search);
+        var id = { curlid: searchParams.get('curlid') || '' };
+
+        datas.set('curlid', id.curlid);
+        datas.set('jsstring', JSON.stringify(scene));
+        console.log(scene);
+
+        var request = new Request(url, {
+          method: 'POST',
+          body: datas
+        });
+
+        fetch(request).then(function (res) {
+          if (res.ok) {
+            alert("Сохранение прошло успешно!");
+            window.location.href = 'http://rentservice.getwider.com/company/objects/?curlid={' + id.curlid + '}';
+          } else if (res.status == 401) {
+            alert("Сервер отклонил сохранение. Код ошибки " + res.status);
+          }
+        }, function (e) {
+          alert("Error submitting form!");
+        });
+      };
 
       var mode = state.get('mode');
 
@@ -208,10 +260,97 @@ var Toolbar = function (_Component) {
         };
       }));
 
-      return React.createElement(
-        'aside',
-        { style: _extends({}, ASIDE_STYLE, { maxWidth: width, maxHeight: height }), className: 'toolbar' },
-        sorter.sort(sortButtonsCb).map(mapButtonsCb)
+      return (
+        // <aside style={{ ...ASIDE_STYLE, maxWidth: width, maxHeight: height }} className='toolbar'>
+        //   {sorter.sort(sortButtonsCb).map(mapButtonsCb)}
+        // </aside>
+        React.createElement(
+          Paper,
+          { style: { maxWidth: width, maxHeight: height } },
+          React.createElement(
+            MenuList,
+            null,
+            React.createElement(
+              MenuItem,
+              { className: classes.menuItem, onClick: uploadAction },
+              React.createElement(
+                ListItemIcon,
+                { className: classes.icon },
+                React.createElement(SaveIcon, null)
+              ),
+              React.createElement(ListItemText, { classes: { primary: classes.primary }, inset: true, primary: '\u0421\u043E\u0445\u0440\u0430\u043D\u0438\u0442\u044C' })
+            ),
+            React.createElement(
+              MenuItem,
+              { className: classes.menuItem, onClick: function onClick() {
+                  return _this2.props.onInvertCatalog();
+                } },
+              React.createElement(
+                ListItemIcon,
+                { className: classes.icon },
+                React.createElement(DraftsIcon, null)
+              ),
+              React.createElement(ListItemText, { classes: { primary: classes.primary }, inset: true, primary: '\u041A\u0430\u0442\u0430\u043B\u043E\u0433' })
+            ),
+            React.createElement(
+              MenuItem,
+              { className: classes.menuItem, onClick: function onClick(event) {
+                  return projectActions.rollback();
+                } },
+              React.createElement(
+                ListItemIcon,
+                { className: classes.icon },
+                React.createElement(GridOnIcon, null)
+              ),
+              React.createElement(ListItemText, { classes: { primary: classes.primary }, inset: true, primary: '\u0421\u0445\u0435\u043C\u0430' })
+            ),
+            React.createElement(
+              MenuItem,
+              { className: classes.menuItem, onClick: function onClick(event) {
+                  return projectActions.undo();
+                } },
+              React.createElement(
+                ListItemIcon,
+                { className: classes.icon },
+                React.createElement(BackIcon, null)
+              ),
+              React.createElement(ListItemText, { classes: { primary: classes.primary }, inset: true, primary: '\u041D\u0430\u0437\u0430\u0434' })
+            ),
+            React.createElement(
+              MenuItem,
+              { className: classes.menuItem, onClick: function onClick() {
+                  return _this2.props.onInvertSettings();
+                } },
+              React.createElement(
+                ListItemIcon,
+                { className: classes.icon },
+                React.createElement(SettingsIcon, null)
+              ),
+              React.createElement(ListItemText, { classes: { primary: classes.primary }, inset: true, primary: '\u041D\u0430\u0441\u0442\u0440\u043E\u0439\u043A\u0438' })
+            ),
+            React.createElement(
+              MenuItem,
+              { className: classes.menuItem, onClick: function onClick(event) {
+                  return projectActions.openAgentsVIew();
+                } },
+              React.createElement(
+                ListItemIcon,
+                { className: classes.icon },
+                React.createElement(AgentsIcon, null)
+              ),
+              React.createElement(ListItemText, { classes: { primary: classes.primary }, inset: true, primary: '\u0410\u0433\u0435\u043D\u0442\u044B' })
+            )
+          ),
+          React.createElement(Listmenu, { checked: this.props.checked,
+            tabValue: this.props.tabValue,
+            ontabValueChanged: function ontabValueChanged() {
+              return _this2.props.ontabValueChanged();
+            },
+            state: state }),
+          React.createElement(AlertDialogSlide, { state: state, dialogIsOpen: this.props.dialogIsOpen, onInvertSettings: function onInvertSettings() {
+              return _this2.props.onInvertSettings();
+            } })
+        )
       );
     }
   }]);

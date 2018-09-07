@@ -27,6 +27,9 @@ export default function ToolbarSaveButton({state}, {translator, projectActions})
       .update('layers', layers => layers.map(layer => unselectAll(layer)))
       .toJS();
 
+      console.log('Save');
+      console.log(scene);
+
       event.preventDefault();
       const datas = new FormData(event.target);
 
@@ -35,9 +38,8 @@ export default function ToolbarSaveButton({state}, {translator, projectActions})
 
       datas.set('curlid', id.curlid);
       datas.set('jsstring', JSON.stringify(scene));
-      console.log(scene)
+      console.log(scene);
 
-return;
       var request = new Request(url,{
       method: 'POST',
       body: datas,

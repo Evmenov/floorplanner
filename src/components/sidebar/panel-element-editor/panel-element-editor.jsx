@@ -22,7 +22,7 @@ export default function PanelElementEditor({state}, {projectActions, translator}
 
   let componentRenderer = (element, layer) =>
     <Panel  key={element.id} name={translator.t("Properties: [{0}] {1}", element.type, element.id)} opened={true}>
-      <div style={{background:'#32394f', padding: "5px 15px"}}>
+      <div style={{background:'#ffffff', padding: "5px 15px"}}>
         <ElementEditor element={element} layer={layer} state={state}/>
       </div>
     </Panel>;
@@ -35,7 +35,7 @@ export default function PanelElementEditor({state}, {projectActions, translator}
     .map(element => componentRenderer(element, layer))
     .valueSeq();
 
-  return <div style={{background:'#32394f', padding: "10px 15px"}}>{scene.layers.valueSeq().map(layerRenderer)}</div>
+  return <div style={{background:'#ffffff'}}>{scene.layers.valueSeq().map(layerRenderer)}</div>
 
 }
 

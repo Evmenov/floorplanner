@@ -17,12 +17,18 @@ import {
 import {VERSION} from './version';
 import RoomAdditionalPanel from './components/room-additional/room-additional';
 import {browserUpload} from "./utils/browser";
+import SimpleBottomNavigation from "./components/modal-window/menu";
+import MiniDrawer from "./components/modal-window/Drawer";
+import SimpleCard from "./components/modal-window/ToolbarMaterial";
+import RoomInfo from "./components/modal-window/RoomInfo";
+import Listmenu from "./components/modal-window/Catalog";
+import AlertDialogSlide from "./components/modal-window/SettingsDialog";
 
 const {Toolbar} = ToolbarComponents;
 const {Sidebar} = SidebarComponents;
 const {FooterBar} = FooterBarComponents;
 
-const toolbarW = 50;
+const toolbarW = 270;
 const sidebarH = 400;
 const sidebarW = 300;
 const footerBarH= 20;
@@ -50,13 +56,18 @@ class ReactPlanner extends Component {
       error: null,
       isLoaded: false,
       items: [],
+      checked: false,
+      dialogIsOpen: false,
+      tabValue: 0,
+      X:0,
+      Y:0
     };
   }
 
    componentDidMount(){
      let {projectActions} = this.props;
 
-    // projectActions.newProject();
+     //projectActions.newProject();
      const searchParams = new URLSearchParams(location.search);
      let id = {curlid: searchParams.get('curlid') || ''};
 
@@ -123,7 +134,9 @@ class ReactPlanner extends Component {
   };
 
    render() {
-    let {width, height, state, stateExtractor, ...props} = this.props;
+    let {width, height, state, stateExtractor, ...prop} = this.props;
+    this.state.X = X;
+    this.state.Y = Y;
 
 
     let toolbarH = height - footerBarH;
@@ -133,19 +146,34 @@ class ReactPlanner extends Component {
 
     return (
 
-           <div style={{...wrapperStyle, height}}>
-      <Toolbar width={toolbarW} height={toolbarH} state={extractedState} {...props} />
-        <Content width={contentW} height={contentH} state={extractedState}
-                sidebarH={sidebarH} updateData={this.updateData} updateCoordinats={this.updateCoordinats} {...props} onWheel={event => event.preventDefault()} />
-       <Sidebar width={sidebarW} height={sidebarH} state={extractedState} selectedObject={selectedObject} {...props} />
-       <FooterBar width={width} height={footerBarH} state={extractedState} {...props} />
-      </div>
 
- //     <div style={{...wrapperStyle, height}}>
- //     <Content width={contentW + toolbarW} height={contentH + footerBarH} state={extractedState}
- //             sidebarH={sidebarH} updateData={this.updateData} updateCoordinats={this.updateCoordinats} {...props} onWheel={event => event.preventDefault()} />
- //    <RoomAdditionalPanel width={roomInfoW} height={roomInfoH} state={extractedState} selectedObject={selectedObject} x={X} y={Y} {...props} />
- //  </div>
+    <div style={{...wrapperStyle, height}}>
+   <Toolbar checked={this.state.checked}
+   onInvertCatalog={() => this.setState({ checked: !this.state.checked})}
+   dialogIsOpen={this.state.dialogIsOpen}
+   onInvertSettings={() => this.setState({ dialogIsOpen: !this.state.dialogIsOpen})}
+   tabValue={this.state.tabValue}
+   ontabValueChanged={(value) => this.setState({ tabValue: value})}
+   width={toolbarW} height={toolbarH} state={extractedState}  {...prop} />
+   <Content width={contentW} height={contentH} state={extractedState}
+            sidebarH={sidebarH} updateData={this.updateData}
+            updateCoordinats={this.updateCoordinats} {...prop}
+            onWheel={event => event.preventDefault()} />
+   <SimpleCard  width={sidebarW} height={sidebarH} state={extractedState}
+   selectedObject={selectedObject} {...prop}  />
+   <FooterBar width={width} height={footerBarH} state={extractedState} {...prop} />
+   </div>
+
+
+  // <div style={{...wrapperStyle, height}}>
+  //    <Content width={contentW + toolbarW} height={contentH + footerBarH} state={extractedState}
+  //            sidebarH={sidebarH} updateData={this.updateData} updateCoordinats={this.updateCoordinats} {...prop} onWheel={event => event.preventDefault()} />
+  //   <RoomInfo width={roomInfoW}
+  //                        height={roomInfoH}
+  //                        state={extractedState}
+  //                        selectedObject={selectedObject}
+  //                        x={this.state.X} y={this.state.Y} {...prop} />
+  // </div>
     );
   }
 }

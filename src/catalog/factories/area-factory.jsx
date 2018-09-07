@@ -37,6 +37,22 @@ export default function AreaFactory (name, info, textures) {
         type: 'string',
         defaultValue: '0'
       },
+      type:{
+        label:'Тип помещения',
+        type:'enum',
+        defaultValue: 'none',
+
+      },
+      avability:{
+        label:'Пригодность',
+        type:'enum',
+        defaultValue: 'none',
+      },
+      condition:{
+        label:'Состояние',
+        type:'enum',
+        defaultValue: 'none',
+      },
     },
 
     render2D: function (element, layer, agents, square, scene) {
@@ -56,21 +72,57 @@ export default function AreaFactory (name, info, textures) {
         values: agentsValues
       };
 
-      // if(square != null) {
-      //   areaElement.info.square = square;
-      // }
-     // console.log(areaElement.info.square)
+      let types = {
+        'Stock' : 'Склад',
+        'Office' : 'Офис',
+        'Trading' : 'Торговое'
+      };
+      areaElement.properties.type = {
+        label:'Тип помещения',
+        type:'enum',
+        defaultValue: 'none',
+        values: types,
+      };
+
+      let avabilitys = {
+        'Usefull' : 'Полезное',
+        'Technical' : 'Техническое',
+        'Common' : 'Общего пользования',
+        'Potential' : 'Потенциальное',
+      };
+      areaElement.properties.avability = {
+        label:'Пригодность',
+        type:'enum',
+        defaultValue: 'none',
+        values: avabilitys,
+      };
+
+      let conditions = {
+        'Unsuitable' : 'Непригодное',
+        'Finite' : 'Чистовая',
+        'NeedsRepair' : 'Требует ремонта'
+      };
+      areaElement.properties.condition = {
+        label:'Состояние',
+        type:'enum',
+        defaultValue: 'none',
+        values: conditions,
+      };
+
+
+      //console.log(types['office']);
 
       if(square != null){
-        areaElement.properties.square = {
+        //
+        // console.log(element.id);
+        // console.log(element.properties.square);
+        element.properties.square = {
           label:'Площадь',
           type: 'string',
-          defaultValue: square
+          defaultValue: 'ue',
+          values: square
         };
-       // console.log(areaElement.properties.square.defaultValue)
       }
-      //
-      // console.log(element.properties.getIn(['square', 'length']))
 
       let path = '';
       ///print area path

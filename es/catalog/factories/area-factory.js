@@ -34,8 +34,8 @@ export default function AreaFactory(name, info, textures) {
       },
       square: {
         label: 'Площадь',
-        type: 'length-measure',
-        defaultValue: 'not calculated'
+        type: 'string',
+        defaultValue: '0'
       }
     },
 
@@ -49,18 +49,24 @@ export default function AreaFactory(name, info, textures) {
         agentsValues[agentName] = agents[agentName].name + ' ' + agents[agentName].surname;
       }
 
-      // areaElement.properties.agent = {
-      //   label: 'Текущий агент',
-      //   type: 'enum',
-      //   defaultValue: 'none',
-      //   values: agentsValues
-      // };
+      areaElement.properties.agent = {
+        label: 'Текущий агент',
+        type: 'enum',
+        defaultValue: 'none',
+        values: agentsValues
+      };
 
       if (square != null) {
-        areaElement.properties.square = square;
+        //
+        // console.log(element.id);
+        // console.log(element.properties.square);
+        element.properties.square = {
+          label: 'Площадь',
+          type: 'string',
+          defaultValue: 'ue',
+          values: square
+        };
       }
-
-      console.log(areaElement.properties.square);
 
       var path = '';
       ///print area path

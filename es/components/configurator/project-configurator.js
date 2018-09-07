@@ -9,6 +9,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { ContentTitle, ContentContainer, FormLabel, FormBlock, FormNumberInput, FormSubmitButton, CancelButton } from '../style/export';
+import Button from '@material-ui/core/Button';
+import Typography from '@material-ui/core/Typography';
 
 var ProjectConfigurator = function (_Component) {
   _inherits(ProjectConfigurator, _Component);
@@ -73,11 +75,6 @@ var ProjectConfigurator = function (_Component) {
         ContentContainer,
         { width: width, height: height, style: Style },
         React.createElement(
-          ContentTitle,
-          null,
-          translator.t('Project config')
-        ),
-        React.createElement(
           'form',
           { onSubmit: function onSubmit(e) {
               return _this2.onSubmit(e);
@@ -86,7 +83,7 @@ var ProjectConfigurator = function (_Component) {
             FormBlock,
             null,
             React.createElement(
-              FormLabel,
+              Typography,
               { htmlFor: 'width' },
               translator.t('width')
             ),
@@ -103,7 +100,7 @@ var ProjectConfigurator = function (_Component) {
             FormBlock,
             null,
             React.createElement(
-              FormLabel,
+              Typography,
               { htmlFor: 'height' },
               translator.t('height')
             ),
@@ -129,10 +126,10 @@ var ProjectConfigurator = function (_Component) {
                   'td',
                   null,
                   React.createElement(
-                    CancelButton,
-                    { size: 'large',
-                      onClick: function onClick(e) {
-                        return projectActions.rollback();
+                    Button,
+                    { onClick: function onClick(e) {
+                        projectActions.rollback();
+                        _this2.props.onInvertSettings();
                       } },
                     translator.t('Cancel')
                   )
@@ -141,8 +138,8 @@ var ProjectConfigurator = function (_Component) {
                   'td',
                   null,
                   React.createElement(
-                    FormSubmitButton,
-                    { size: 'large' },
+                    Button,
+                    { type: 'submit', onClick: function onClick(e) {} },
                     translator.t('Save')
                   )
                 )

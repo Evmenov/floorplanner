@@ -11,6 +11,7 @@ const info = {
   }
 };
 
+
 const textures = {
   bricks: {
     name: 'Bricks',

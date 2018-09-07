@@ -9,6 +9,8 @@ import {
   FormSubmitButton,
   CancelButton
 } from '../style/export';
+import Button from '@material-ui/core/Button';
+import Typography from '@material-ui/core/Typography';
 
 export default class ProjectConfigurator extends Component {
 
@@ -53,11 +55,11 @@ export default class ProjectConfigurator extends Component {
 
     return (
       <ContentContainer width={width} height={height} style={Style}>
-        <ContentTitle>{translator.t('Project config')}</ContentTitle>
+        {/*<ContentTitle>{translator.t('Project config')}</ContentTitle>*/}
 
         <form onSubmit={e => this.onSubmit(e)}>
           <FormBlock>
-            <FormLabel htmlFor='width'>{translator.t('width')}</FormLabel>
+            <Typography htmlFor='width'>{translator.t('width')}</Typography>
             <FormNumberInput
               id='width'
               placeholder='width'
@@ -67,7 +69,7 @@ export default class ProjectConfigurator extends Component {
           </FormBlock>
 
           <FormBlock>
-            <FormLabel htmlFor='height'>{translator.t('height')}</FormLabel>
+            <Typography htmlFor='height'>{translator.t('height')}</Typography>
             <FormNumberInput
               id='height'
               placeholder='height'
@@ -80,11 +82,15 @@ export default class ProjectConfigurator extends Component {
             <tbody>
             <tr>
               <td>
-                <CancelButton size='large'
-                              onClick={e => projectActions.rollback()}>{translator.t('Cancel')}</CancelButton>
+                <Button onClick={e => {
+                  projectActions.rollback();
+                  this.props.onInvertSettings();
+                  }}>{translator.t('Cancel')}</Button>
               </td>
               <td>
-                <FormSubmitButton size='large'>{translator.t('Save')}</FormSubmitButton>
+                <Button  type="submit" onClick={e => {
+
+                }}>{translator.t('Save')}</Button>
               </td>
             </tr>
             </tbody>

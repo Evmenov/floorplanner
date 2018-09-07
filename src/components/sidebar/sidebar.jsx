@@ -3,10 +3,19 @@ import PropTypes from 'prop-types';
 import PanelElementEditor from './panel-element-editor/panel-element-editor';
 import * as SharedStyle from '../../shared-style';
 import If from '../../utils/react-if';
+import Button from '@material-ui/core/Button';
 import {
   FormSubmitButton,
   FormGetMoreInfoButton
 } from '../style/export';
+
+
+import { withStyles } from '@material-ui/core/styles';
+import Card from '@material-ui/core/Card';
+import CardActions from '@material-ui/core/CardActions';
+import CardContent from '@material-ui/core/CardContent';
+import ButtonMD from '@material-ui/core/Button';
+import Typography from '@material-ui/core/Typography';
 
 const STYLE_TITLE = {
   fontSize: '16px',
@@ -42,11 +51,11 @@ const sortButtonsCb = (a, b) => {
   return a.index - b.index;
 };
 
-const mapButtonsCb = (el, ind) => <If key={ind} condition={el.condition} style={{ position: 'relative' }}>{el.dom}</If>;
+const mapButtonsCb = (el, ind) => <If key={ind} condition={el.condition}
+                                      style={{ position: 'relative' }}>{el.dom}</If>;
 
-export default function Sidebar({ state, width, height, sidebarComponents, selectedObject },
+export default function Sidebar({props, state, width, height, sidebarComponents, selectedObject },
                                 {translator, projectActions, viewer3DActions}) {
-
  if(selectedObject == null){
   STYLE.visibility = 'hidden';
 }
@@ -90,9 +99,11 @@ let elements = <PanelElementEditor state={state} />;
     redirectUrl = "http://rentservice.getwider.com/edit_room/?curlid={" + id.curlid + "}&id_room={" + selectedObject.id + "}"
   }
 
+  const classes ={root: 'classes-state-root'}
+
   return (
    <aside
-      style={{ width, height, ...STYLE }}
+     style={{ width, height, ...STYLE }}
       onKeyDown={event => event.stopPropagation()}
       onKeyUp={event => event.stopPropagation()}
       className="sidebar"
@@ -106,6 +117,7 @@ let elements = <PanelElementEditor state={state} />;
        <FormGetMoreInfoButton >Подробнее о помещении</FormGetMoreInfoButton>
      </form>
 </div>
+     <Button variant="contained" color="blueGrey">Test Button</Button>
     </aside>
   );
 }
@@ -113,7 +125,7 @@ let elements = <PanelElementEditor state={state} />;
 Sidebar.propTypes = {
   state: PropTypes.object.isRequired,
   width: PropTypes.number.isRequired,
-  height: PropTypes.number.isRequired
+  height: PropTypes.number.isRequired,
 };
 
 Sidebar.contextTypes = {
