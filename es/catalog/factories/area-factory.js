@@ -56,21 +56,17 @@ export default function AreaFactory(name, info, textures) {
         values: agentsValues
       };
 
-      // if(square != null) {
-      //   areaElement.info.square = square;
-      // }
-      // console.log(areaElement.info.square)
-
       if (square != null) {
-        areaElement.properties.square = {
+        //
+        // console.log(element.id);
+        // console.log(element.properties.square);
+        element.properties.square = {
           label: 'Площадь',
           type: 'string',
-          defaultValue: square
+          defaultValue: 'ue',
+          values: square
         };
-        // console.log(areaElement.properties.square.defaultValue)
       }
-      //
-      // console.log(element.properties.getIn(['square', 'length']))
 
       var path = '';
       ///print area path

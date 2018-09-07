@@ -67,7 +67,7 @@ class ReactPlanner extends Component {
    componentDidMount(){
      let {projectActions} = this.props;
 
-     projectActions.newProject();
+     //projectActions.newProject();
      const searchParams = new URLSearchParams(location.search);
      let id = {curlid: searchParams.get('curlid') || ''};
 

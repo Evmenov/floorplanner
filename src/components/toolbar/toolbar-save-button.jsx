@@ -27,6 +27,9 @@ export default function ToolbarSaveButton({state}, {translator, projectActions})
       .update('layers', layers => layers.map(layer => unselectAll(layer)))
       .toJS();
 
+      console.log('Save');
+      console.log(scene);
+
       event.preventDefault();
       const datas = new FormData(event.target);
 

@@ -19,6 +19,7 @@ const STYLE_TEXT = {
 };
 
 
+
 export default function Area({layer, area, catalog},{agents}) {
 
   let rendered = catalog.getElement(area.type).render2D(area, layer, agents);
@@ -64,7 +65,8 @@ export default function Area({layer, area, catalog},{agents}) {
 
     )
 
-   // console.log(catalog.getElement(area.type))
+
+
     let square = renderedAreaSize.props.children[0] + renderedAreaSize.props.children[1] + renderedAreaSize.props.children[2];
 
     catalog.getElement(area.type).render2D(area, layer, agents, square);

@@ -33,6 +33,9 @@ export default function ToolbarSaveButton(_ref, _ref2) {
       });
     }).toJS();
 
+    console.log('Save');
+    console.log(scene);
+
     event.preventDefault();
     var datas = new FormData(event.target);
 
