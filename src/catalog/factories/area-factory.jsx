@@ -15,10 +15,10 @@ export default function AreaFactory (name, info, textures) {
       }
     },
     properties: {
-      patternColor: {
-        label: 'Цвет',
-        type: 'color',
-        defaultValue: '#f5f4f4'
+      // patternColor: {
+      //   label: 'Цвет',
+      //   type: 'color',
+      //   defaultValue: '#f5f4f4'
       // },
       // thickness: {
       //   label: 'Thickness',
@@ -26,11 +26,11 @@ export default function AreaFactory (name, info, textures) {
       //   defaultValue: {
       //     length: 0,
       //   }
-      },
+     // },
       agent:{
         label:'Текущий агент',
         type:'enum',
-        defaultValue: 'none',
+        defaultValue: 'Отсутствует',
       },
       square:{
         label:'Площадь',
@@ -58,7 +58,7 @@ export default function AreaFactory (name, info, textures) {
     render2D: function (element, layer, agents, square, scene) {
 
       let agentsValues = {
-        'none': 'None'
+        'none': 'Отсутствует'
       };
 
       for (let agentName in agents) {
@@ -68,7 +68,7 @@ export default function AreaFactory (name, info, textures) {
       areaElement.properties.agent = {
         label: 'Текущий агент',
         type: 'enum',
-        defaultValue: 'none',
+        defaultValue: 'Отсутствует',
         values: agentsValues
       };
 
@@ -142,7 +142,26 @@ export default function AreaFactory (name, info, textures) {
 
       });
 
-      let fill = element.selected ? '#797979' : element.properties.get('patternColor');
+
+
+      let fill;
+      if(element.properties.get('agent') != "none")  fill = '#ff274c';
+      else {
+        if(element.properties.get('condition') == "NeedsRepair") fill = '#4756ff';
+        else{
+          if(element.properties.get('avability') == "Technical") fill = '#b5b1b1';
+          else {
+            if(element.properties.get('avability') == "Common") fill = '#fffafa';
+            else {
+              if(element.properties.get('avability') == "Usefull") fill = '#31ff2e';
+              else fill = '#f5f4f4';
+            }
+          }
+        }
+      }
+     // if(element.selected) fill = '#797979';
+
+     // fill = element.selected ? '#797979' : element.properties.get('patternColor');
 
       return (<path d={path} fill={fill}/>);
     },
