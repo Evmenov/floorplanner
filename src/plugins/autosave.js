@@ -8,6 +8,9 @@ let timeout = null;
 
 export default function autosave(autosaveKey, delay) {
 
+  // disable autosave plugin TEMP
+  return () => {}
+
   return (store, stateExtractor) => {
 
     delay = delay || TIMEOUT_DELAY;

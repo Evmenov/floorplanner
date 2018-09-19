@@ -145,35 +145,53 @@ class ReactPlanner extends Component {
     let extractedState = stateExtractor(state);
 
     return (
+      <div style={{...wrapperStyle, height}}>
+        <Toolbar
+          checked={this.state.checked}
+          onInvertCatalog={() => this.setState({ checked: !this.state.checked})}
+          dialogIsOpen={this.state.dialogIsOpen}
+          onInvertSettings={() => this.setState({ dialogIsOpen: !this.state.dialogIsOpen})}
+          tabValue={this.state.tabValue}
+          ontabValueChanged={(value) => this.setState({ tabValue: value})}
+          width={toolbarW} height={toolbarH} state={extractedState}  {...prop}
+        />
 
+        <Content
+          width={contentW} height={contentH} state={extractedState}
+          sidebarH={sidebarH} updateData={this.updateData}
+          updateCoordinats={this.updateCoordinats} {...prop}
+          onWheel={event => event.preventDefault()}
+        />
 
-    <div style={{...wrapperStyle, height}}>
-   <Toolbar checked={this.state.checked}
-   onInvertCatalog={() => this.setState({ checked: !this.state.checked})}
-   dialogIsOpen={this.state.dialogIsOpen}
-   onInvertSettings={() => this.setState({ dialogIsOpen: !this.state.dialogIsOpen})}
-   tabValue={this.state.tabValue}
-   ontabValueChanged={(value) => this.setState({ tabValue: value})}
-   width={toolbarW} height={toolbarH} state={extractedState}  {...prop} />
-   <Content width={contentW} height={contentH} state={extractedState}
-            sidebarH={sidebarH} updateData={this.updateData}
-            updateCoordinats={this.updateCoordinats} {...prop}
-            onWheel={event => event.preventDefault()} />
-   <SimpleCard  width={sidebarW} height={sidebarH} state={extractedState}
-   selectedObject={selectedObject} {...prop}  />
-   <FooterBar width={width} height={footerBarH} state={extractedState} {...prop} />
-   </div>
+        <SimpleCard
+          width={sidebarW} height={sidebarH} state={extractedState}
+          selectedObject={selectedObject} {...prop}
+        />
 
+        <FooterBar
+          width={width} height={footerBarH}
+          state={extractedState} {...prop}
+        />
+      </div>
 
- //  <div style={{...wrapperStyle, height}}>
- //     <Content width={contentW + toolbarW} height={contentH + footerBarH} state={extractedState}
- //             sidebarH={sidebarH} updateData={this.updateData} updateCoordinats={this.updateCoordinats} {...prop} onWheel={event => event.preventDefault()} />
- //    <RoomInfo width={roomInfoW}
- //                         height={roomInfoH}
- //                         state={extractedState}
- //                         selectedObject={selectedObject}
- //                         x={this.state.X} y={this.state.Y} {...prop} />
- //  </div>
+      {/*
+      <div style={{...wrapperStyle, height}}>
+        <Content
+          width={contentW + toolbarW} height={contentH + footerBarH}
+          state={extractedState} sidebarH={sidebarH} updateData={this.updateData}
+          updateCoordinats={this.updateCoordinats}
+          {...prop} onWheel={event => event.preventDefault()}
+        />
+
+        <RoomInfo
+          width={roomInfoW}
+          height={roomInfoH}
+          state={extractedState}
+          selectedObject={selectedObject}
+          x={this.state.X} y={this.state.Y} {...prop}
+        />
+      </div>
+      */}
     );
   }
 }
