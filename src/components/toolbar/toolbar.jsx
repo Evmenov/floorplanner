@@ -225,65 +225,73 @@ export default class Toolbar extends Component {
     }));
 
     return (
-     // <aside style={{ ...ASIDE_STYLE, maxWidth: width, maxHeight: height }} className='toolbar'>
-     //   {sorter.sort(sortButtonsCb).map(mapButtonsCb)}
-     // </aside>
+      // <aside style={{ ...ASIDE_STYLE, maxWidth: width, maxHeight: height }} className='toolbar'>
+      //   {sorter.sort(sortButtonsCb).map(mapButtonsCb)}
+      // </aside>
+
       <Paper style={{maxWidth: width, maxHeight: height }}>
-      <MenuList>
+        <MenuList>
+          <MenuItem className={classes.menuItem} onClick={uploadAction}>
+            <ListItemIcon className={classes.icon}>
+              <SaveIcon />
+            </ListItemIcon>
 
-      <MenuItem className={classes.menuItem} onClick={uploadAction}>
-  <ListItemIcon className={classes.icon}>
-  <SaveIcon />
-    </ListItemIcon>
-    <ListItemText classes={{ primary: classes.primary }} inset primary="Сохранить" />
-    </MenuItem>
+            <ListItemText classes={{ primary: classes.primary }} inset primary="Сохранить" />
+          </MenuItem>
 
-    <MenuItem className={classes.menuItem} onClick={() => this.props.onInvertCatalog()}>
-      <ListItemIcon className={classes.icon}>
-        <DraftsIcon />
-      </ListItemIcon>
-      <ListItemText classes={{ primary: classes.primary }} inset primary="Каталог" />
-    </MenuItem>
+          <MenuItem className={classes.menuItem} onClick={() => this.props.onInvertCatalog()}>
+            <ListItemIcon className={classes.icon}>
+              <DraftsIcon />
+            </ListItemIcon>
 
-    <MenuItem className={classes.menuItem} onClick={event => projectActions.rollback()}>
-      <ListItemIcon className={classes.icon}>
-         <GridOnIcon />
-     </ListItemIcon>
-    <ListItemText classes={{ primary: classes.primary }} inset primary="Схема" />
-    </MenuItem>
+            <ListItemText classes={{ primary: classes.primary }} inset primary="Каталог" />
+          </MenuItem>
 
-    <MenuItem className={classes.menuItem} onClick={event => projectActions.undo()}>
-      <ListItemIcon className={classes.icon}>
-        <BackIcon />
-      </ListItemIcon>
-      <ListItemText classes={{ primary: classes.primary }} inset primary="Назад" />
-    </MenuItem>
+          <MenuItem className={classes.menuItem} onClick={event => projectActions.rollback()}>
+            <ListItemIcon className={classes.icon}>
+               <GridOnIcon />
+            </ListItemIcon>
 
-    <MenuItem className={classes.menuItem} onClick={() => this.props.onInvertSettings()}>
-      <ListItemIcon className={classes.icon}>
-        <SettingsIcon />
-      </ListItemIcon>
-      <ListItemText classes={{ primary: classes.primary }} inset primary="Настройки" />
-    </MenuItem>
+            <ListItemText classes={{ primary: classes.primary }} inset primary="Схема" />
+          </MenuItem>
 
-    <MenuItem className={classes.menuItem} onClick={event => projectActions.openAgentsVIew()}>
-      <ListItemIcon className={classes.icon}>
-        <AgentsIcon />
-      </ListItemIcon>
-      <ListItemText classes={{ primary: classes.primary }} inset primary="Агенты" />
-    </MenuItem>
+          <MenuItem className={classes.menuItem} onClick={event => projectActions.undo()}>
+            <ListItemIcon className={classes.icon}>
+              <BackIcon />
+            </ListItemIcon>
 
-    </MenuList>
-        <Listmenu checked={this.props.checked}
-                  tabValue={this.props.tabValue}
-                  ontabValueChanged={() => this.props.ontabValueChanged()}
-                  state={state} />
+            <ListItemText classes={{ primary: classes.primary }} inset primary="Назад" />
+          </MenuItem>
 
+          <MenuItem className={classes.menuItem} onClick={() => this.props.onInvertSettings()}>
+            <ListItemIcon className={classes.icon}>
+              <SettingsIcon />
+            </ListItemIcon>
 
-        <AlertDialogSlide state={state} dialogIsOpen={this.props.dialogIsOpen} onInvertSettings={() => this.props.onInvertSettings()} />
-  </Paper>
+            <ListItemText classes={{ primary: classes.primary }} inset primary="Настройки" />
+          </MenuItem>
 
+          <MenuItem className={classes.menuItem} onClick={event => projectActions.openAgentsVIew()}>
+            <ListItemIcon className={classes.icon}>
+              <AgentsIcon />
+            </ListItemIcon>
 
+            <ListItemText classes={{ primary: classes.primary }} inset primary="Агенты" />
+          </MenuItem>
+        </MenuList>
+
+        <Listmenu
+          checked={this.props.checked}
+          tabValue={this.props.tabValue}
+          ontabValueChanged={() => this.props.ontabValueChanged()}
+          state={state}
+        />
+
+        <AlertDialogSlide
+          state={state} dialogIsOpen={this.props.dialogIsOpen}
+          onInvertSettings={() => this.props.onInvertSettings()}
+        />
+      </Paper>
     )
   }
 }
