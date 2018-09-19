@@ -2,22 +2,9 @@
   "name": "react-planner",
   "version": "1.8.5",
   "description": "react-planner is a React Component for plans design. Draw a 2D floorplan and navigate it in 3D mode.",
-  "main": "lib/index.js",
-  "module": "es/index.js",
-  "jsnext:main": "es/index.js",
   "scripts": {
     "start": "webpack-dev-server --inline --port 9001 --mode development",
-    "build-demo": "webpack --config demo/webpack.config.js --mode production",
-    "build-commonjs": "cross-env BABEL_ENV=commonjs babel src --out-dir lib",
-    "build-es": "cross-env BABEL_ENV=es babel src --out-dir es",
-    "build": "npm run clean && npm run build-demo && npm run build-commonjs && npm run build-es",
-    "add-build-to-vcs": "git add -A src/version.js && git add -A es && git add -A lib && git add -A demo/dist",
-    "clean": "rimraf lib es demo/dist",
-    "website-update": "gh-pages -m 'Update gh-pages' -d ./demo/dist/",
-    "update-version-file": "const-version ./package.json ./src/version.js",
-    "version": "npm run update-version-file && npm run build && npm run add-build-to-vcs",
-    "postpublish": "npm run website-update",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "webpack --mode production"
   },
   "repository": {
     "type": "git",
@@ -36,32 +23,6 @@
     "ui",
     "interface",
     "component"
-  ],
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/cvdlab/react-planner/issues"
-  },
-  "maintainers": [
-    {
-      "url": "https://github.com/chrvadala",
-      "name": "chrvadala"
-    },
-    {
-      "url": "https://github.com/danilosalvati",
-      "name": "danilosalvati"
-    },
-    {
-      "url": "https://github.com/enricomarino",
-      "name": "enricomarino"
-    },
-    {
-      "url": "https://github.com/federicospini",
-      "name": "federicospini"
-    },
-    {
-      "url": "https://github.com/alessiocarrafa",
-      "name": "alessiocarrafa"
-    }
   ],
   "homepage": "https://github.com/cvdlab/react-planner#readme",
   "dependencies": {
