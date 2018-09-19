@@ -102,8 +102,8 @@ export default class ProjectConfigurator extends Component {
 }
 
 ProjectConfigurator.propTypes = {
-  width: PropTypes.number.isRequired,
-  height: PropTypes.number.isRequired,
+  // width: PropTypes.number.isRequired,
+  // height: PropTypes.number.isRequired,
   state: PropTypes.object.isRequired,
 };
 
