@@ -174,7 +174,7 @@ class ReactPlanner extends Component {
         />
       </div>
 
-      {/*
+      /*
       <div style={{...wrapperStyle, height}}>
         <Content
           width={contentW + toolbarW} height={contentH + footerBarH}
@@ -191,7 +191,7 @@ class ReactPlanner extends Component {
           x={this.state.X} y={this.state.Y} {...prop}
         />
       </div>
-      */}
+      */
     );
   }
 }
