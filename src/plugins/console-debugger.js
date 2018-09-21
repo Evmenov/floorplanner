@@ -28,10 +28,10 @@ export default function consoleDebugger() {
       }
     };
 
-    console.groupCollapsed("ReactPlanner");
-    console.info("ReactPlanner is ready");
-    console.info("console.log(ReactPlanner)");
-    console.log(window.ReactPlanner);
-    console.groupEnd();
+    // console.groupCollapsed("ReactPlanner");
+    // console.info("ReactPlanner is ready");
+    // console.info("console.log(ReactPlanner)");
+    // console.log(window.ReactPlanner);
+    // console.groupEnd();
   }
 }
