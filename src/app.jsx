@@ -28,13 +28,12 @@ let reducer = (state, action) => {
   return state;
 };
 
+// If environment is in development, these actions will be blacklisted
 let blackList = isProduction === true ? [] : [
   'UPDATE_MOUSE_COORDS',
   'UPDATE_ZOOM_SCALE',
   'UPDATE_2D_CAMERA'
 ];
-
-if( !isProduction ) console.info('Environment is in development and these actions will be blacklisted', blackList);
 
 //init store
 let store = createStore(
