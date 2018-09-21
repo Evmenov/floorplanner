@@ -25,7 +25,7 @@ import {
   THROW_WARNING,
   COPY_PROPERTIES,
   PASTE_PROPERTIES,
-  PUSH_LAST_SELECTED_CATALOG_ELEMENT_TO_HISTORY,
+  PUSH_LAST_SELECTED_CATALOG_ELEMENT_TO_HISTORY
 } from '../constants';
 
 export function loadProject(sceneJSON) {
@@ -219,5 +219,11 @@ export function pushLastSelectedCatalogElementToHistory( element ) {
   return {
     type: PUSH_LAST_SELECTED_CATALOG_ELEMENT_TO_HISTORY,
     element
+  };
+}
+
+export function testSetStateAction() {
+  return {
+    type: 'TEST_SET_STATE_ACTION'
   };
 }

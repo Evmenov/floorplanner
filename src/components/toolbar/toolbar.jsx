@@ -278,6 +278,14 @@ export default class Toolbar extends Component {
 
             <ListItemText classes={{ primary: classes.primary }} inset primary="Агенты" />
           </MenuItem>
+
+          <MenuItem className={classes.menuItem} onClick={() => projectActions.testSetStateAction()}>
+            <ListItemIcon className={classes.icon}>
+              <AgentsIcon />
+            </ListItemIcon>
+
+            <ListItemText classes={{ primary: classes.primary }} inset primary="testSetStateAction" />
+          </MenuItem>
         </MenuList>
 
         <Listmenu

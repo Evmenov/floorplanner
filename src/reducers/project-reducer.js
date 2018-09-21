@@ -124,10 +124,22 @@ export default function (state, action) {
     case PUSH_LAST_SELECTED_CATALOG_ELEMENT_TO_HISTORY:
       return pushLastSelectedCatalogElementToHistory(state, action.element);
 
+    case 'TEST_SET_STATE_ACTION':
+      return testSetStateAction(state);
+
     default:
       return state;
 
   }
+}
+
+function testSetStateAction(state) {
+  const scene = state.scene.setIn(
+                  ['layers', 'layer-1', 'areas', 'S1GlDeaBfKm', 'properties', 'square'],
+                  '350'
+                );
+
+  return state.merge({ scene });
 }
 
 function openCatalog(state) {
@@ -146,6 +158,7 @@ function loadProject(state, sceneJSON) {
 function setProperties(state, properties) {
   let scene = state.scene;
   scene = scene.set('layers', scene.layers.map(layer => LayerOperations.setPropertiesOnSelected(layer, properties)));
+
   return state.merge({
     scene,
     sceneHistory: history.historyPush(state.sceneHistory, scene)
