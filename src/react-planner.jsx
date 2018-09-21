@@ -43,10 +43,6 @@ const wrapperStyle = {
   display: 'flex',
   flexFlow: 'row nowrap'
 };
-function getMoviesFromApiAsync(path) {
-  console.log("sdfs")
-
-}
 
 class ReactPlanner extends Component {
   constructor(props) {
@@ -64,38 +60,38 @@ class ReactPlanner extends Component {
     };
   }
 
-   componentDidMount(){
-     let {projectActions} = this.props;
+  componentDidMount() {
+    let {projectActions} = this.props;
 
-     //projectActions.newProject();
-     const searchParams = new URLSearchParams(location.search);
-     let id = {curlid: searchParams.get('curlid') || ''};
+    // const searchParams = new URLSearchParams(location.search);
+    // let id = {curlid: searchParams.get('curlid') || ''};
 
-     const url = 'http://rentservice.getwider.com/corpsget/';
-     var request = new Request(url, {
-        method: 'POST',
-       headers: {
-         'Content-Type': 'text/plain;charset=UTF-8',
-       },
-         body: JSON.stringify({
-           curlid: id.curlid,
-         }),
-     });
-///index.html?curlid=50237c98-720c-4753-9d62-c9d294ad121c
-     fetch(request)
-       .then(function(response) {
-         if (response.status !== 200) {
-           console.log('There was a problem. Status code: ' +
-             response.status);
-           return;
-         }
+    // const url = 'http://rentservice.getwider.com/corpsget/';
 
-         response.json().then(function(data) {
+    // var request = new Request(url, {
+    //     method: 'POST',
+    //    headers: {
+    //      'Content-Type': 'text/plain;charset=UTF-8',
+    //    },
+    //      body: JSON.stringify({
+    //        curlid: id.curlid,
+    //      }),
+    // });
 
-           projectActions.loadProject(data);
-          });
-       })}
+    // index.html?curlid=50237c98-720c-4753-9d62-c9d294ad121c
 
+    // fetch(request)
+    //   .then(function(response) {
+    //     if (response.status !== 200) {
+    //       console.log('There was a problem. Status code: ' + response.status);
+    //       return;
+    //     }
+
+    //     response.json().then(function(data) {
+    //       projectActions.loadProject(data);
+    //     });
+    //   })
+  }
 
   getChildContext() {
     return {
@@ -122,9 +118,7 @@ class ReactPlanner extends Component {
     }
   }
 
-
-  updateData (value)
-  {
+  updateData (value) {
     selectedObject = value;
   };
 
@@ -133,7 +127,7 @@ class ReactPlanner extends Component {
     Y = y;
   };
 
-   render() {
+  render() {
     let {width, height, state, stateExtractor, ...prop} = this.props;
     this.state.X = X;
     this.state.Y = Y;
