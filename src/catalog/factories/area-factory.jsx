@@ -1,6 +1,8 @@
 import { createArea, updatedArea } from './area-factory-3d';
 import React from 'react';
 
+let isConnectionAvability = true;
+
 export default function AreaFactory (name, info, textures) {
 
 
@@ -15,23 +17,6 @@ export default function AreaFactory (name, info, textures) {
       }
     },
     properties: {
-      // patternColor: {
-      //   label: 'Цвет',
-      //   type: 'color',
-      //   defaultValue: '#f5f4f4'
-      // },
-      // thickness: {
-      //   label: 'Thickness',
-      //   type: 'length-measure',
-      //   defaultValue: {
-      //     length: 0,
-      //   }
-     // },
-      agent:{
-        label:'Текущий агент',
-        type:'enum',
-        defaultValue: 'Отсутствует',
-      },
       square:{
         label:'Площадь',
         type: 'string',
@@ -55,22 +40,13 @@ export default function AreaFactory (name, info, textures) {
       },
     },
 
+
+
     render2D: function (element, layer, agents, square, scene) {
 
-      let agentsValues = {
-        'none': 'Отсутствует'
-      };
+    let url = 'http://rentservice.getwider.com/roomget/';
 
-      for (let agentName in agents) {
-        agentsValues[agentName] = agents[agentName].name +' ' + agents[agentName].surname
-      }
-
-      areaElement.properties.agent = {
-        label: 'Текущий агент',
-        type: 'enum',
-        defaultValue: 'Отсутствует',
-        values: agentsValues
-      };
+    let additionalData;
 
       let types = {
         'Stock' : 'Склад',
@@ -109,13 +85,7 @@ export default function AreaFactory (name, info, textures) {
         values: conditions,
       };
 
-
-      //console.log(types['office']);
-
       if(square != null){
-        //
-        // console.log(element.id);
-        // console.log(element.properties.square);
         element.properties.square = {
           label:'Площадь',
           type: 'string',
@@ -142,27 +112,51 @@ export default function AreaFactory (name, info, textures) {
 
       });
 
+           var request = new Request(url, {
+       method: 'POST',
+       headers: {
+         'Content-Type': 'text/plain;charset=UTF-8',
+       },
+       body: JSON.stringify({
+         curlid: element.id,
+       }),
+     });
 
+      if(additionalData == null && isConnectionAvability){
+       fetch(request)
+         .then(function(response) {
+           if (response.status !== 200) {
+            isConnectionAvability = false;
+             console.log('There was a problem. Status code: ' +
+               response.status);
+             return;
+           }
+
+           response.json().then(function(data) {
+             additionalData = data;
+           });
+         });
+      }
 
       let fill;
-      if(element.properties.get('agent') != "none")  fill = '#ff274c';
-      else {
-        if(element.properties.get('condition') == "NeedsRepair") fill = '#4756ff';
-        else{
-          if(element.properties.get('avability') == "Technical") fill = '#b5b1b1';
-          else {
-            if(element.properties.get('avability') == "Common") fill = '#fffafa';
+      if(additionalData != null)
+      {
+        if(additionalData.status) fill = '#ff7990';
+        else {
+          if(element.properties.get('condition') == "NeedsRepair") fill = '#828cf6';
+         else{
+            if(element.properties.get('avability') == "Technical") fill = '#b5b5b5';
             else {
-              if(element.properties.get('avability') == "Usefull") fill = '#31ff2e';
-              else fill = '#f5f4f4';
-            }
-          }
-        }
+              if(element.properties.get('avability') == "Common") fill = '#ededed';
+              else {
+                if(element.properties.get('avability') == "Usefull") fill = '#71ff3f';
+                else fill = '#f5f4f4';
+              }
+           }
+         }
+       }
       }
-     // if(element.selected) fill = '#797979';
-
-     // fill = element.selected ? '#797979' : element.properties.get('patternColor');
-
+      else fill = '#71ff3f';
       return (<path d={path} fill={fill}/>);
     },
 
@@ -175,24 +169,6 @@ export default function AreaFactory (name, info, textures) {
     }
 
   };
-
-  // if (textures && textures !== {}) {
-  //
-  //   let textureValues = {
-  //     'none': 'None'
-  //   };
-  //
-  //   for (let textureName in textures) {
-  //     textureValues[textureName] = textures[textureName].name
-  //   }
-  //
-  //   areaElement.properties.texture = {
-  //     label: 'Floor',
-  //     type: 'enum',
-  //     defaultValue: 'none',
-  //     values: textureValues
-  //   };
-//  }
 
   return areaElement
 

@@ -103,6 +103,8 @@ export default function Viewer2D({state, width, height, sidebarH, updateData, up
 
   let layerID = scene.selectedLayer;
 
+
+
   let mapCursorPosition = ({x, y}) => {
     return {x, y: -y + scene.height}
   };

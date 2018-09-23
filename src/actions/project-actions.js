@@ -222,8 +222,10 @@ export function pushLastSelectedCatalogElementToHistory( element ) {
   };
 }
 
-export function testSetStateAction() {
+export function setAreaSquareProperty(areaId, square) {
   return {
-    type: 'TEST_SET_STATE_ACTION'
+    type: 'UPDATE_SQUARE_PROPERTIES', 
+    areaId, 
+    square
   };
 }

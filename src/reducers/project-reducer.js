@@ -124,8 +124,8 @@ export default function (state, action) {
     case PUSH_LAST_SELECTED_CATALOG_ELEMENT_TO_HISTORY:
       return pushLastSelectedCatalogElementToHistory(state, action.element);
 
-    case 'TEST_SET_STATE_ACTION':
-      return testSetStateAction(state);
+    case 'UPDATE_SQUARE_PROPERTIES':
+      return setAreaSquareProperty(state, action.areaId, action.square);
 
     default:
       return state;
@@ -133,10 +133,11 @@ export default function (state, action) {
   }
 }
 
-function testSetStateAction(state) {
+function setAreaSquareProperty(state, areaId, square) {
+  
   const scene = state.scene.setIn(
-                  ['layers', 'layer-1', 'areas', 'S1GlDeaBfKm', 'properties', 'square'],
-                  '350'
+                  ['layers', 'layer-1', 'areas', areaId, 'properties', 'square'],
+                  square
                 );
 
   return state.merge({ scene });
@@ -144,6 +145,7 @@ function testSetStateAction(state) {
 
 function openCatalog(state) {
   return rollback(state)
+
     .set('mode', MODE_VIEWING_CATALOG);
 }
 

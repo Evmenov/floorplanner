@@ -20,13 +20,14 @@ const STYLE_TEXT = {
 
 
 
-export default function Area({layer, area, catalog},{agents}) {
+export default function Area({layer, area, catalog},{projectActions, agents}) {
 
   let rendered = catalog.getElement(area.type).render2D(area, layer, agents);
 
   let renderedAreaSize = null;
 
-  if (area.selected) {
+  //if (area.selected) {
+     if (true) {
     let polygon = area.vertices.toArray().map(vertexID => {
       let {x, y} = layer.vertices.get(vertexID);
       return [x, y];
@@ -59,25 +60,17 @@ export default function Area({layer, area, catalog},{agents}) {
 
     renderedAreaSize = (
       <text x="0" y="0" transform={`translate(${center[0]} ${center[1]}) scale(1, -1)`} style={STYLE_TEXT}>
-        {(areaSize / 10000).toFixed(2)} m{String.fromCharCode(0xb2)}
+        {((areaSize * 25) / 10000).toFixed(2)} m{String.fromCharCode(0xb2)}
       </text>
-
-
     )
-
-
 
     let square = renderedAreaSize.props.children[0] + renderedAreaSize.props.children[1] + renderedAreaSize.props.children[2];
 
-    catalog.getElement(area.type).render2D(area, layer, agents, square);
+    if(area.properties.get('square') != square){
+        projectActions.setAreaSquareProperty(area.id, square);
+    }
+    
   }
-  // else {
-  //   renderedAreaSize = (
-  //     <text x="0" y="0" transform={`translate(${center[0]} ${center[1]}) scale(1, -1)`} style={STYLE_TEXT}>
-  //       {area.properties.getIn(['agent', 'value'])}
-  //     </text>
-  //   )
-  //}
 
   return (
     <g
@@ -100,7 +93,7 @@ Area.propTypes = {
   catalog: PropTypes.object.isRequired
 };
 
-
 Area.contextTypes = {
+  projectActions: PropTypes.object.isRequired,
   agents: PropTypes.array.isRequired
 }
