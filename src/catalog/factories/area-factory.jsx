@@ -2,11 +2,28 @@ import { createArea, updatedArea } from './area-factory-3d';
 import React from 'react';
 
 let isConnectionAvability = true;
+let additionalData;
 
 export default function AreaFactory (name, info, textures) {
 
+let types = {
+        'Stock' : 'Склад',
+        'Office' : 'Офис',
+        'Trading' : 'Торговое'
+      };
+let avabilitys = {
+        'Usefull' : 'Полезное',
+        'Technical' : 'Техническое',
+        'Common' : 'Общего пользования',
+        'Potential' : 'Потенциальное',
+      };
+let conditions = {
+        'Unsuitable' : 'Непригодное',
+        'Finite' : 'Чистовая',
+        'NeedsRepair' : 'Требует ремонта'
+      };
 
-  let areaElement = {
+let areaElement = {
     name,
     prototype: 'areas',
         info: {
@@ -25,18 +42,21 @@ export default function AreaFactory (name, info, textures) {
       type:{
         label:'Тип помещения',
         type:'enum',
-        defaultValue: 'none',
+        defaultValue: 'Stock',
+        values: types,
 
       },
       avability:{
         label:'Пригодность',
         type:'enum',
-        defaultValue: 'none',
+        defaultValue: 'Usefull',
+        values: avabilitys,
       },
       condition:{
         label:'Состояние',
         type:'enum',
-        defaultValue: 'none',
+        defaultValue: 'Unsuitable',
+        values: conditions,
       },
     },
 
@@ -45,46 +65,7 @@ export default function AreaFactory (name, info, textures) {
     render2D: function (element, layer, agents, square, scene) {
 
     let url = 'http://rentservice.getwider.com/roomget/';
-
-    let additionalData;
-
-      let types = {
-        'Stock' : 'Склад',
-        'Office' : 'Офис',
-        'Trading' : 'Торговое'
-      };
-      areaElement.properties.type = {
-        label:'Тип помещения',
-        type:'enum',
-        defaultValue: 'none',
-        values: types,
-      };
-
-      let avabilitys = {
-        'Usefull' : 'Полезное',
-        'Technical' : 'Техническое',
-        'Common' : 'Общего пользования',
-        'Potential' : 'Потенциальное',
-      };
-      areaElement.properties.avability = {
-        label:'Пригодность',
-        type:'enum',
-        defaultValue: 'none',
-        values: avabilitys,
-      };
-
-      let conditions = {
-        'Unsuitable' : 'Непригодное',
-        'Finite' : 'Чистовая',
-        'NeedsRepair' : 'Требует ремонта'
-      };
-      areaElement.properties.condition = {
-        label:'Состояние',
-        type:'enum',
-        defaultValue: 'none',
-        values: conditions,
-      };
-
+    
       if(square != null){
         element.properties.square = {
           label:'Площадь',
@@ -127,7 +108,7 @@ export default function AreaFactory (name, info, textures) {
          .then(function(response) {
            if (response.status !== 200) {
             isConnectionAvability = false;
-             console.log('There was a problem. Status code: ' +
+             console.log('Area factories: there was a problem. Status code: ' +
                response.status);
              return;
            }

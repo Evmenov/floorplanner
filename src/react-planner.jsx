@@ -63,34 +63,35 @@ class ReactPlanner extends Component {
   componentDidMount() {
     let {projectActions} = this.props;
 
-    // const searchParams = new URLSearchParams(location.search);
-    // let id = {curlid: searchParams.get('curlid') || ''};
+    const searchParams = new URLSearchParams(location.search);
+    let id = {curlid: searchParams.get('curlid') || ''};
 
-    // const url = 'http://rentservice.getwider.com/corpsget/';
+    const url = 'http://rentservice.getwider.com/corpsget/';
 
-    // var request = new Request(url, {
-    //     method: 'POST',
-    //    headers: {
-    //      'Content-Type': 'text/plain;charset=UTF-8',
-    //    },
-    //      body: JSON.stringify({
-    //        curlid: id.curlid,
-    //      }),
-    // });
+    var request = new Request(url, {
+        method: 'POST',
+       headers: {
+         'Content-Type': 'text/plain;charset=UTF-8',
+       },
+         body: JSON.stringify({
+           curlid: id.curlid,
+         }),
+    });
 
-    // index.html?curlid=50237c98-720c-4753-9d62-c9d294ad121c
+   // index.html?curlid=50237c98-720c-4753-9d62-c9d294ad121c
 
-    // fetch(request)
-    //   .then(function(response) {
-    //     if (response.status !== 200) {
-    //       console.log('There was a problem. Status code: ' + response.status);
-    //       return;
-    //     }
+    fetch(request)
+      .then(function(response) {
+        if (response.status !== 200) {
+          projectActions.newProject();
+          console.log('React planner: there was a problem. Status code: ' + response.status);
+          return;
+        }
 
-    //     response.json().then(function(data) {
-    //       projectActions.loadProject(data);
-    //     });
-    //   })
+        response.json().then(function(data) {
+          projectActions.loadProject(data);
+        });
+      })
   }
 
   getChildContext() {
@@ -138,37 +139,39 @@ class ReactPlanner extends Component {
     let contentW = width - toolbarW;
     let extractedState = stateExtractor(state);
 
+   // console.log(selectedObject)
+
     return (
-      <div style={{...wrapperStyle, height}}>
-        <Toolbar
-          checked={this.state.checked}
-          onInvertCatalog={() => this.setState({ checked: !this.state.checked})}
-          dialogIsOpen={this.state.dialogIsOpen}
-          onInvertSettings={() => this.setState({ dialogIsOpen: !this.state.dialogIsOpen})}
-          tabValue={this.state.tabValue}
-          ontabValueChanged={(value) => this.setState({ tabValue: value})}
-          width={toolbarW} height={toolbarH} state={extractedState}  {...prop}
-        />
+    // <div style={{...wrapperStyle, height}}>
+      // <Toolbar
+        // checked={this.state.checked}
+        // onInvertCatalog={() => this.setState({ checked: !this.state.checked})}
+        // dialogIsOpen={this.state.dialogIsOpen}
+        // onInvertSettings={() => this.setState({ dialogIsOpen: !this.state.dialogIsOpen})}
+        // tabValue={this.state.tabValue}
+        // ontabValueChanged={(value) => this.setState({ tabValue: value})}
+        // width={toolbarW} height={toolbarH} state={extractedState}  {...prop}
+      // />
+// 
+      // <Content
+        // width={contentW} height={contentH} state={extractedState}
+        // sidebarH={sidebarH} updateData={this.updateData}
+        // updateCoordinats={this.updateCoordinats} {...prop}
+        // onWheel={event => event.preventDefault()}
+      // />
+// 
+      // <SimpleCard
+        // width={sidebarW} height={sidebarH} state={extractedState}
+        // selectedObject={selectedObject} {...prop}
+      // />
+// 
+      // <FooterBar
+        // width={width} height={footerBarH}
+        // state={extractedState} {...prop}
+      // />
+    // </div>
 
-        <Content
-          width={contentW} height={contentH} state={extractedState}
-          sidebarH={sidebarH} updateData={this.updateData}
-          updateCoordinats={this.updateCoordinats} {...prop}
-          onWheel={event => event.preventDefault()}
-        />
-
-        <SimpleCard
-          width={sidebarW} height={sidebarH} state={extractedState}
-          selectedObject={selectedObject} {...prop}
-        />
-
-        <FooterBar
-          width={width} height={footerBarH}
-          state={extractedState} {...prop}
-        />
-      </div>
-
-      /*
+      
       <div style={{...wrapperStyle, height}}>
         <Content
           width={contentW + toolbarW} height={contentH + footerBarH}
@@ -176,7 +179,7 @@ class ReactPlanner extends Component {
           updateCoordinats={this.updateCoordinats}
           {...prop} onWheel={event => event.preventDefault()}
         />
-
+/
         <RoomInfo
           width={roomInfoW}
           height={roomInfoH}
@@ -185,7 +188,7 @@ class ReactPlanner extends Component {
           x={this.state.X} y={this.state.Y} {...prop}
         />
       </div>
-      */
+      
     );
   }
 }

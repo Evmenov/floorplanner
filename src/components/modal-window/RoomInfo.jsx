@@ -10,6 +10,9 @@ import PanelElementEditor from '../sidebar/panel-element-editor/panel-element-ed
 import If from '../../utils/react-if';
 import AddCircle from '@material-ui/icons/AddCircleOutline';
 
+let isConnectionAvability = true;
+let additionalData;
+
 const styles = {
     card: {
     width: 400,
@@ -41,7 +44,7 @@ let contentTextStyle ={
 };
 
 const url = 'http://rentservice.getwider.com/roomget/';
-let additionalData;
+
 
 
 function SimpleCard(props) {
@@ -72,10 +75,13 @@ function SimpleCard(props) {
        }),
      });
 
+     if(additionalData == null && isConnectionAvability || additionalData.curlid != props.selectedObject.id && isConnectionAvability){
+
      fetch(request)
        .then(function(response) {
          if (response.status !== 200) {
-           console.log('There was a problem. Status code: ' +
+          isConnectionAvability = false;
+           console.log('Room info: there was a problem. Status code: ' +
              response.status);
            return;
          }
@@ -84,6 +90,7 @@ function SimpleCard(props) {
            additionalData = data;
          });
        });
+     }
 
      positionStyle.visibility = 'visible';
 }
