@@ -62,7 +62,7 @@ class ReactPlanner extends Component {
 
   componentDidMount() {
     let {projectActions} = this.props;
-
+    //projectActions.newProject();
     const searchParams = new URLSearchParams(location.search);
     let id = {curlid: searchParams.get('curlid') || ''};
 
@@ -89,10 +89,16 @@ class ReactPlanner extends Component {
         }
 
         response.json().then(function(data) {
-          projectActions.loadProject(data);
+          if(data.height == null) projectActions.newProject();
+          else {
+            projectActions.loadProject(data);
+            projectActions.openProjectConfigurator();
+            projectActions.rollback();
+          }
         });
       })
   }
+  
 
   getChildContext() {
     return {
@@ -142,52 +148,52 @@ class ReactPlanner extends Component {
    // console.log(selectedObject)
 
     return (
-    // <div style={{...wrapperStyle, height}}>
-      // <Toolbar
-        // checked={this.state.checked}
-        // onInvertCatalog={() => this.setState({ checked: !this.state.checked})}
-        // dialogIsOpen={this.state.dialogIsOpen}
-        // onInvertSettings={() => this.setState({ dialogIsOpen: !this.state.dialogIsOpen})}
-        // tabValue={this.state.tabValue}
-        // ontabValueChanged={(value) => this.setState({ tabValue: value})}
-        // width={toolbarW} height={toolbarH} state={extractedState}  {...prop}
-      // />
-// 
-      // <Content
-        // width={contentW} height={contentH} state={extractedState}
-        // sidebarH={sidebarH} updateData={this.updateData}
-        // updateCoordinats={this.updateCoordinats} {...prop}
-        // onWheel={event => event.preventDefault()}
-      // />
-// 
-      // <SimpleCard
-        // width={sidebarW} height={sidebarH} state={extractedState}
-        // selectedObject={selectedObject} {...prop}
-      // />
-// 
-      // <FooterBar
-        // width={width} height={footerBarH}
-        // state={extractedState} {...prop}
-      // />
-    // </div>
+    <div style={{...wrapperStyle, height}}>
+      <Toolbar
+        checked={this.state.checked}
+        onInvertCatalog={() => this.setState({ checked: !this.state.checked})}
+        dialogIsOpen={this.state.dialogIsOpen}
+        onInvertSettings={() => this.setState({ dialogIsOpen: !this.state.dialogIsOpen})}
+        tabValue={this.state.tabValue}
+        ontabValueChanged={(value) => this.setState({ tabValue: value})}
+        width={toolbarW} height={toolbarH} state={extractedState}  {...prop}
+      />
+
+      <Content
+        width={contentW} height={contentH} state={extractedState}
+        sidebarH={sidebarH} updateData={this.updateData}
+        updateCoordinats={this.updateCoordinats} {...prop}
+        onWheel={event => event.preventDefault()}
+      />
+
+      <SimpleCard
+        width={sidebarW} height={sidebarH} state={extractedState}
+        selectedObject={selectedObject} {...prop}
+      />
+
+      <FooterBar
+        width={width} height={footerBarH}
+        state={extractedState} {...prop}
+      />
+    </div>
 
       
-      <div style={{...wrapperStyle, height}}>
-        <Content
-          width={contentW + toolbarW} height={contentH + footerBarH}
-          state={extractedState} sidebarH={sidebarH} updateData={this.updateData}
-          updateCoordinats={this.updateCoordinats}
-          {...prop} onWheel={event => event.preventDefault()}
-        />
-/
-        <RoomInfo
-          width={roomInfoW}
-          height={roomInfoH}
-          state={extractedState}
-          selectedObject={selectedObject}
-          x={this.state.X} y={this.state.Y} {...prop}
-        />
-      </div>
+  //    <div style={{...wrapperStyle, height}}>
+  //      <Content
+  //        width={contentW + toolbarW} height={contentH + footerBarH}
+  //        state={extractedState} sidebarH={sidebarH} updateData={this.updateData}
+  //        updateCoordinats={this.updateCoordinats}
+  //        {...prop} onWheel={event => event.preventDefault()}
+  //      />
+  //      
+  //      <RoomInfo
+  //        width={roomInfoW}
+  //        height={roomInfoH}
+  //        state={extractedState}
+  //        selectedObject={selectedObject}
+  //        x={this.state.X} y={this.state.Y} {...prop}
+  //      />
+  //    </div>
       
     );
   }
