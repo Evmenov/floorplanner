@@ -1,8 +1,7 @@
 import { createArea, updatedArea } from './area-factory-3d';
 import React from 'react';
 
-let isConnectionAvability = true;
-let additionalData;
+let url = 'http://rentservice.getwider.com/roomget/';
 
 export default function AreaFactory (name, info, textures) {
 
@@ -60,20 +59,7 @@ let areaElement = {
       },
     },
 
-
-
-    render2D: function (element, layer, agents, square, scene) {
-
-    let url = 'http://rentservice.getwider.com/roomget/';
-    
-      if(square != null){
-        element.properties.square = {
-          label:'Площадь',
-          type: 'string',
-          defaultValue: 'ue',
-          values: square
-        };
-      }
+    render2D: function (element, layer, agents, roomInfo) {
 
       let path = '';
       ///print area path
@@ -92,34 +78,9 @@ let areaElement = {
         });
 
       });
-
-           var request = new Request(url, {
-       method: 'POST',
-       headers: {
-         'Content-Type': 'text/plain;charset=UTF-8',
-       },
-       body: JSON.stringify({
-         curlid: element.id,
-       }),
-     });
-
-      if(additionalData == null && isConnectionAvability){
-       fetch(request)
-         .then(function(response) {
-           if (response.status !== 200) {
-            isConnectionAvability = false;
-             console.log('Area factories: there was a problem. Status code: ' +
-               response.status);
-             return;
-           }
-
-           response.json().then(function(data) {
-             additionalData = data;
-           });
-         });
-      }
-
+       // console.log(roomInfo)
       let fill;
+      let additionalData =  roomInfo[element.id];
       if(additionalData != null)
       {
         if(additionalData.status) fill = '#ff7990';

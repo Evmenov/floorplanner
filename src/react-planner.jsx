@@ -44,6 +44,45 @@ const wrapperStyle = {
   flexFlow: 'row nowrap'
 };
 
+let additionalDataDictionary = {};
+let currentElement = 0;
+
+function getAllRoomInfo(id, count, projectActions, map){
+  currentElement = currentElement + 1;
+  if(additionalDataDictionary[id] == null)
+     {
+      const url = 'http://rentservice.getwider.com/roomget/';
+      var request = new Request(url, {
+       method: 'POST',
+       headers: {
+         'Content-Type': 'text/plain;charset=UTF-8',
+       },
+       body: JSON.stringify({
+         curlid: id,
+       }),
+     });
+
+     fetch(request)
+       .then(function(response) {
+         if (response.status !== 200) {
+           console.log('Room info: there was a problem. Status code: ' +
+             response.status);
+           return;
+         }
+
+         response.json().then(function(data) {
+           additionalDataDictionary[id] = data;
+           if(currentElement == count){
+
+              projectActions.loadProject(map);
+              projectActions.openProjectConfigurator();
+              projectActions.rollback();
+           }
+         });
+       });
+     }
+}
+
 class ReactPlanner extends Component {
   constructor(props) {
     super(props);
@@ -78,8 +117,6 @@ class ReactPlanner extends Component {
          }),
     });
 
-   // index.html?curlid=50237c98-720c-4753-9d62-c9d294ad121c
-
     fetch(request)
       .then(function(response) {
         if (response.status !== 200) {
@@ -91,9 +128,14 @@ class ReactPlanner extends Component {
         response.json().then(function(data) {
           if(data.height == null) projectActions.newProject();
           else {
-            projectActions.loadProject(data);
-            projectActions.openProjectConfigurator();
-            projectActions.rollback();
+           
+            let items = data.layers['layer-1']['areas'];
+            let list = Object.values(items);
+            
+            list.forEach(function(item)
+            {
+              getAllRoomInfo(item.id, list.length, projectActions, data);
+            });
           }
         });
       })
@@ -106,6 +148,7 @@ class ReactPlanner extends Component {
       translator: this.props.translator,
       catalog: this.props.catalog,
       agents: jsonTest,
+      roomInfo: additionalDataDictionary
     }
   }
 
@@ -139,61 +182,59 @@ class ReactPlanner extends Component {
     this.state.X = X;
     this.state.Y = Y;
 
-
     let toolbarH = height - footerBarH;
     let contentH = height - footerBarH;
     let contentW = width - toolbarW;
     let extractedState = stateExtractor(state);
 
-   // console.log(selectedObject)
-
     return (
-    <div style={{...wrapperStyle, height}}>
-      <Toolbar
-        checked={this.state.checked}
-        onInvertCatalog={() => this.setState({ checked: !this.state.checked})}
-        dialogIsOpen={this.state.dialogIsOpen}
-        onInvertSettings={() => this.setState({ dialogIsOpen: !this.state.dialogIsOpen})}
-        tabValue={this.state.tabValue}
-        ontabValueChanged={(value) => this.setState({ tabValue: value})}
-        width={toolbarW} height={toolbarH} state={extractedState}  {...prop}
-      />
-
-      <Content
-        width={contentW} height={contentH} state={extractedState}
-        sidebarH={sidebarH} updateData={this.updateData}
-        updateCoordinats={this.updateCoordinats} {...prop}
-        onWheel={event => event.preventDefault()}
-      />
-
-      <SimpleCard
-        width={sidebarW} height={sidebarH} state={extractedState}
-        selectedObject={selectedObject} {...prop}
-      />
-
-      <FooterBar
-        width={width} height={footerBarH}
-        state={extractedState} {...prop}
-      />
-    </div>
+  //  <div style={{...wrapperStyle, height}}>
+  //    <Toolbar
+  //      checked={this.state.checked}
+  //      onInvertCatalog={() => this.setState({ checked: !this.state.checked})}
+  //      dialogIsOpen={this.state.dialogIsOpen}
+  //      onInvertSettings={() => this.setState({ dialogIsOpen: !this.state.dialogIsOpen})}
+  //      tabValue={this.state.tabValue}
+  //      ontabValueChanged={(value) => this.setState({ tabValue: value})}
+  //      width={toolbarW} height={toolbarH} state={extractedState}  {...prop}
+  //    />
+//
+  //    <Content
+  //      width={contentW} height={contentH} state={extractedState}
+  //      sidebarH={sidebarH} updateData={this.updateData}
+  //      updateCoordinats={this.updateCoordinats} {...prop}
+  //      onWheel={event => event.preventDefault()}
+  //    />
+//
+  //    <SimpleCard
+  //      width={sidebarW} height={sidebarH} state={extractedState}
+  //      selectedObject={selectedObject} {...prop}
+  //    />
+//
+  //    <FooterBar
+  //      width={width} height={footerBarH}
+  //      state={extractedState} {...prop}
+  //    />
+  //  </div>
 
       
-  //    <div style={{...wrapperStyle, height}}>
-  //      <Content
-  //        width={contentW + toolbarW} height={contentH + footerBarH}
-  //        state={extractedState} sidebarH={sidebarH} updateData={this.updateData}
-  //        updateCoordinats={this.updateCoordinats}
-  //        {...prop} onWheel={event => event.preventDefault()}
-  //      />
-  //      
-  //      <RoomInfo
-  //        width={roomInfoW}
-  //        height={roomInfoH}
-  //        state={extractedState}
-  //        selectedObject={selectedObject}
-  //        x={this.state.X} y={this.state.Y} {...prop}
-  //      />
-  //    </div>
+      <div style={{...wrapperStyle, height}}>
+        <Content
+          width={contentW + toolbarW} height={contentH + footerBarH}
+          state={extractedState} sidebarH={sidebarH} updateData={this.updateData}
+          updateCoordinats={this.updateCoordinats}
+          {...prop} onWheel={event => event.preventDefault()}
+        />
+        
+        <RoomInfo
+          width={roomInfoW}
+          height={roomInfoH}
+          state={extractedState}
+          selectedObject={selectedObject}
+          additionalDataDictionary={additionalDataDictionary}
+          x={this.state.X} y={this.state.Y} {...prop}
+        />
+      </div>
       
     );
   }
@@ -225,6 +266,7 @@ ReactPlanner.childContextTypes = {
   translator: PropTypes.object,
   catalog: PropTypes.object,
   agents: PropTypes.array,
+  roomInfo: PropTypes.object
 };
 
 ReactPlanner.defaultProps = {

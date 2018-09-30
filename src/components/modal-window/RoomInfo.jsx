@@ -10,9 +10,6 @@ import PanelElementEditor from '../sidebar/panel-element-editor/panel-element-ed
 import If from '../../utils/react-if';
 import AddCircle from '@material-ui/icons/AddCircleOutline';
 
-let isConnectionAvability = true;
-let additionalData;
-
 const styles = {
     card: {
     width: 400,
@@ -40,16 +37,13 @@ let headerTextStyle ={
   padding: '0px 0px 0px 30px',
   margin: '0px',
 };
+
 let contentTextStyle ={
 };
 
-const url = 'http://rentservice.getwider.com/roomget/';
-
-
-
 function SimpleCard(props) {
   const { classes } = props;
-
+  
   let positionStyle = {
     position: 'absolute',
     top: 0,
@@ -57,59 +51,34 @@ function SimpleCard(props) {
     visibility: 'hidden',
   };
 
-   if(props.selectedObject == null){
+   if(props.selectedObject == null || props.selectedObject.prototype != 'areas')
+   {
      positionStyle.visibility = 'hidden';
      return null;
    }
-   else if(props.selectedObject.prototype == 'areas'){
+   else if(props.selectedObject.prototype == 'areas')
+   {
      positionStyle.left = props.x;
      positionStyle.top = props.y;
-
-     var request = new Request(url, {
-       method: 'POST',
-       headers: {
-         'Content-Type': 'text/plain;charset=UTF-8',
-       },
-       body: JSON.stringify({
-         curlid: props.selectedObject.id,
-       }),
-     });
-
-     if(additionalData == null && isConnectionAvability || additionalData.curlid != props.selectedObject.id && isConnectionAvability){
-
-     fetch(request)
-       .then(function(response) {
-         if (response.status !== 200) {
-          isConnectionAvability = false;
-           console.log('Room info: there was a problem. Status code: ' +
-             response.status);
-           return;
-         }
-
-         response.json().then(function(data) {
-           additionalData = data;
-         });
-       });
-     }
-
      positionStyle.visibility = 'visible';
-}
-   else{
-     positionStyle.visibility = 'hidden';
-     return null;
-   }
+  }
 
-   if(additionalData == null) return null;
+  let additionalData = props.additionalDataDictionary[props.selectedObject.id];
 
-   let body;
-  if(props.selectedObject != null){
-    let cardStyle = {
+  if(additionalData == null) return null;
+
+  let body;
+  if(props.selectedObject != null)
+  {
+    let cardStyle = 
+    {
       border: '1px solid #32394f',
       width: 250,
       height: 90
     };
 
-    if(additionalData.status) {
+    if(additionalData.status) 
+    {
       body = <Card className={classes.card} style={styles}>
 
         <CardContent style={cardStyle}>
@@ -177,11 +146,13 @@ function SimpleCard(props) {
 
       </Card>
     }
-    else {
+
+    else 
+    {
       const searchParams = new URLSearchParams(location.search);
       let id = {curlid: searchParams.get('curlid') || ''};
-      //  let redirectUrl = "http://rentservice.getwider.com/edit_room/?curlid={" + id.curlid + "}&id_room={" + props.selectedObject.id + "}";
-      let redirectUrl = "http://mail.ru";
+      let redirectUrl = "http://rentservice.getwider.com/edit_room/?curlid={" + id.curlid + "}&id_room={" + props.selectedObject.id + "}";
+      //let redirectUrl = "http://mail.ru";
       body =  <Card className={classes.card} style={styles}>
 
         <CardContent style={cardStyle}>

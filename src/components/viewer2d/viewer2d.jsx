@@ -157,7 +157,7 @@ export default function Viewer2D({state, width, height, sidebarH, updateData, up
   };
 
   let onMouseDown = viewerEvent => {
-    updateCoordinats(viewerEvent.originalEvent.pageX, viewerEvent.originalEvent.pageY);
+    
     let event = viewerEvent.originalEvent;
 
     //workaround that allow imageful component to work
@@ -170,9 +170,8 @@ export default function Viewer2D({state, width, height, sidebarH, updateData, up
     if( mode === constants.MODE_IDLE )
     {
       let elementData = extractElementData(event.target);
-
-      updateData(elementData);
-
+      updateData('reset');
+      
       if ( !elementData || !elementData.selected ) return;
 
       switch ( elementData.prototype ) {
@@ -202,6 +201,7 @@ export default function Viewer2D({state, width, height, sidebarH, updateData, up
   };
 
   let onMouseUp = viewerEvent => {
+    updateCoordinats(viewerEvent.originalEvent.pageX, viewerEvent.originalEvent.pageY);
     let event = viewerEvent.originalEvent;
 
     let evt = new Event('mouseup-planner-event' );
@@ -214,6 +214,7 @@ export default function Viewer2D({state, width, height, sidebarH, updateData, up
 
       case constants.MODE_IDLE:
         let elementData = extractElementData(event.target);
+        updateData(elementData);
 
         if (elementData && elementData.selected) return;
 

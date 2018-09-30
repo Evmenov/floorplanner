@@ -18,11 +18,9 @@ const STYLE_TEXT = {
   userSelect: 'none'
 };
 
+export default function Area({layer, area, catalog},{projectActions, agents, roomInfo}) {
 
-
-export default function Area({layer, area, catalog},{projectActions, agents}) {
-
-  let rendered = catalog.getElement(area.type).render2D(area, layer, agents);
+  let rendered = catalog.getElement(area.type).render2D(area, layer, agents, roomInfo);
 
   let renderedAreaSize = null;
 
@@ -65,7 +63,7 @@ export default function Area({layer, area, catalog},{projectActions, agents}) {
     )
 
     let square = renderedAreaSize.props.children[0] + renderedAreaSize.props.children[1] + renderedAreaSize.props.children[2];
-
+    //let rendered = catalog.getElement(area.type).render2D(area, layer, agents);
     if(area.properties.get('square') != square){
         projectActions.setAreaSquareProperty(area.id, square);
     }
@@ -95,5 +93,6 @@ Area.propTypes = {
 
 Area.contextTypes = {
   projectActions: PropTypes.object.isRequired,
-  agents: PropTypes.array.isRequired
+  agents: PropTypes.array.isRequired,
+  roomInfo: PropTypes.object.isRequired
 }
