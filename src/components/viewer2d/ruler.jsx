@@ -24,7 +24,6 @@ const STYLE_TEXT = {
 
 export default function Ruler({length, unit, transform}) {
 
-console.log(length)
   let distanceText = `${length.toFixed(2) * 50} ${unit}`;
 
   return (

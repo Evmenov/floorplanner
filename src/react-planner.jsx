@@ -31,9 +31,9 @@ const {FooterBar} = FooterBarComponents;
 const toolbarW = 270;
 const sidebarH = 400;
 const sidebarW = 300;
-const footerBarH= 20;
-const roomInfoH= 240;
-const roomInfoW= 400;
+const footerBarH = 20;
+const roomInfoH = 240;
+const roomInfoW = 400;
 
 let selectedObject = null;
 let X = 0;
@@ -46,41 +46,41 @@ const wrapperStyle = {
 
 let additionalDataDictionary = {};
 let currentElement = 0;
+let isAdmin = true;
 
-function getAllRoomInfo(id, count, projectActions, map){
+function getAllRoomInfo(id, count, projectActions, map) {
   currentElement = currentElement + 1;
-  if(additionalDataDictionary[id] == null)
-     {
-      const url = 'http://rentservice.getwider.com/roomget/';
-      var request = new Request(url, {
-       method: 'POST',
-       headers: {
-         'Content-Type': 'text/plain;charset=UTF-8',
-       },
-       body: JSON.stringify({
-         curlid: id,
-       }),
-     });
+  if (additionalDataDictionary[id] == null) {
+    const url = 'http://rentservice.getwider.com/roomget/';
+    var request = new Request(url, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'text/plain;charset=UTF-8',
+      },
+      body: JSON.stringify({
+        curlid: id,
+      }),
+    });
 
-     fetch(request)
-       .then(function(response) {
-         if (response.status !== 200) {
-           console.log('Room info: there was a problem. Status code: ' +
-             response.status);
-           return;
-         }
+    fetch(request)
+      .then(function (response) {
+        if (response.status !== 200) {
+          console.log('Room info: there was a problem. Status code: ' +
+            response.status);
+          return;
+        }
 
-         response.json().then(function(data) {
-           additionalDataDictionary[id] = data;
-           if(currentElement == count){
+        response.json().then(function (data) {
+          additionalDataDictionary[id] = data;
+          if (currentElement == count) {
 
-              projectActions.loadProject(map);
-              projectActions.openProjectConfigurator();
-              projectActions.rollback();
-           }
-         });
-       });
-     }
+            projectActions.loadProject(map);
+            projectActions.openProjectConfigurator();
+            projectActions.rollback();
+          }
+        });
+      });
+  }
 }
 
 class ReactPlanner extends Component {
@@ -94,8 +94,8 @@ class ReactPlanner extends Component {
       checked: false,
       dialogIsOpen: false,
       tabValue: 0,
-      X:0,
-      Y:0
+      X: 0,
+      Y: 0
     };
   }
 
@@ -108,39 +108,38 @@ class ReactPlanner extends Component {
     const url = 'http://rentservice.getwider.com/corpsget/';
 
     var request = new Request(url, {
-        method: 'POST',
-       headers: {
-         'Content-Type': 'text/plain;charset=UTF-8',
-       },
-         body: JSON.stringify({
-           curlid: id.curlid,
-         }),
+      method: 'POST',
+      headers: {
+        'Content-Type': 'text/plain;charset=UTF-8',
+      },
+      body: JSON.stringify({
+        curlid: id.curlid,
+      }),
     });
 
     fetch(request)
-      .then(function(response) {
+      .then(function (response) {
         if (response.status !== 200) {
           projectActions.newProject();
           console.log('React planner: there was a problem. Status code: ' + response.status);
           return;
         }
 
-        response.json().then(function(data) {
-          if(data.height == null) projectActions.newProject();
+        response.json().then(function (data) {
+          if (data.height == null) projectActions.newProject();
           else {
-           
+
             let items = data.layers['layer-1']['areas'];
             let list = Object.values(items);
-            
-            list.forEach(function(item)
-            {
+
+            list.forEach(function (item) {
               getAllRoomInfo(item.id, list.length, projectActions, data);
             });
           }
         });
       })
   }
-  
+
 
   getChildContext() {
     return {
@@ -168,11 +167,11 @@ class ReactPlanner extends Component {
     }
   }
 
-  updateData (value) {
+  updateData(value) {
     selectedObject = value;
   };
 
-  updateCoordinats (x, y){
+  updateCoordinats(x, y) {
     X = x;
     Y = y;
   };
@@ -188,54 +187,56 @@ class ReactPlanner extends Component {
     let extractedState = stateExtractor(state);
 
     return (
-  //  <div style={{...wrapperStyle, height}}>
-  //    <Toolbar
-  //      checked={this.state.checked}
-  //      onInvertCatalog={() => this.setState({ checked: !this.state.checked})}
-  //      dialogIsOpen={this.state.dialogIsOpen}
-  //      onInvertSettings={() => this.setState({ dialogIsOpen: !this.state.dialogIsOpen})}
-  //      tabValue={this.state.tabValue}
-  //      ontabValueChanged={(value) => this.setState({ tabValue: value})}
-  //      width={toolbarW} height={toolbarH} state={extractedState}  {...prop}
-  //    />
-//
-  //    <Content
-  //      width={contentW} height={contentH} state={extractedState}
-  //      sidebarH={sidebarH} updateData={this.updateData}
-  //      updateCoordinats={this.updateCoordinats} {...prop}
-  //      onWheel={event => event.preventDefault()}
-  //    />
-//
-  //    <SimpleCard
-  //      width={sidebarW} height={sidebarH} state={extractedState}
-  //      selectedObject={selectedObject} {...prop}
-  //    />
-//
-  //    <FooterBar
-  //      width={width} height={footerBarH}
-  //      state={extractedState} {...prop}
-  //    />
-  //  </div>
+       <div style={{...wrapperStyle, height}}>
+         <Toolbar
+           checked={this.state.checked}
+           onInvertCatalog={() => this.setState({ checked: !this.state.checked})}
+           dialogIsOpen={this.state.dialogIsOpen}
+           onInvertSettings={() => this.setState({ dialogIsOpen: !this.state.dialogIsOpen})}
+           tabValue={this.state.tabValue}
+           ontabValueChanged={(value) => this.setState({ tabValue: value})}
+           width={toolbarW} height={toolbarH} state={extractedState}  {...prop}
+         />
 
-      
-      <div style={{...wrapperStyle, height}}>
-        <Content
-          width={contentW + toolbarW} height={contentH + footerBarH}
-          state={extractedState} sidebarH={sidebarH} updateData={this.updateData}
-          updateCoordinats={this.updateCoordinats}
-          {...prop} onWheel={event => event.preventDefault()}
-        />
-        
-        <RoomInfo
-          width={roomInfoW}
-          height={roomInfoH}
-          state={extractedState}
-          selectedObject={selectedObject}
-          additionalDataDictionary={additionalDataDictionary}
-          x={this.state.X} y={this.state.Y} {...prop}
-        />
-      </div>
-      
+         <Content
+           width={contentW} height={contentH} state={extractedState}
+           sidebarH={sidebarH} updateData={this.updateData}
+           updateCoordinats={this.updateCoordinats}
+           isAdmin={isAdmin}
+           {...prop} onWheel={event => event.preventDefault()}
+         />
+
+         <SimpleCard
+           width={sidebarW} height={sidebarH} state={extractedState}
+           selectedObject={selectedObject} {...prop}
+         />
+
+         <FooterBar
+           width={width} height={footerBarH}
+           state={extractedState} {...prop}
+         />
+       </div>
+
+
+  //    <div style={{...wrapperStyle, height}}>
+  //      <Content
+  //        width={contentW + toolbarW} height={contentH + footerBarH}
+  //        state={extractedState} sidebarH={sidebarH} updateData={this.updateData}
+  //        updateCoordinats={this.updateCoordinats}
+  //        isAdmin={isAdmin}
+  //        {...prop} onWheel={event => event.preventDefault()}
+  //      />
+//
+  //      <RoomInfo
+  //        width={roomInfoW}
+  //        height={roomInfoH}
+  //        state={extractedState}
+  //        selectedObject={selectedObject}
+  //        additionalDataDictionary={additionalDataDictionary}
+  //        x={this.state.X} y={this.state.Y} {...prop}
+  //      />
+  //    </div>
+
     );
   }
 }

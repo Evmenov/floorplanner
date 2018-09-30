@@ -3,7 +3,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import {ReactSVGPanZoom, TOOL_NONE, TOOL_PAN, TOOL_ZOOM_IN, TOOL_ZOOM_OUT, TOOL_AUTO} from 'react-svg-pan-zoom';
+import {
+  ReactSVGPanZoom,
+  TOOL_NONE,
+  TOOL_PAN,
+  TOOL_ZOOM_IN,
+  TOOL_ZOOM_OUT,
+  TOOL_AUTO,
+  fitToViewer,
+  fitSelection
+} from 'react-svg-pan-zoom';
 import * as constants from '../../constants';
 import State from './state';
 import * as SharedStyle from "../../shared-style";
@@ -89,7 +98,7 @@ function extractElementData(node) {
   }
 }
 
-export default function Viewer2D({state, width, height, sidebarH, updateData, updateCoordinats},
+export default function Viewer2D({state, width, height, sidebarH, updateData, updateCoordinats, isAdmin},
                                  {viewer2DActions, linesActions, holesActions, verticesActions, itemsActions, areaActions, projectActions, catalog}) {
 
   const Style = {
@@ -102,7 +111,6 @@ export default function Viewer2D({state, width, height, sidebarH, updateData, up
   let {viewer2D, mode, scene} = state;
 
   let layerID = scene.selectedLayer;
-
 
 
   let mapCursorPosition = ({x, y}) => {
@@ -121,35 +129,35 @@ export default function Viewer2D({state, width, height, sidebarH, updateData, up
     projectActions.updateMouseCoord({x, y});
     switch (mode) {
       case constants.MODE_DRAWING_LINE:
-        linesActions.updateDrawingLine(x, y, state.snapMask);
+        if (isAdmin) linesActions.updateDrawingLine(x, y, state.snapMask);
         break;
 
       case constants.MODE_DRAWING_HOLE:
-        holesActions.updateDrawingHole(layerID, x, y);
+        if (isAdmin) holesActions.updateDrawingHole(layerID, x, y);
         break;
 
       case constants.MODE_DRAWING_ITEM:
-        itemsActions.updateDrawingItem(layerID, x, y);
+        if (isAdmin) itemsActions.updateDrawingItem(layerID, x, y);
         break;
 
       case constants.MODE_DRAGGING_HOLE:
-        holesActions.updateDraggingHole(x, y);
+        if (isAdmin) holesActions.updateDraggingHole(x, y);
         break;
 
       case constants.MODE_DRAGGING_LINE:
-        linesActions.updateDraggingLine(x, y, state.snapMask);
+        if (isAdmin) linesActions.updateDraggingLine(x, y, state.snapMask);
         break;
 
       case constants.MODE_DRAGGING_VERTEX:
-        verticesActions.updateDraggingVertex(x, y, state.snapMask);
+        if (isAdmin) verticesActions.updateDraggingVertex(x, y, state.snapMask);
         break;
 
       case constants.MODE_DRAGGING_ITEM:
-        itemsActions.updateDraggingItem(x, y);
+        if (isAdmin) itemsActions.updateDraggingItem(x, y);
         break;
 
       case constants.MODE_ROTATING_ITEM:
-        itemsActions.updateRotatingItem(x, y);
+        if (isAdmin) itemsActions.updateRotatingItem(x, y);
         break;
     }
 
@@ -157,26 +165,24 @@ export default function Viewer2D({state, width, height, sidebarH, updateData, up
   };
 
   let onMouseDown = viewerEvent => {
-    
+
     let event = viewerEvent.originalEvent;
 
     //workaround that allow imageful component to work
-    let evt = new Event('mousedown-planner-event' );
+    let evt = new Event('mousedown-planner-event');
     evt.viewerEvent = viewerEvent;
     document.dispatchEvent(evt);
 
     let {x, y} = mapCursorPosition(viewerEvent);
 
-    if( mode === constants.MODE_IDLE )
-    {
+    if (mode === constants.MODE_IDLE) {
       let elementData = extractElementData(event.target);
       updateData('reset');
-      
-      if ( !elementData || !elementData.selected ) return;
 
-      switch ( elementData.prototype ) {
+      if (!elementData || !elementData.selected) return;
+      switch (elementData.prototype) {
         case 'lines':
-          linesActions.beginDraggingLine(elementData.layer, elementData.id, x, y, state.snapMask);
+          if (isAdmin) linesActions.beginDraggingLine(elementData.layer, elementData.id, x, y, state.snapMask);
           break;
 
         case 'vertices':
@@ -194,7 +200,8 @@ export default function Viewer2D({state, width, height, sidebarH, updateData, up
           holesActions.beginDraggingHole(elementData.layer, elementData.id, x, y);
           break;
 
-        default: break;
+        default:
+          break;
       }
     }
     event.stopPropagation();
@@ -204,7 +211,7 @@ export default function Viewer2D({state, width, height, sidebarH, updateData, up
     updateCoordinats(viewerEvent.originalEvent.pageX, viewerEvent.originalEvent.pageY);
     let event = viewerEvent.originalEvent;
 
-    let evt = new Event('mouseup-planner-event' );
+    let evt = new Event('mouseup-planner-event');
     evt.viewerEvent = viewerEvent;
     document.dispatchEvent(evt);
 
@@ -280,6 +287,9 @@ export default function Viewer2D({state, width, height, sidebarH, updateData, up
     }
 
     event.stopPropagation();
+  };
+
+  let fit = () => {
   };
 
   let onChangeValue = (value) => {

@@ -10,11 +10,11 @@ import ProjectConfigurator from './configurator/project-configurator';
 import * as constants from '../constants';
 import AgentViewer from "./agents/agent-viewer";
 
-export default function Content({width, height, state, customContents, sidebarH, updateData, updateCoordinats}) {
+export default function Content({width, height, state, customContents, sidebarH, updateData, updateCoordinats, isAdmin}) {
 
     let mode = state.get('mode');
-    // console.log(mode)
     switch (mode) {
+
       case constants.MODE_3D_VIEW:
         return <Viewer3D state={state} width={width} height={height}/>;
 
@@ -37,7 +37,15 @@ export default function Content({width, height, state, customContents, sidebarH,
       case constants.MODE_DRAWING_ITEM:
       case constants.MODE_DRAGGING_HOLE:
       case constants.MODE_ROTATING_ITEM:
-        return <Viewer2D state={state} width={width} height={height} sidebarH={sidebarH} updateData={updateData} updateCoordinats={updateCoordinats}/>;
+        return <Viewer2D
+          state={state}
+          width={width}
+          height={height}
+          sidebarH={sidebarH}
+          updateData={updateData}
+          updateCoordinats={updateCoordinats}
+          isAdmin={isAdmin}
+        />;
 
       case constants.MODE_CONFIGURING_PROJECT:
         return <ProjectConfigurator width={width} height={height} state={state} sidebarH={sidebarH}/>;
