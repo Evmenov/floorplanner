@@ -29,7 +29,7 @@ export default function keyboard() {
       let mode = state.get('mode');
 
       switch (event.keyCode) {
-        case KEY_BACKSPACE:
+        //case KEY_BACKSPACE:
         case KEY_DELETE:
         {
           if ([MODE_IDLE, MODE_3D_FIRST_PERSON, MODE_3D_VIEW].includes(mode))
