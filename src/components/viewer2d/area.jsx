@@ -3,6 +3,21 @@ import PropTypes from 'prop-types';
 import polylabel from 'polylabel';
 import areapolygon from 'area-polygon';
 
+const STYLE_TEXT_TYPE = {
+  textAnchor: 'middle',
+  fontSize: '20px',
+  fontFamily: '"Courier New", Courier, monospace',
+  pointerEvents: 'none',
+  fontWeight: 'bold',
+
+  //http://stackoverflow.com/questions/826782/how-to-disable-text-selection-highlighting-using-css
+  WebkitTouchCallout: 'none', /* iOS Safari */
+  WebkitUserSelect: 'none', /* Chrome/Safari/Opera */
+  MozUserSelect: 'none', /* Firefox */
+  MsUserSelect: 'none', /* Internet Explorer/Edge */
+  userSelect: 'none'
+};
+
 const STYLE_TEXT = {
   textAnchor: 'middle',
   fontSize: '12px',
@@ -18,14 +33,15 @@ const STYLE_TEXT = {
   userSelect: 'none'
 };
 
-export default function Area({layer, area, catalog},{projectActions, agents, roomInfo}) {
+export default function Area({layer, area, catalog}, {projectActions, agents, roomInfo}) {
 
   let rendered = catalog.getElement(area.type).render2D(area, layer, agents, roomInfo);
 
   let renderedAreaSize = null;
+  let areaType = null;
 
   //if (area.selected) {
-     if (true) {
+  if (true) {
     let polygon = area.vertices.toArray().map(vertexID => {
       let {x, y} = layer.vertices.get(vertexID);
       return [x, y];
@@ -56,18 +72,26 @@ export default function Area({layer, area, catalog},{projectActions, agents, roo
       areaSize -= areapolygon(holePolygon, false);
     });
 
+    if (roomInfo[area.id] != null) {
+      areaType = (
+        <text x="0" y="-20" transform={`translate(${center[0]} ${center[1]}) scale(1, -1)`} style={STYLE_TEXT_TYPE}>
+          {roomInfo[area.id].typeroom}
+        </text>
+      )
+    }
+
     renderedAreaSize = (
       <text x="0" y="0" transform={`translate(${center[0]} ${center[1]}) scale(1, -1)`} style={STYLE_TEXT}>
-        {((areaSize * 25) / 10000).toFixed(2)} m{String.fromCharCode(0xb2)}
+        {((areaSize) / 10000).toFixed(2)} m{String.fromCharCode(0xb2)}
       </text>
     )
 
     let square = renderedAreaSize.props.children[0] + renderedAreaSize.props.children[1] + renderedAreaSize.props.children[2];
     //let rendered = catalog.getElement(area.type).render2D(area, layer, agents);
-    if(area.properties.get('square') != square){
-        projectActions.setAreaSquareProperty(area.id, square);
+    if (area.properties.get('square') != square) {
+      projectActions.setAreaSquareProperty(area.id, square);
     }
-    
+
   }
 
   return (
@@ -79,6 +103,7 @@ export default function Area({layer, area, catalog},{projectActions, agents, roo
       data-layer={layer.id}
     >
       {rendered}
+      {areaType}
       {renderedAreaSize}
     </g>
   )

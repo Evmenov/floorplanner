@@ -101,7 +101,7 @@ class ReactPlanner extends Component {
 
   componentDidMount() {
     let {projectActions} = this.props;
-    //projectActions.newProject();
+    projectActions.newProject();
     const searchParams = new URLSearchParams(location.search);
     let id = {curlid: searchParams.get('curlid') || ''};
 
@@ -120,7 +120,7 @@ class ReactPlanner extends Component {
     fetch(request)
       .then(function (response) {
         if (response.status !== 200) {
-          projectActions.newProject();
+         // projectActions.newProject();
           console.log('React planner: there was a problem. Status code: ' + response.status);
           return;
         }

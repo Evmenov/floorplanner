@@ -21,6 +21,7 @@ export default function PropertyLengthMeasure({value, onUpdate, onValid, configs
   let update = (lengthInput, unitInput) => {
 
     let newLength = toFixedFloat(lengthInput);
+
     let merged = value.merge({
       length: unitInput !== UNIT_CENTIMETER ? convert(newLength).from(unitInput).to(UNIT_CENTIMETER) : newLength,
       _length: lengthInput,

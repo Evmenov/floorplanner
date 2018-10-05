@@ -27,6 +27,7 @@ export default function Line({line, layer, scene, catalog}) {
     let startAt = length * hole.offset;
     let renderedHole = catalog.getElement(hole.type).render2D(hole, layer, scene);
 
+
     return <g
       key={holeID}
       transform={`translate(${startAt}, 0)`}

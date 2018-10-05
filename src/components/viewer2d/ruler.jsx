@@ -24,7 +24,7 @@ const STYLE_TEXT = {
 
 export default function Ruler({length, unit, transform}) {
 
-  let distanceText = `${length.toFixed(2) * 50} ${unit}`;
+  let distanceText = `${length.toFixed(2)} ${unit}`;
 
   return (
     <g transform={transform}>
