@@ -172,14 +172,14 @@ export default class Toolbar extends Component {
         //   <Icon3D />
         // </ToolbarButton>
     //  },
-      {
+/*      {
         index: 5, condition: true, dom: <ToolbarButton
           active={[MODE_IDLE].includes(mode)}
           tooltip={translator.t('2D View')}
           onClick={event => projectActions.rollback()}>
           {[MODE_3D_FIRST_PERSON, MODE_3D_VIEW].includes(mode) ? <MdGridOn /> : <MdGridOn />}
         </ToolbarButton>
-      },
+      },*/
       // {
       //   index: 6, condition: true, dom: <ToolbarButton
       //     active={[MODE_3D_FIRST_PERSON].includes(mode)}
@@ -250,13 +250,13 @@ export default class Toolbar extends Component {
             <ListItemText classes={{ primary: classes.primary }} inset primary="Каталог" />
           </MenuItem>
 
-          <MenuItem className={classes.menuItem} onClick={event => projectActions.rollback()}>
+         {/* <MenuItem className={classes.menuItem} onClick={event => projectActions.rollback()}>
             <ListItemIcon className={classes.icon}>
                <GridOnIcon />
             </ListItemIcon>
 
             <ListItemText classes={{ primary: classes.primary }} inset primary="Схема" />
-          </MenuItem>
+          </MenuItem>*/}
 
           <MenuItem className={classes.menuItem} onClick={event => projectActions.undo()}>
             <ListItemIcon className={classes.icon}>

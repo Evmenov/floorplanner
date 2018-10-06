@@ -17,7 +17,7 @@ export default function GuideVerticalStreak({width, height, guide}) {
   for (let x = 0; x <= width; x += step) {
     let color = colors.get(i % colors.size);
     i++;
-    rendered.push(<line key={x} x1={x} y1="0" x2={x} y2={height} strokeWidth="0.5" stroke={color}/>);
+    rendered.push(<line key={x} x1={x} y1="0" x2={x} y2={height} strokeWidth="2" stroke={color}/>);
   }
 
   return (<g>{rendered}</g>);

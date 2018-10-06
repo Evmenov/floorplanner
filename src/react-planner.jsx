@@ -147,7 +147,8 @@ class ReactPlanner extends Component {
       translator: this.props.translator,
       catalog: this.props.catalog,
       agents: jsonTest,
-      roomInfo: additionalDataDictionary
+      roomInfo: additionalDataDictionary,
+      isAdminMode: isAdmin
     }
   }
 
@@ -271,7 +272,8 @@ ReactPlanner.childContextTypes = {
   translator: PropTypes.object,
   catalog: PropTypes.object,
   agents: PropTypes.array,
-  roomInfo: PropTypes.object
+  roomInfo: PropTypes.object,
+  isAdminMode: PropTypes.object,
 };
 
 ReactPlanner.defaultProps = {

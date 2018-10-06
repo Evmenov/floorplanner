@@ -147,8 +147,7 @@ function SimpleCard(props) {
     else {
       const searchParams = new URLSearchParams(location.search);
       let id = {curlid: searchParams.get('curlid') || ''};
-      let redirectUrl = "http://rentservice.getwider.com/edit_room/?curlid={" + id.curlid + "}&id_room={" + props.selectedObject.id + "}";
-      //let redirectUrl = "http://mail.ru";
+      let redirectUrl = "http://rentservice.getwider.com/edit_room/?curlid=" + id.curlid + "&id_room=" + props.selectedObject.id + "";
       body = <Card className={classes.card} style={styles}>
 
         <CardContent style={{border: '1px solid #32394f',}}>
@@ -158,7 +157,7 @@ function SimpleCard(props) {
 
 
           <Tooltip title="Редактировать помещение">
-            <a href={redirectUrl} style={{
+            <a href={redirectUrl} target="_blank" style={{
               right: 10,
               top: 35,
               position: "absolute"

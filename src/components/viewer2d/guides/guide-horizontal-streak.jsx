@@ -17,7 +17,7 @@ export default function GuideHorizontalStreak({width, height, guide}) {
   for (let y = 0; y <= height; y += step) {
     let color = colors.get(i % colors.size);
     i++;
-    rendered.push(<line key={y} x1="0" y1={y} x2={width} y2={y} strokeWidth="0.5" stroke={color}/>);
+    rendered.push(<line key={y} x1="0" y1={y} x2={width} y2={y} strokeWidth="2" stroke={color}/>);
   }
 
   return (<g>{rendered}</g>);

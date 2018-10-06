@@ -81,24 +81,30 @@ let areaElement = {
        // console.log(roomInfo)
       let fill;
       let additionalData =  roomInfo[element.id];
-      if(additionalData != null)
-      {
-        if(additionalData.status) fill = '#ff7990';
-        else {
-          if(element.properties.get('condition') == "NeedsRepair") fill = '#828cf6';
-         else{
-            if(element.properties.get('avability') == "Technical") fill = '#b5b5b5';
-            else {
-              if(element.properties.get('avability') == "Common") fill = '#ededed';
+      if(!element.selected){
+        if(additionalData != null)
+        {
+          if(additionalData.status) fill = '#ff7990';
+          else {
+            if(element.properties.get('condition') == "NeedsRepair") fill = '#828cf6';
+            else{
+              if(element.properties.get('avability') == "Technical") fill = '#b5b5b5';
               else {
-                if(element.properties.get('avability') == "Usefull") fill = '#71ff3f';
-                else fill = '#f5f4f4';
+                if(element.properties.get('avability') == "Common") fill = '#ededed';
+                else {
+                  if(element.properties.get('avability') == "Usefull") fill = '#71ff3f';
+                  else fill = '#f5f4f4';
+                }
               }
-           }
-         }
-       }
+            }
+          }
+        }
+        else fill = '#71ff3f';
       }
-      else fill = '#71ff3f';
+      else {
+        fill = '#657d53'
+      }
+
       return (<path d={path} fill={fill}/>);
     },
 
