@@ -44,7 +44,6 @@ export default function (state, action) {
       return state.set('mode', MODE_2D_ZOOM_OUT);
 
     case SELECT_FIT_TO_VIEWER:
-      console.log('SELECT_FIT_TO_VIEWER')
       return state.set('viewer2D', fromJS(fitToViewer(viewerValue)));
   }
 }

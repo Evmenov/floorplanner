@@ -47,6 +47,7 @@ const wrapperStyle = {
 let additionalDataDictionary = {};
 let currentElement = 0;
 let isAdmin = true;
+let isFittingTime = false;
 
 function getAllRoomInfo(id, count, projectActions, map, viewer2DActions) {
   currentElement = currentElement + 1;
@@ -77,6 +78,7 @@ function getAllRoomInfo(id, count, projectActions, map, viewer2DActions) {
 
             projectActions.loadProject(map);
             projectActions.openProjectConfigurator();
+            isFittingTime = true;
             projectActions.rollback();
           }
         });
@@ -128,15 +130,24 @@ class ReactPlanner extends Component {
         }
 
         response.json().then(function (data) {
+
           if (data.height == null) projectActions.newProject();
           else {
 
             let items = data.layers['layer-1']['areas'];
             let list = Object.values(items);
 
-            list.forEach(function (item) {
-              getAllRoomInfo(item.id, list.length, projectActions, data, viewer2DActions);
-            });
+            if(list.length != 0){
+              list.forEach(function (item) {
+                getAllRoomInfo(item.id, list.length, projectActions, data, viewer2DActions);
+              });
+            }
+            else {
+              projectActions.loadProject(data);
+              projectActions.openProjectConfigurator();
+              isFittingTime = true;
+              projectActions.rollback();
+            }
           }
         });
       })
@@ -150,7 +161,8 @@ class ReactPlanner extends Component {
       catalog: this.props.catalog,
       agents: jsonTest,
       roomInfo: additionalDataDictionary,
-      isAdminMode: isAdmin
+      isAdminMode: isAdmin,
+      isFittingMode: isFittingTime
     }
   }
 
@@ -207,6 +219,7 @@ class ReactPlanner extends Component {
           sidebarH={sidebarH} updateData={this.updateData}
           updateCoordinats={this.updateCoordinats}
           isAdmin={isAdmin}
+          isFittingTime={isFittingTime}
           {...prop} onWheel={event => event.preventDefault()}
         />
 
@@ -275,7 +288,8 @@ ReactPlanner.childContextTypes = {
   catalog: PropTypes.object,
   agents: PropTypes.array,
   roomInfo: PropTypes.object,
-  isAdminMode: PropTypes.object,
+  isAdminMode: PropTypes.bool,
+  isFittingMode: PropTypes.bool,
 };
 
 ReactPlanner.defaultProps = {

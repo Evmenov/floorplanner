@@ -101,7 +101,7 @@ function extractElementData(node) {
   }
 }
 
-export default function Viewer2D({state, width, height, sidebarH, updateData, updateCoordinats, isAdmin},
+export default function Viewer2D({state, width, height, sidebarH, updateData, updateCoordinats, isAdmin, isFittingTime},
                                  {viewer2DActions, linesActions, holesActions, verticesActions, itemsActions, areaActions, projectActions, catalog}) {
 
   const Style = {
@@ -127,7 +127,7 @@ export default function Viewer2D({state, width, height, sidebarH, updateData, up
 
     let {x, y} = mapCursorPosition(viewerEvent);
 
-   //load();
+    //load();
     projectActions.updateMouseCoord({x, y});
     switch (mode) {
       case constants.MODE_DRAWING_LINE:
@@ -291,21 +291,22 @@ export default function Viewer2D({state, width, height, sidebarH, updateData, up
 
 
   let onChangeValue = (value) => {
-    console.log('1')
-    viewer2DActions.fitToViewer();
     projectActions.updateZoomScale(value.a);
     return viewer2DActions.updateCameraView(value);
   };
-  let x = () => {
-    setTimeout(function() { load()}, 3000);
+
+  function x() {
+    setTimeout(function () {
+      load()
+    }, 0);
   };
 
   function load() {
-    if(!isComplete){
+    if (!isComplete) {
       isComplete = true;
       viewer2DActions.fitToViewer();
     }
-}
+  }
 
   let onChangeTool = (tool) => {
     switch (tool) {
@@ -326,15 +327,16 @@ export default function Viewer2D({state, width, height, sidebarH, updateData, up
         break;
     }
   };
+
+  if (isFittingTime) x();
+
   return (
     <ReactSVGPanZoom
       width={width} height={height}
       style={Style}
       value={viewer2D.isEmpty() ? null : viewer2D.toJS()}
       onChangeValue={onChangeValue}
-
-
-
+      background={'#f3f3f3'}
 
       tool={mode2Tool(mode)}
       onChangeTool={onChangeTool}
@@ -344,7 +346,7 @@ export default function Viewer2D({state, width, height, sidebarH, updateData, up
       onMouseMove={onMouseMove.bind(this)}
       onMouseUp={onMouseUp}
 
-      miniaturePosition='none'
+      miniaturePosition='right'
       toolbarPosition='right'>
 
       <svg onMouseMove={onMouseMove.bind(this)} width={scene.width} height={scene.height}>
