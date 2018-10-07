@@ -295,18 +295,6 @@ export default function Viewer2D({state, width, height, sidebarH, updateData, up
     return viewer2DActions.updateCameraView(value);
   };
 
-  function x() {
-    setTimeout(function () {
-      load()
-    }, 0);
-  };
-
-  function load() {
-    if (!isComplete) {
-      isComplete = true;
-      viewer2DActions.fitToViewer();
-    }
-  }
 
   let onChangeTool = (tool) => {
     switch (tool) {
@@ -328,10 +316,25 @@ export default function Viewer2D({state, width, height, sidebarH, updateData, up
     }
   };
 
-  if (isFittingTime) x();
+  let body;
 
-  return (
-    <ReactSVGPanZoom
+  function set() {
+    setTimeout(function () {
+      fitToView()
+    }, 0);
+  };
+
+  function fitToView() {
+    if (!isComplete) {
+      isComplete = true;
+      viewer2DActions.fitToViewer();
+    }
+  }
+
+  if (isFittingTime) set();
+
+  if (isFittingTime) {
+    body = (<ReactSVGPanZoom
       width={width} height={height}
       style={Style}
       value={viewer2D.isEmpty() ? null : viewer2D.toJS()}
@@ -355,7 +358,11 @@ export default function Viewer2D({state, width, height, sidebarH, updateData, up
         </g>
       </svg>
 
-    </ReactSVGPanZoom>
+    </ReactSVGPanZoom>)
+  }
+  else body = null;
+  return (
+    body
   );
 }
 
