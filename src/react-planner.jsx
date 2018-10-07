@@ -48,7 +48,7 @@ let additionalDataDictionary = {};
 let currentElement = 0;
 let isAdmin = true;
 
-function getAllRoomInfo(id, count, projectActions, map) {
+function getAllRoomInfo(id, count, projectActions, map, viewer2DActions) {
   currentElement = currentElement + 1;
   if (additionalDataDictionary[id] == null) {
     const url = 'http://rentservice.getwider.com/roomget/';
@@ -73,6 +73,7 @@ function getAllRoomInfo(id, count, projectActions, map) {
         response.json().then(function (data) {
           additionalDataDictionary[id] = data;
           if (currentElement == count) {
+            console.log('r')
 
             projectActions.loadProject(map);
             projectActions.openProjectConfigurator();
@@ -100,8 +101,9 @@ class ReactPlanner extends Component {
   }
 
   componentDidMount() {
-    let {projectActions} = this.props;
+    let {projectActions, viewer2DActions} = this.props;
     projectActions.newProject();
+
     const searchParams = new URLSearchParams(location.search);
     let id = {curlid: searchParams.get('curlid') || ''};
 
@@ -133,7 +135,7 @@ class ReactPlanner extends Component {
             let list = Object.values(items);
 
             list.forEach(function (item) {
-              getAllRoomInfo(item.id, list.length, projectActions, data);
+              getAllRoomInfo(item.id, list.length, projectActions, data, viewer2DActions);
             });
           }
         });

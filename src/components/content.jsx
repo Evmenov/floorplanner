@@ -28,6 +28,7 @@ export default function Content({width, height, state, customContents, sidebarH,
       case constants.MODE_2D_ZOOM_IN:
       case constants.MODE_2D_ZOOM_OUT:
       case constants.MODE_2D_PAN:
+      case constants.MODE_2D_FIT_TO_VIEW:
       case constants.MODE_WAITING_DRAWING_LINE:
       case constants.MODE_DRAGGING_LINE:
       case constants.MODE_DRAGGING_VERTEX:

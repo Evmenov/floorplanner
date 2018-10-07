@@ -1,4 +1,4 @@
-import {UPDATE_2D_CAMERA, SELECT_TOOL_PAN, SELECT_TOOL_ZOOM_IN, SELECT_TOOL_ZOOM_OUT} from '../constants';
+import {UPDATE_2D_CAMERA, SELECT_TOOL_PAN, SELECT_TOOL_ZOOM_IN, SELECT_TOOL_ZOOM_OUT, SELECT_FIT_TO_VIEWER} from '../constants';
 
 export function updateCameraView(value) {
   return {
@@ -22,5 +22,11 @@ export function selectToolZoomOut() {
 export function selectToolZoomIn() {
   return {
     type: SELECT_TOOL_ZOOM_IN
+  };
+}
+
+export function fitToViewer() {
+  return {
+    type: SELECT_FIT_TO_VIEWER
   };
 }

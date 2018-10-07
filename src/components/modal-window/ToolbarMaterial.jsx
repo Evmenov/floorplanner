@@ -109,8 +109,8 @@ function SimpleCard(props) {
 
       </CardContent>
       <CardActions>
-       {/* <Button onClick={save} >{props.translator.t('Apply changes')}</Button>
-        <form  action={redirectUrl}>
+        <Button onClick={save} >{props.translator.t('Apply changes')}</Button>
+       {/* <form  action={redirectUrl}>
           <Button>{props.translator.t('Edit')}</Button>
         </form>*/}
       </CardActions>

@@ -15,7 +15,7 @@ import {
 } from 'react-svg-pan-zoom';
 import * as constants from '../../constants';
 import State from './state';
-import * as SharedStyle from "../../shared-style";
+import {fromJS} from 'immutable';
 
 function mode2Tool(mode) {
   switch (mode) {
@@ -31,6 +31,9 @@ function mode2Tool(mode) {
       return TOOL_NONE;
   }
 }
+
+let count = 0;
+let isComplete = false;
 
 function mode2PointerEvents(mode) {
   switch (mode) {
@@ -112,20 +115,19 @@ export default function Viewer2D({state, width, height, sidebarH, updateData, up
 
   let layerID = scene.selectedLayer;
 
-
   let mapCursorPosition = ({x, y}) => {
     return {x, y: -y + scene.height}
   };
 
   let onMouseMove = viewerEvent => {
-
-
     //workaround that allow imageful component to work
     let evt = new Event('mousemove-planner-event');
     evt.viewerEvent = viewerEvent;
     document.dispatchEvent(evt);
 
     let {x, y} = mapCursorPosition(viewerEvent);
+
+   //load();
     projectActions.updateMouseCoord({x, y});
     switch (mode) {
       case constants.MODE_DRAWING_LINE:
@@ -165,7 +167,6 @@ export default function Viewer2D({state, width, height, sidebarH, updateData, up
   };
 
   let onMouseDown = viewerEvent => {
-
     let event = viewerEvent.originalEvent;
 
     //workaround that allow imageful component to work
@@ -216,7 +217,6 @@ export default function Viewer2D({state, width, height, sidebarH, updateData, up
     document.dispatchEvent(evt);
 
     let {x, y} = mapCursorPosition(viewerEvent);
-
     switch (mode) {
 
       case constants.MODE_IDLE:
@@ -289,13 +289,23 @@ export default function Viewer2D({state, width, height, sidebarH, updateData, up
     event.stopPropagation();
   };
 
-  let fit = () => {
-  };
 
   let onChangeValue = (value) => {
+    console.log('1')
+    viewer2DActions.fitToViewer();
     projectActions.updateZoomScale(value.a);
-    return viewer2DActions.updateCameraView(value)
+    return viewer2DActions.updateCameraView(value);
   };
+  let x = () => {
+    setTimeout(function() { load()}, 3000);
+  };
+
+  function load() {
+    if(!isComplete){
+      isComplete = true;
+      viewer2DActions.fitToViewer();
+    }
+}
 
   let onChangeTool = (tool) => {
     switch (tool) {
@@ -316,7 +326,6 @@ export default function Viewer2D({state, width, height, sidebarH, updateData, up
         break;
     }
   };
-
   return (
     <ReactSVGPanZoom
       width={width} height={height}
@@ -324,11 +333,13 @@ export default function Viewer2D({state, width, height, sidebarH, updateData, up
       value={viewer2D.isEmpty() ? null : viewer2D.toJS()}
       onChangeValue={onChangeValue}
 
+
+
+
       tool={mode2Tool(mode)}
       onChangeTool={onChangeTool}
 
       detectAutoPan={mode2DetectAutopan(mode)}
-
       onMouseDown={onMouseDown}
       onMouseMove={onMouseMove.bind(this)}
       onMouseUp={onMouseUp}

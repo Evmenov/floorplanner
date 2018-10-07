@@ -75,12 +75,19 @@ function SimpleCard(props) {
         height: 90
       };
 
+    const searchParams = new URLSearchParams(location.search);
+    let id = {curlid: searchParams.get('curlid') || ''};
+    let redirectUrlForButton = "http://rentservice.getwider.com/edit_room/?curlid=" + id.curlid + "&id_room=" + props.selectedObject.id + "";
+    let redirectUrlForName = "http://rentservice.getwider.com/room_admin/?curlid=" + id.curlid + "&id_room=" + props.selectedObject.id + "";
+
     if (additionalData.status) {
       body = <Card className={classes.card} style={styles}>
 
         <CardContent style={cardStyle}>
           <Typography className={classes.title}>
+            <a href={redirectUrlForName} target="_blank">
             {additionalData.typeroom}
+            </a>
           </Typography>
           <Typography component="h3">
             {additionalData.goodroom}
@@ -97,7 +104,7 @@ function SimpleCard(props) {
           background: '#9283d4'
         }}>
           <Typography className={classes.title}>
-            72 кв\м
+            {additionalData.square == null ? 'Нет данных' :  additionalData.square + ' кв. м.'}
           </Typography>
         </CardContent>
 
@@ -120,10 +127,10 @@ function SimpleCard(props) {
           background: '#fad36c'
         }}>
           <Typography className={classes.title}>
-            446 400 р.
+            {additionalData.arenda_m == null ? 'Нет данных' :  additionalData.arenda_m + ' p.'}
           </Typography>
           <Typography component="h3">
-            1 200 р/кв. м.
+            {additionalData.arenda_only_square == null ? 'Нет данных' :  additionalData.arenda_only_square + ' р/кв. м.'}
           </Typography>
         </CardContent>
 
@@ -145,19 +152,16 @@ function SimpleCard(props) {
     }
 
     else {
-      const searchParams = new URLSearchParams(location.search);
-      let id = {curlid: searchParams.get('curlid') || ''};
-      let redirectUrl = "http://rentservice.getwider.com/edit_room/?curlid=" + id.curlid + "&id_room=" + props.selectedObject.id + "";
       body = <Card className={classes.card} style={styles}>
 
         <CardContent style={{border: '1px solid #32394f',}}>
           <Typography className={classes.title}>
-            СВОБОДНО
+            ... пока СВОБОДНО
           </Typography>
 
 
           <Tooltip title="Редактировать помещение">
-            <a href={redirectUrl} target="_blank" style={{
+            <a href={redirectUrlForButton} target="_blank" style={{
               right: 10,
               top: 35,
               position: "absolute"
