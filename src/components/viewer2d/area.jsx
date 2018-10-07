@@ -4,12 +4,12 @@ import polylabel from 'polylabel';
 import areapolygon from 'area-polygon';
 
 let types = {
-  'Stock': 'Склад',
   'Office': 'Офис',
+  'Stock': 'Склад',
   'Trading': 'Торговое'
 }
 
-  const STYLE_TEXT_TYPE = {
+const STYLE_TEXT_TYPE = {
   textAnchor: 'middle',
   fontSize: '20px',
   fontFamily: '"Courier New", Courier, monospace',
@@ -80,7 +80,7 @@ export default function Area({layer, area, catalog}, {projectActions, agents, ro
 
     if (roomInfo[area.id] != null) {
       let type;
-      if(roomInfo[area.id].typeroom == area.properties.get('type')){
+      if (roomInfo[area.id].typeroom == area.properties.get('type')) {
         type = roomInfo[area.id].typeroom;
       }
       else {
@@ -89,6 +89,13 @@ export default function Area({layer, area, catalog}, {projectActions, agents, ro
       areaType = (
         <text x="0" y="-20" transform={`translate(${center[0]} ${center[1]}) scale(1, -1)`} style={STYLE_TEXT_TYPE}>
           {type}
+        </text>
+      )
+    }
+    else {
+      areaType = (
+        <text x="0" y="-20" transform={`translate(${center[0]} ${center[1]}) scale(1, -1)`} style={STYLE_TEXT_TYPE}>
+          {types[area.properties.get('type')]}
         </text>
       )
     }

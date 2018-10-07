@@ -1,31 +1,31 @@
-import { createArea, updatedArea } from './area-factory-3d';
+import {createArea, updatedArea} from './area-factory-3d';
 import React from 'react';
 
 let url = 'http://rentservice.getwider.com/roomget/';
 
-export default function AreaFactory (name, info, textures) {
+export default function AreaFactory(name, info, textures) {
 
-let types = {
-        'Stock' : 'Склад',
-        'Office' : 'Офис',
-        'Trading' : 'Торговое'
-      };
-let avabilitys = {
-        'Usefull' : 'Полезное',
-        'Technical' : 'Техническое',
-        'Common' : 'Общего пользования',
-        'Potential' : 'Потенциальное',
-      };
-let conditions = {
-        'Unsuitable' : 'Непригодное',
-        'Finite' : 'Чистовая',
-        'NeedsRepair' : 'Требует ремонта'
-      };
+  let types = {
+    'Office': 'Офис',
+    'Stock': 'Склад',
+    'Trading': 'Торговое'
+  };
+  let avabilitys = {
+    'Usefull': 'Полезное',
+    'Technical': 'Техническое',
+    'Common': 'Общего пользования',
+    'Potential': 'Потенциальное',
+  };
+  let conditions = {
+    'Unsuitable': 'Непригодное',
+    'Finite': 'Чистовая',
+    'NeedsRepair': 'Требует ремонта'
+  };
 
-let areaElement = {
+  let areaElement = {
     name,
     prototype: 'areas',
-        info: {
+    info: {
       ...info,
       visibility: {
         catalog: false,
@@ -33,27 +33,27 @@ let areaElement = {
       }
     },
     properties: {
-      square:{
-        label:'Площадь',
+      square: {
+        label: 'Площадь',
         type: 'string',
         defaultValue: '0'
       },
-      type:{
-        label:'Тип помещения',
-        type:'enum',
-        defaultValue: 'Stock',
+      type: {
+        label: 'Тип помещения',
+        type: 'enum',
+        defaultValue: 'Office',
         values: types,
 
       },
-      avability:{
-        label:'Пригодность',
-        type:'enum',
+      avability: {
+        label: 'Пригодность',
+        type: 'enum',
         defaultValue: 'Usefull',
         values: avabilitys,
       },
-      condition:{
-        label:'Состояние',
-        type:'enum',
+      condition: {
+        label: 'Состояние',
+        type: 'enum',
         defaultValue: 'Unsuitable',
         values: conditions,
       },
@@ -65,34 +65,33 @@ let areaElement = {
       ///print area path
       element.vertices.forEach((vertexID, ind) => {
         let vertex = layer.vertices.get(vertexID);
-        path += ( ind ? 'L' : 'M' ) + vertex.x + ' ' + vertex.y + ' ';
+        path += (ind ? 'L' : 'M') + vertex.x + ' ' + vertex.y + ' ';
       });
 
       //add holes
       element.holes.forEach(areaID => {
-        let area = layer.areas.get( areaID );
+        let area = layer.areas.get(areaID);
 
         area.vertices.reverse().forEach((vertexID, ind) => {
           let vertex = layer.vertices.get(vertexID);
-          path += ( ind ? 'L' : 'M' ) + vertex.x + ' ' + vertex.y + ' ';
+          path += (ind ? 'L' : 'M') + vertex.x + ' ' + vertex.y + ' ';
         });
 
       });
-       // console.log(roomInfo)
+      // console.log(roomInfo)
       let fill;
-      let additionalData =  roomInfo[element.id];
-      if(!element.selected){
-        if(additionalData != null)
-        {
-          if(additionalData.status) fill = '#ff7990';
+      let additionalData = roomInfo[element.id];
+      if (!element.selected) {
+        if (additionalData != null) {
+          if (additionalData.status) fill = '#ff7990';
           else {
-            if(element.properties.get('condition') == "NeedsRepair") fill = '#828cf6';
-            else{
-              if(element.properties.get('avability') == "Technical") fill = '#b5b5b5';
+            if (element.properties.get('condition') == "NeedsRepair") fill = '#828cf6';
+            else {
+              if (element.properties.get('avability') == "Technical") fill = '#b5b5b5';
               else {
-                if(element.properties.get('avability') == "Common") fill = '#ededed';
+                if (element.properties.get('avability') == "Common") fill = '#ededed';
                 else {
-                  if(element.properties.get('avability') == "Usefull") fill = '#71ff3f';
+                  if (element.properties.get('avability') == "Usefull") fill = '#71ff3f';
                   else fill = '#f5f4f4';
                 }
               }
