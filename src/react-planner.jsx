@@ -46,7 +46,7 @@ const wrapperStyle = {
 
 let additionalDataDictionary = {};
 let currentElement = 0;
-let isAdmin = true;
+let isAdmin = false;
 let isFittingTime = false;
 
 function getAllRoomInfo(id, count, projectActions, map, viewer2DActions) {
@@ -74,7 +74,6 @@ function getAllRoomInfo(id, count, projectActions, map, viewer2DActions) {
         response.json().then(function (data) {
           additionalDataDictionary[id] = data;
           if (currentElement == count) {
-            console.log('r')
 
             projectActions.loadProject(map);
             projectActions.openProjectConfigurator();
@@ -125,6 +124,7 @@ class ReactPlanner extends Component {
       .then(function (response) {
         if (response.status !== 200) {
          // projectActions.newProject();
+          //isFittingTime = true;
           console.log('React planner: there was a problem. Status code: ' + response.status);
           return;
         }
@@ -243,6 +243,7 @@ class ReactPlanner extends Component {
             state={extractedState} sidebarH={sidebarH} updateData={this.updateData}
             updateCoordinats={this.updateCoordinats}
             isAdmin={isAdmin}
+            isFittingTime={isFittingTime}
             {...prop} onWheel={event => event.preventDefault()}
           />
           <RoomInfo
