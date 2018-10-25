@@ -106,6 +106,9 @@ export default class Toolbar extends Component {
         .update('layers', layers => layers.map(layer => unselectAll(layer)))
         .toJS();
 
+      console.log(scene);
+      console.log(scene.ToString());
+
       event.preventDefault();
       const datas = new FormData(event.target);
 

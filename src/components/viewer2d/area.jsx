@@ -108,6 +108,9 @@ export default function Area({layer, area, catalog}, {projectActions, agents, ro
 
     let square = renderedAreaSize.props.children[0] + renderedAreaSize.props.children[1] + renderedAreaSize.props.children[2];
     //let rendered = catalog.getElement(area.type).render2D(area, layer, agents);
+
+      //projectActions.updateAreaTypeProperty(area.id, area.properties.get('type'));
+
     if (area.properties.get('square') != square) {
       projectActions.setAreaSquareProperty(area.id, square);
     }

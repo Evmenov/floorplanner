@@ -127,11 +127,29 @@ export default function (state, action) {
     case 'UPDATE_SQUARE_PROPERTIES':
       return setAreaSquareProperty(state, action.areaId, action.square);
 
+    case 'UPDATE_TYPE_PROPERTIES':
+      return updateAreaTypeProperty(state, action.areaId, action.types);
+
     default:
       return state;
 
   }
 }
+
+function updateAreaTypeProperty(state, areaId, types) {
+  const scene = state.scene.getIn(
+    ['layers', 'layer-1', 'areas', areaId, 'properties', 'type']
+  );
+  console.log(scene)
+  return state;
+
+/*  const scene = state.scene.setIn(
+    ['layers', 'layer-1', 'areas', areaId, 'properties', 'type'],
+    types
+  );
+  return state.merge({ scene });*/
+}
+
 
 function setAreaSquareProperty(state, areaId, square) {
   

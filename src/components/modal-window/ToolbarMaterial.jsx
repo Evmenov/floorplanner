@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { withStyles } from '@material-ui/core/styles';
+import {withStyles} from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
@@ -12,7 +12,7 @@ import If from '../../utils/react-if';
 const styles = {
   card: {
     minWidth: 275,
-    position:'absolute',
+    position: 'absolute',
     right: 50,
     top: 5,
   },
@@ -42,62 +42,65 @@ const sortButtonsCb = (a, b) => {
   return a.index - b.index;
 };
 
-const mapButtonsCb = (el, ind) => <If key={ind} condition={el.condition} style={{ position: 'relative' }}>{el.dom}</If>;
+const mapButtonsCb = (el, ind) => <If key={ind} condition={el.condition} style={{position: 'relative'}}>{el.dom}</If>;
 
 function SimpleCard(props) {
-  const { classes } = props;
+  const {classes} = props;
   const bull = <span className={classes.bullet}>•</span>;
 
-  if(props.selectedObject == null){
+  if (props.selectedObject == null) {
     //STYLE.visibility = 'hidden';
   }
-  else {} //STYLE.visibility = 'visible';
+  else {
+  } //STYLE.visibility = 'visible';
 
-  let elements = <PanelElementEditor state={props.state} />;
-  let sorter = [{ index: 2, condition: true, dom: elements }];
+  let elements = <PanelElementEditor state={props.state}/>;
+  let sorter = [{index: 2, condition: true, dom: elements}];
   sorter = sorter.concat(props.sidebarComponents.map((Component, key) => {
     return Component.prototype ? //if is a react component
       {
         condition: true,
-        dom: React.createElement(Component, { state, key })
+        dom: React.createElement(Component, {state, key})
       } :
       {                           //else is a sortable toolbar button
         index: Component.index,
         condition: Component.condition,
-        dom: React.createElement(Component.dom, { state, key })
+        dom: React.createElement(Component.dom, {state, key})
       };
   }));
 
   let save = event => {
-    props.viewer3DActions.selectTool3DView();
-    setTimeout(st,1);
+    props.projectActions.unselectAll();
+   // props.viewer3DActions.selectTool3DView();
+   // setTimeout(st, 1);
   };
+
   function st() {
     props.projectActions.rollback();
   }
 
   let redirectUrl;
-  if(props.selectedObject != null){
+  if (props.selectedObject != null) {
     const searchParams = new URLSearchParams(location.search);
     let id = {curlid: searchParams.get('curlid') || ''};
     redirectUrl = "http://rentservice.getwider.com/edit_room/?curlid={" + id.curlid + "}&id_room={" + props.selectedObject.id + "}"
-   }
+  }
 
-   let body;
-  if(props.selectedObject == null){
-    body =  <Card className={classes.card}>
+  let body;
+  if (props.selectedObject == null) {
+    body = <Card className={classes.card}>
       <CardContent>
         <Typography className={classes.title}>
           {props.translator.t('Settings')}
         </Typography>
         <Typography component="h3">
-         Выберите объект для редактирования
+          Выберите объект для редактирования
         </Typography>
       </CardContent>
     </Card>
   }
   else {
-    body =  <Card className={classes.card}>
+    body = <Card className={classes.card}>
       <CardContent>
 
         <Typography className={classes.title}>
@@ -109,8 +112,8 @@ function SimpleCard(props) {
 
       </CardContent>
       <CardActions>
-        <Button onClick={save} >{props.translator.t('Apply changes')}</Button>
-       {/* <form  action={redirectUrl}>
+        <Button onClick={save}>{props.translator.t('Apply changes')}</Button>
+        {/* <form  action={redirectUrl}>
           <Button>{props.translator.t('Edit')}</Button>
         </form>*/}
       </CardActions>
