@@ -222,12 +222,13 @@ class ReactPlanner extends Component {
           updateCoordinats={this.updateCoordinats}
           isAdmin={isAdmin}
           isFittingTime={isFittingTime}
+          selectedObject={selectedObject}
           {...prop} onWheel={event => event.preventDefault()}
         />
 
         <SimpleCard
           width={sidebarW} height={sidebarH} state={extractedState}
-          selectedObject={selectedObject} {...prop}
+          selectedObject={selectedObject} projectActions={prop.projectActions} {...prop}
         />
 
         <FooterBar

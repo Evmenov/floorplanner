@@ -8,6 +8,8 @@ import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import PanelElementEditor from '../sidebar/panel-element-editor/panel-element-editor';
 import If from '../../utils/react-if';
+import areapolygon from "area-polygon";
+import Area from "../viewer2d/area";
 
 const styles = {
   card: {
@@ -53,7 +55,7 @@ function SimpleCard(props) {
   }
   else {
   } //STYLE.visibility = 'visible';
-
+  //console.log(props.selectedObject)
   let elements = <PanelElementEditor state={props.state}/>;
   let sorter = [{index: 2, condition: true, dom: elements}];
   sorter = sorter.concat(props.sidebarComponents.map((Component, key) => {
@@ -70,9 +72,14 @@ function SimpleCard(props) {
   }));
 
   let save = event => {
-    props.projectActions.unselectAll();
-   // props.viewer3DActions.selectTool3DView();
-   // setTimeout(st, 1);
+    if (props.selectedObject != null) {
+      props.projectActions.setAreaSquareProperty(props.selectedObject.id, '0');
+    }
+
+
+    //props.projectActions.unselectAll();
+    // props.viewer3DActions.selectTool3DView();
+    // setTimeout(st, 1);
   };
 
   function st() {
@@ -111,12 +118,12 @@ function SimpleCard(props) {
         </Typography>
 
       </CardContent>
-      <CardActions>
-        <Button onClick={save}>{props.translator.t('Apply changes')}</Button>
-        {/* <form  action={redirectUrl}>
+      {/*<CardActions>
+        <Button onClick={save}>{props.translator.t('Calculate square')}</Button>
+         <form  action={redirectUrl}>
           <Button>{props.translator.t('Edit')}</Button>
-        </form>*/}
-      </CardActions>
+        </form>
+      </CardActions>*/}
     </Card>
   }
 
