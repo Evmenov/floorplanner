@@ -87,7 +87,8 @@ export default class Toolbar extends Component {
       this.props.width !== nextProps.width ||
       nextProps.checked !== this.props.checked ||
       nextProps.tabValue !== this.props.tabValue ||
-      nextProps.dialogIsOpen !== this.props.dialogIsOpen
+      nextProps.dialogIsOpen !== this.props.dialogIsOpen ||
+      this.props.state !== nextProps.state
   }
 
 
@@ -103,7 +104,7 @@ export default class Toolbar extends Component {
 
       let scene = state
         .get('scene')
-        .update('layers', layers => layers.map(layer => unselectAll(layer)))
+         .update('layers', layers => layers.map(layer => unselectAll(layer)))
         .toJS();
 
       event.preventDefault();
@@ -114,7 +115,6 @@ export default class Toolbar extends Component {
 
       datas.set('curlid', id.curlid);
       datas.set('jsstring', JSON.stringify(scene));
-      console.log(scene);
 
       var request = new Request(url,{
         method: 'POST',

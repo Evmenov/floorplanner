@@ -57,4 +57,5 @@ export default {
   "Apply changes": "Применить",
   "Settings": "Настройки объекта",
   "Edit": "Редактировать",
+  "Calculate square": "Высчитать площадь",
 }

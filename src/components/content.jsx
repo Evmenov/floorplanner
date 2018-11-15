@@ -10,7 +10,7 @@ import ProjectConfigurator from './configurator/project-configurator';
 import * as constants from '../constants';
 import AgentViewer from "./agents/agent-viewer";
 
-export default function Content({width, height, state, customContents, sidebarH, updateData, updateCoordinats, isAdmin, isFittingTime}) {
+export default function Content({width, height, state, customContents, sidebarH, updateData, updateCoordinats, isAdmin, isFittingTime, selectedObject}) {
 
     let mode = state.get('mode');
     switch (mode) {
@@ -47,6 +47,7 @@ export default function Content({width, height, state, customContents, sidebarH,
           updateCoordinats={updateCoordinats}
           isAdmin={isAdmin}
           isFittingTime={isFittingTime}
+          selectedObject={selectedObject}
         />;
 
       case constants.MODE_CONFIGURING_PROJECT:

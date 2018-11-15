@@ -215,7 +215,7 @@ export function pasteProperties() {
   };
 }
 
-export function pushLastSelectedCatalogElementToHistory( element ) {
+export function pushLastSelectedCatalogElementToHistory(element) {
   return {
     type: PUSH_LAST_SELECTED_CATALOG_ELEMENT_TO_HISTORY,
     element
@@ -224,8 +224,32 @@ export function pushLastSelectedCatalogElementToHistory( element ) {
 
 export function setAreaSquareProperty(areaId, square) {
   return {
-    type: 'UPDATE_SQUARE_PROPERTIES', 
-    areaId, 
+    type: 'UPDATE_SQUARE_PROPERTIES',
+    areaId,
     square
   };
 }
+
+export function updateAreaTypeProperty(areaId, types) {
+  return {
+    type: 'UPDATE_TYPE_PROPERTIES',
+    areaId,
+    types
+  };
+}
+
+// export function updateAreaAvabilityProperty(areaId, avability) {
+//   return {
+//     type: 'UPDATE_AVABILITY_PROPERTIES',
+//     areaId,
+//     avability
+//   };
+// }
+//
+// export function updateAreaConditionProperty(areaId, condition) {
+//   return {
+//     type: 'UPDATE_CONDITION_PROPERTIES',
+//     areaId,
+//     condition
+//   };
+// }

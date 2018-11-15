@@ -7,7 +7,7 @@ let types = {
   'Office': 'Офис',
   'Stock': 'Склад',
   'Trading': 'Торговое'
-}
+};
 
 const STYLE_TEXT_TYPE = {
   textAnchor: 'middle',
@@ -86,6 +86,7 @@ export default function Area({layer, area, catalog}, {projectActions, agents, ro
       else {
         type = types[area.properties.get('type')];
       }
+
       areaType = (
         <text x="0" y="-20" transform={`translate(${center[0]} ${center[1]}) scale(1, -1)`} style={STYLE_TEXT_TYPE}>
           {type}
@@ -100,17 +101,23 @@ export default function Area({layer, area, catalog}, {projectActions, agents, ro
       )
     }
 
-    renderedAreaSize = (
-      <text x="0" y="0" transform={`translate(${center[0]} ${center[1]}) scale(1, -1)`} style={STYLE_TEXT}>
-        {((areaSize) / 10000).toFixed(2)} m{String.fromCharCode(0xb2)}
-      </text>
-    )
 
-    let square = renderedAreaSize.props.children[0] + renderedAreaSize.props.children[1] + renderedAreaSize.props.children[2];
     //let rendered = catalog.getElement(area.type).render2D(area, layer, agents);
-    if (area.properties.get('square') != square) {
+    //projectActions.updateAreaTypeProperty(area.id, area.properties.get('type'));
+    if (area.properties.get('square') == '0') {
+      renderedAreaSize = (
+        <text x="0" y="0" transform={`translate(${center[0]} ${center[1]}) scale(1, -1)`} style={STYLE_TEXT}>
+          {((areaSize) / 10000).toFixed(2)} m{String.fromCharCode(0xb2)}
+        </text>
+      );
+      let square = renderedAreaSize.props.children[0] + renderedAreaSize.props.children[1] + renderedAreaSize.props.children[2];
       projectActions.setAreaSquareProperty(area.id, square);
     }
+    else renderedAreaSize = (
+      <text x="0" y="0" transform={`translate(${center[0]} ${center[1]}) scale(1, -1)`} style={STYLE_TEXT}>
+        {area.properties.get('square')}
+      </text>
+    );
 
   }
 
@@ -133,11 +140,11 @@ export default function Area({layer, area, catalog}, {projectActions, agents, ro
 Area.propTypes = {
   area: PropTypes.object.isRequired,
   layer: PropTypes.object.isRequired,
-  catalog: PropTypes.object.isRequired
+  catalog: PropTypes.object.isRequired,
 };
 
 Area.contextTypes = {
   projectActions: PropTypes.object.isRequired,
   agents: PropTypes.array.isRequired,
   roomInfo: PropTypes.object.isRequired
-}
+};

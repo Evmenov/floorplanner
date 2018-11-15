@@ -101,7 +101,7 @@ function extractElementData(node) {
   }
 }
 
-export default function Viewer2D({state, width, height, sidebarH, updateData, updateCoordinats, isAdmin, isFittingTime},
+export default function Viewer2D({state, width, height, sidebarH, updateData, updateCoordinats, isAdmin, isFittingTime, selectedObject},
                                  {viewer2DActions, linesActions, holesActions, verticesActions, itemsActions, areaActions, projectActions, catalog}) {
 
   const Style = {
@@ -130,6 +130,7 @@ export default function Viewer2D({state, width, height, sidebarH, updateData, up
     //load();
     projectActions.updateMouseCoord({x, y});
     switch (mode) {
+
       case constants.MODE_DRAWING_LINE:
         if (isAdmin) linesActions.updateDrawingLine(x, y, state.snapMask);
         break;
@@ -178,7 +179,7 @@ export default function Viewer2D({state, width, height, sidebarH, updateData, up
 
     if (mode === constants.MODE_IDLE) {
       let elementData = extractElementData(event.target);
-      updateData('reset');
+      //updateData('reset');
 
       if (!elementData || !elementData.selected) return;
       switch (elementData.prototype) {

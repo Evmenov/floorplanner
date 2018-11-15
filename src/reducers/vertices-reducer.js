@@ -5,7 +5,7 @@ import {
   MODE_DRAGGING_VERTEX,
   MODE_IDLE
 } from '../constants';
-import { Map, List } from 'immutable';
+import {Map, List} from 'immutable';
 import {
   LayerOperations,
   SnapSceneUtils,
@@ -44,26 +44,28 @@ function beginDraggingVertex(state, layerID, vertexID, x, y) {
 }
 
 function updateDraggingVertex(state, x, y) {
-  let { draggingSupport, snapElements, scene } = state;
+  let {draggingSupport, snapElements, scene} = state;
 
   let snap = null;
   if (state.snapMask && !state.snapMask.isEmpty()) {
     snap = SnapUtils.nearestSnap(snapElements, x, y, state.snapMask);
-    if (snap) ({ x, y } = snap.point);
+    if (snap) ({x, y} = snap.point);
   }
 
   let layerID = draggingSupport.get('layerID');
   let vertexID = draggingSupport.get('vertexID');
+
+
   return state.merge({
     activeSnapElement: snap ? snap.snap : null,
-    scene: scene.mergeIn(['layers', layerID, 'vertices', vertexID], { x, y })
+    scene: scene.mergeIn(['layers', layerID, 'vertices', vertexID], {x, y})
   });
 }
 
 function endDraggingVertex(state, x, y) {
   let catalog = state.catalog;
 
-  let { draggingSupport } = state;
+  let {draggingSupport} = state;
   let layerID = draggingSupport.get('layerID');
   let vertexID = draggingSupport.get('vertexID');
   let lineIDs = state.scene.layers.get(layerID).vertices.get(vertexID).lines;
@@ -108,7 +110,7 @@ function endDraggingVertex(state, x, y) {
           let xp = oldLineLength * offset * Math.cos(alpha) + orderedVertices[0].x;
           let yp = oldLineLength * offset * Math.sin(alpha) + orderedVertices[0].y;
 
-          oldHoles.push({ hole, offsetPosition: { x: xp, y: yp } });
+          oldHoles.push({hole, offsetPosition: {x: xp, y: yp}});
         });
 
         LayerOperations.mergeEqualsVertices(layer, vertexID);
@@ -126,6 +128,36 @@ function endDraggingVertex(state, x, y) {
 
     LayerOperations.detectAndUpdateAreas(layer, catalog);
   }));
+
+  let items = state.scene.getIn(['layers', 'layer-1', 'areas']);
+  let isMerged = false;
+
+  if (items.length != 0) {
+
+    items.forEach(function (item) {
+      let vertexes = item.getIn(['vertices']);
+
+      vertexes.forEach(function (id) {
+        if (id == vertexID) {
+
+          if (!isMerged) {
+            scene = state.scene.setIn(
+              ['layers', 'layer-1', 'areas', item.id, 'properties', 'square'],
+              '0'
+            );
+            isMerged = true;
+          }
+
+          else {
+            scene = scene.setIn(
+              ['layers', 'layer-1', 'areas', item.id, 'properties', 'square'],
+              '0'
+            );
+          }
+        }
+      })
+    });
+  }
 
   return state.merge({
     mode: MODE_IDLE,
