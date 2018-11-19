@@ -15,14 +15,9 @@ import {
   FooterBarComponents
 } from './components/export';
 import {VERSION} from './version';
-import RoomAdditionalPanel from './components/room-additional/room-additional';
-import {browserUpload} from "./utils/browser";
-import SimpleBottomNavigation from "./components/modal-window/menu";
-import MiniDrawer from "./components/modal-window/Drawer";
 import SimpleCard from "./components/modal-window/ToolbarMaterial";
 import RoomInfo from "./components/modal-window/RoomInfo";
-import Listmenu from "./components/modal-window/Catalog";
-import AlertDialogSlide from "./components/modal-window/SettingsDialog";
+import SelectedItemContextMenu from "./components/modal-window/SelectedItemContextMenu";
 
 const {Toolbar} = ToolbarComponents;
 const {Sidebar} = SidebarComponents;
@@ -49,10 +44,10 @@ let currentElement = 0;
 let isAdmin = true;
 let isFittingTime = false;
 
-function getAllRoomInfo(id, count, projectActions, map, viewer2DActions) {
+function getAllRoomInfo(id, count, projectActions, map, viewer2DActions, domen) {
   currentElement = currentElement + 1;
   if (additionalDataDictionary[id] == null) {
-    const url = 'http://rentservice.getwider.com/roomget/';
+    const url = domen + '/roomget/';
     var request = new Request(url, {
       method: 'POST',
       headers: {
@@ -95,6 +90,7 @@ class ReactPlanner extends Component {
       items: [],
       checked: false,
       dialogIsOpen: false,
+      selectedItemContextIsVisible: false,
       tabValue: 0,
       X: 0,
       Y: 0
@@ -106,9 +102,10 @@ class ReactPlanner extends Component {
     projectActions.newProject();
 
     const searchParams = new URLSearchParams(location.search);
-    let id = {curlid: searchParams.get('curlid') || ''};
 
-    const url = 'http://rentservice.getwider.com/corpsget/';
+    let id = {curlid: searchParams.get('curlid') || ''};
+    let path = {domen: searchParams.get('domen') || ''};
+    const url = path.domen + '/corpsget/';
 
     var request = new Request(url, {
       method: 'POST',
@@ -139,9 +136,9 @@ class ReactPlanner extends Component {
             let items = data.layers['layer-1']['areas'];
             let list = Object.values(items);
 
-            if(list.length != 0){
+            if (list.length != 0) {
               list.forEach(function (item) {
-                getAllRoomInfo(item.id, list.length, projectActions, data, viewer2DActions);
+                getAllRoomInfo(item.id, list.length, projectActions, data, viewer2DActions, path.domen);
               });
             }
             else {
@@ -203,16 +200,20 @@ class ReactPlanner extends Component {
     let contentW = width - toolbarW;
     let extractedState = stateExtractor(state);
 
+    this.state.selectedItemContextIsVisible = selectedObject != null;
+
+    console.log(selectedObject)
+
     let body;
-    if(isAdmin) {
+    if (isAdmin) {
       body = <div style={{...wrapperStyle, height}}>
         <Toolbar
           checked={this.state.checked}
-          onInvertCatalog={() => this.setState({ checked: !this.state.checked})}
+          onInvertCatalog={() => this.setState({checked: !this.state.checked})}
           dialogIsOpen={this.state.dialogIsOpen}
-          onInvertSettings={() => this.setState({ dialogIsOpen: !this.state.dialogIsOpen})}
+          onInvertSettings={() => this.setState({dialogIsOpen: !this.state.dialogIsOpen})}
           tabValue={this.state.tabValue}
-          ontabValueChanged={(value) => this.setState({ tabValue: value})}
+          ontabValueChanged={(value) => this.setState({tabValue: value})}
           width={toolbarW} height={toolbarH} state={extractedState}  {...prop}
         />
 
@@ -224,6 +225,16 @@ class ReactPlanner extends Component {
           isFittingTime={isFittingTime}
           selectedObject={selectedObject}
           {...prop} onWheel={event => event.preventDefault()}
+        />
+
+        <SelectedItemContextMenu
+          selectedItemContextIsVisible={this.state.selectedItemContextIsVisible}
+          invertSelectedItemContextMenuVisibility={() => this.setState({selectedItemContextIsVisible: !this.state.selectedItemContextIsVisible})}
+          resetSelectedObject={() => selectedObject = null}
+          selectedItem={selectedObject}
+          selectedObject={selectedObject}
+          x={this.state.X} y={this.state.Y}
+          {...prop}
         />
 
         <SimpleCard
@@ -259,7 +270,7 @@ class ReactPlanner extends Component {
           />
         </div>
     }
-    return ( body
+    return (body
 
     );
   }

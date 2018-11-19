@@ -100,7 +100,12 @@ export default class Toolbar extends Component {
     } = this;
 
     let uploadAction = event => {
-      const url = 'http://rentservice.getwider.com/corpsupdate/';
+
+      const searchParams = new URLSearchParams(location.search);
+      let id = {curlid: searchParams.get('curlid') || ''};
+      let path = {domen: searchParams.get('domen') || ''};
+
+      const url = path.domen + '/corpsupdate/';
 
       let scene = state
         .get('scene')
@@ -109,9 +114,6 @@ export default class Toolbar extends Component {
 
       event.preventDefault();
       const datas = new FormData(event.target);
-
-      const searchParams = new URLSearchParams(location.search);
-      let id = {curlid: searchParams.get('curlid') || ''};
 
       datas.set('curlid', id.curlid);
       datas.set('jsstring', JSON.stringify(scene));
