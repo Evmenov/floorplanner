@@ -40,6 +40,7 @@ const wrapperStyle = {
 };
 
 let additionalDataDictionary = {};
+let selectedObjectIsChanged = false;
 let currentElement = 0;
 let isAdmin = true;
 let isFittingTime = false;
@@ -152,7 +153,6 @@ class ReactPlanner extends Component {
       })
   }
 
-
   getChildContext() {
     return {
       ...objectsMap(actions, actionNamespace => this.props[actionNamespace]),
@@ -183,6 +183,7 @@ class ReactPlanner extends Component {
 
   updateData(value) {
     selectedObject = value;
+    if (selectedObject != null) selectedObjectIsChanged = true;
   };
 
   updateCoordinats(x, y) {
@@ -192,15 +193,19 @@ class ReactPlanner extends Component {
 
   render() {
     let {width, height, state, stateExtractor, ...prop} = this.props;
-    this.state.X = X;
-    this.state.Y = Y;
+
+    if (!this.state.selectedItemContextIsVisible || selectedObjectIsChanged){
+      this.state.X = X;
+      this.state.Y = Y;
+      selectedObjectIsChanged = false;
+    }
+
+    this.state.selectedItemContextIsVisible = selectedObject != null;
 
     let toolbarH = height - footerBarH;
     let contentH = height - footerBarH;
     let contentW = width - toolbarW;
     let extractedState = stateExtractor(state);
-
-    this.state.selectedItemContextIsVisible = selectedObject != null;
 
     let body;
     if (isAdmin) {
@@ -229,7 +234,6 @@ class ReactPlanner extends Component {
           selectedItemContextIsVisible={this.state.selectedItemContextIsVisible}
           invertSelectedItemContextMenuVisibility={() => this.setState({selectedItemContextIsVisible: !this.state.selectedItemContextIsVisible})}
           resetSelectedObject={() => selectedObject = null}
-          selectedItem={selectedObject}
           selectedObject={selectedObject}
           x={this.state.X} y={this.state.Y}
           state={extractedState}

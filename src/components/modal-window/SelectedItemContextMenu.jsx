@@ -15,31 +15,30 @@ class SelectedItemContextMenu extends React.Component {
   }
 
   shouldComponentUpdate(nextProps) {
-    if (nextProps.selectedItemContextIsVisible === this.props.selectedItemContextIsVisible) {
+    if (nextProps.selectedItemContextIsVisible === this.props.selectedItemContextIsVisible
+    ) {
+      if (nextProps.selectedObject != null && this.props.selectedObject != null) if (nextProps.selectedObject.id != this.props.selectedObject.id) return true;
       return false;
     }
-    else return true;
+    else {
+      return true;
+    }
   }
+
 
   render() {
     let {projectActions, linesActions} = this.props;
 
     let positionStyle = {
       position: 'absolute',
-      top: 0,
-      left: 0,
-      visibility: 'hidden',
+      top: this.props.y + 25,
+      left: this.props.x + 25,
+      visibility: 'visible',
       background: 'transparent'
     };
 
     if (this.props.selectedObject == null) {
-      positionStyle.visibility = 'hidden';
-      return null;
-    }
-    else {
-      positionStyle.left = this.props.x + 25;
-      positionStyle.top = this.props.y + 25;
-      positionStyle.visibility = 'visible';
+      this.props.resetSelectedObject();
     }
 
     let deleteEvent = event => {
@@ -48,26 +47,25 @@ class SelectedItemContextMenu extends React.Component {
         let walls = this.props.state.get('scene').get('layers').get('layer-1').get('areas').get(this.props.selectedObject.id).get('vertices');
         let list = Object.values(walls.toArray());
         let removedArray = [];
+
         if (list.length != 0) {
-
           for (let i = 0; i < list.length; i++) {
-
             let vertice = this.props.state.get('scene').get('layers').get('layer-1').get('vertices').get(list[i]);
             let areas = vertice.get('areas').toArray();
+
             if (areas.length > 1) continue;
             let lines = vertice.get('lines').toArray();
-
             let verticeLines = Object.values(lines);
             for (let i = 0; i < verticeLines.length; i++) {
               let isExist = false;
 
               if (removedArray.length != 0) for (let y = 0; y < removedArray.length; y++) {
+
                 if (removedArray[y] == verticeLines[i]) {
                   isExist = true;
                   break;
                 }
               }
-
               if (!isExist) removedArray.push(verticeLines[i]);
             }
           }
@@ -98,9 +96,7 @@ class SelectedItemContextMenu extends React.Component {
               }}
             >
               <Paper>
-                <ClickAwayListener onClickAway={() => {
-                  this.props.invertSelectedItemContextMenuVisibility()
-                }}>
+                <ClickAwayListener>
                   <MenuList>
                     <Tooltip title="Удалить">
                       <Button onClick={deleteEvent} variant="fab" color="secondary">
