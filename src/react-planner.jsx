@@ -17,6 +17,7 @@ import {
 import {VERSION} from './version';
 import SimpleCard from "./components/modal-window/ToolbarMaterial";
 import RoomInfo from "./components/modal-window/RoomInfo";
+import AdditionalRoomInformation from "./components/modal-window/AdditionalRoomInformation";
 import SelectedItemContextMenu from "./components/modal-window/SelectedItemContextMenu";
 
 const {Toolbar} = ToolbarComponents;
@@ -29,6 +30,7 @@ const sidebarW = 300;
 const footerBarH = 20;
 const roomInfoH = 240;
 const roomInfoW = 400;
+const additionalRoomInfoW = 400;
 
 let selectedObject = null;
 let X = 0;
@@ -256,16 +258,17 @@ class ReactPlanner extends Component {
       body =
         <div style={{...wrapperStyle, height}}>
           <Content
-            width={contentW + toolbarW} height={contentH + footerBarH}
+            width={(contentW + toolbarW) - additionalRoomInfoW} height={contentH + footerBarH}
             state={extractedState} sidebarH={sidebarH} updateData={this.updateData}
             updateCoordinats={this.updateCoordinats}
             isAdmin={isAdmin}
             isFittingTime={isFittingTime}
             {...prop} onWheel={event => event.preventDefault()}
           />
-          <RoomInfo
-            width={roomInfoW}
-            height={roomInfoH}
+
+          <AdditionalRoomInformation
+            width={additionalRoomInfoW}
+            height={contentH + footerBarH}
             state={extractedState}
             selectedObject={selectedObject}
             additionalDataDictionary={additionalDataDictionary}
