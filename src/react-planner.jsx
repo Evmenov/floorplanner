@@ -202,8 +202,6 @@ class ReactPlanner extends Component {
 
     this.state.selectedItemContextIsVisible = selectedObject != null;
 
-    console.log(selectedObject)
-
     let body;
     if (isAdmin) {
       body = <div style={{...wrapperStyle, height}}>
@@ -234,6 +232,7 @@ class ReactPlanner extends Component {
           selectedItem={selectedObject}
           selectedObject={selectedObject}
           x={this.state.X} y={this.state.Y}
+          state={extractedState}
           {...prop}
         />
 

@@ -22,7 +22,7 @@ class SelectedItemContextMenu extends React.Component {
   }
 
   render() {
-    let {projectActions} = this.props;
+    let {projectActions, linesActions} = this.props;
 
     let positionStyle = {
       position: 'absolute',
@@ -43,8 +43,45 @@ class SelectedItemContextMenu extends React.Component {
     }
 
     let deleteEvent = event => {
-      projectActions.remove();
-      this.props.resetSelectedObject();
+
+      if (this.props.selectedObject.prototype == 'areas') {
+        let walls = this.props.state.get('scene').get('layers').get('layer-1').get('areas').get(this.props.selectedObject.id).get('vertices');
+        let list = Object.values(walls.toArray());
+        let removedArray = [];
+        if (list.length != 0) {
+
+          for (let i = 0; i < list.length; i++) {
+
+            let vertice = this.props.state.get('scene').get('layers').get('layer-1').get('vertices').get(list[i]);
+            let areas = vertice.get('areas').toArray();
+            if (areas.length > 1) continue;
+            let lines = vertice.get('lines').toArray();
+
+            let verticeLines = Object.values(lines);
+            for (let i = 0; i < verticeLines.length; i++) {
+              let isExist = false;
+
+              if (removedArray.length != 0) for (let y = 0; y < removedArray.length; y++) {
+                if (removedArray[y] == verticeLines[i]) {
+                  isExist = true;
+                  break;
+                }
+              }
+
+              if (!isExist) removedArray.push(verticeLines[i]);
+            }
+          }
+          for (let i = 0; i < removedArray.length; i++) {
+            linesActions.selectLine('layer-1', removedArray[i]);
+            projectActions.remove();
+          }
+          this.props.resetSelectedObject();
+        }
+      }
+      else {
+        projectActions.remove();
+        this.props.resetSelectedObject();
+      }
     };
 
     return (
@@ -83,6 +120,7 @@ class SelectedItemContextMenu extends React.Component {
 
 SelectedItemContextMenu.contextTypes = {
   projectActions: PropTypes.object.isRequired,
+  linesActions: PropTypes.object.isRequired,
 };
 
 export default SelectedItemContextMenu;
