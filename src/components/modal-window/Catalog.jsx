@@ -1,11 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
-import Switch from '@material-ui/core/Switch';
 import Paper from '@material-ui/core/Paper';
 import Slide from '@material-ui/core/Slide';
 import CatalogList from "../catalog-view/catalog-list";
-import SimpleTabs from "../modal-window/Tabs";
 
 const styles = theme => ({
   root: {
@@ -53,18 +51,6 @@ class SimpleSlide extends React.Component {
             </Paper>
           </Slide>
         </div>
-
-        {/*<div className={classes.wrapper}>*/}
-          {/*<Slide direction="right" in={!this.props.checked} mountOnEnter unmountOnExit>*/}
-            {/*<Paper elevation={4} className={classes.paper}>*/}
-
-             {/*<h1>Test</h1>*/}
-
-              {/*<svg className={classes.svg}>*/}
-              {/*</svg>*/}
-            {/*</Paper>*/}
-          {/*</Slide>*/}
-        {/*</div>*/}
       </div>
     );
   }

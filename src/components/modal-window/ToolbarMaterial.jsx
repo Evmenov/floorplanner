@@ -50,12 +50,6 @@ function SimpleCard(props) {
   const {classes} = props;
   const bull = <span className={classes.bullet}>•</span>;
 
-  if (props.selectedObject == null) {
-    //STYLE.visibility = 'hidden';
-  }
-  else {
-  } //STYLE.visibility = 'visible';
-  //console.log(props.selectedObject)
   let elements = <PanelElementEditor state={props.state}/>;
   let sorter = [{index: 2, condition: true, dom: elements}];
   sorter = sorter.concat(props.sidebarComponents.map((Component, key) => {
@@ -70,28 +64,6 @@ function SimpleCard(props) {
         dom: React.createElement(Component.dom, {state, key})
       };
   }));
-
-  let save = event => {
-    if (props.selectedObject != null) {
-      props.projectActions.setAreaSquareProperty(props.selectedObject.id, '0');
-    }
-
-
-    //props.projectActions.unselectAll();
-    // props.viewer3DActions.selectTool3DView();
-    // setTimeout(st, 1);
-  };
-
-  function st() {
-    props.projectActions.rollback();
-  }
-
-  let redirectUrl;
-  if (props.selectedObject != null) {
-    const searchParams = new URLSearchParams(location.search);
-    let id = {curlid: searchParams.get('curlid') || ''};
-    redirectUrl = "http://rentservice.getwider.com/edit_room/?curlid={" + id.curlid + "}&id_room={" + props.selectedObject.id + "}"
-  }
 
   let body;
   if (props.selectedObject == null) {
@@ -118,12 +90,6 @@ function SimpleCard(props) {
         </Typography>
 
       </CardContent>
-      {/*<CardActions>
-        <Button onClick={save}>{props.translator.t('Calculate square')}</Button>
-         <form  action={redirectUrl}>
-          <Button>{props.translator.t('Edit')}</Button>
-        </form>
-      </CardActions>*/}
     </Card>
   }
 
