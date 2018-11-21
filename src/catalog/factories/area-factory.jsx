@@ -35,7 +35,7 @@ export default function AreaFactory(name, info, textures) {
     properties: {
       square: {
         label: 'Площадь',
-        type: 'string',
+        type: 'number',
         defaultValue: '0'
       },
       type: {

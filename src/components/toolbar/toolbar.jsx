@@ -100,7 +100,6 @@ export default class Toolbar extends Component {
     } = this;
 
     let uploadAction = event => {
-
       const searchParams = new URLSearchParams(location.search);
       let id = {curlid: searchParams.get('curlid') || ''};
       let path = {domen: searchParams.get('domen') || ''};
@@ -113,7 +112,7 @@ export default class Toolbar extends Component {
         .toJS();
 
       event.preventDefault();
-      const datas = new FormData(event.target);
+      const datas = new FormData();
 
       datas.set('curlid', id.curlid);
       datas.set('jsstring', JSON.stringify(scene));
@@ -233,7 +232,7 @@ export default class Toolbar extends Component {
 
       <Paper style={{maxWidth: width, maxHeight: height }}>
         <MenuList>
-          <MenuItem className={classes.menuItem} onClick={uploadAction}>
+          <MenuItem className={classes.menuItem} onClick={uploadAction.bind(this)}>
             <ListItemIcon className={classes.icon}>
               <SaveIcon />
             </ListItemIcon>

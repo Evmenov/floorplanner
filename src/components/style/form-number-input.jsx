@@ -41,7 +41,7 @@ export default class FormNumberInput extends Component {
     value = regexp.test(value) ? value : parseFloat(value).toFixed(precision);
 
     return <input
-      type="text"
+      type="number"
       value={value}
       style={numericInputStyle}
       onChange={(evt) => {
@@ -80,5 +80,5 @@ FormNumberInput.defaultProps = {
   style: {},
   min: Number.MIN_SAFE_INTEGER,
   max: Number.MAX_SAFE_INTEGER,
-  precision: 3
+  precision: 2
 };

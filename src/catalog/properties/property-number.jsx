@@ -6,11 +6,12 @@ import PropertyStyle from './shared-property-style';
 export default function PropertyNumber({value, onUpdate, onValid, configs, sourceElement, internalState, state}) {
 
   let update = (val) => {
+
     let number = parseFloat(val);
 
-    if (isNaN(number)) {
-      number = 0;
-    }
+    // if (isNaN(number)) {
+    //   number = 0;
+    // }
 
     if (configs.hook) {
       return configs.hook(number, sourceElement, internalState, state).then(_val => {

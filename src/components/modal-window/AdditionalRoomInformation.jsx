@@ -64,20 +64,21 @@ function SimpleExpansionPanel(props) {
       </ExpansionPanelSummary>
       <ExpansionPanelDetails>
         <List>
+
           <ListItem>
             <Avatar><Room/></Avatar>
             <ListItemText secondary="Адрес"
-                          primary={first == null ? 'Нет данных' : props.additionalDataDictionary[first].square}/>
+                          primary={first == null ? 'Нет данных' : props.additionalDataDictionary[first].address_object}/>
           </ListItem>
           <ListItem>
             <Avatar><AccountBalance/></Avatar>
             <ListItemText secondary="Корпус"
-                          primary={first == null ? 'Нет данных' : props.additionalDataDictionary[first].square}/>
+                          primary={first == null ? 'Нет данных' : props.additionalDataDictionary[first].name_corpus}/>
           </ListItem>
           <ListItem>
             <Avatar><Layers/></Avatar>
             <ListItemText secondary="Этаж"
-                          primary={first == null ? 'Нет данных' : props.additionalDataDictionary[first].square}/>
+                          primary={first == null ? 'Нет данных' : props.additionalDataDictionary[first].floor_number}/>
           </ListItem>
         </List>
       </ExpansionPanelDetails>
@@ -104,7 +105,7 @@ function SimpleExpansionPanel(props) {
             <ListItem>
               <Avatar><LocalOffer/></Avatar>
               <ListItemText secondary="Название помещения"
-                            primary={first == null ? 'Нет данных' : props.additionalDataDictionary[first].square}/>
+                            primary={first == null || props.additionalDataDictionary[first].name_room == null ? 'Нет данных' : props.additionalDataDictionary[first].name_room}/>
             </ListItem>
             <ListItem>
               <Avatar><LocalMall/></Avatar>
