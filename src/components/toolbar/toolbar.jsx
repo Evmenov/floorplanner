@@ -125,7 +125,9 @@ export default class Toolbar extends Component {
       fetch(request).then(function (res) {
         if (res.ok) {
           alert("Сохранение прошло успешно!");
-          window.location.href='http://rentservice.getwider.com/company/objects/?curlid={' + id.curlid + '}';
+          let redirectPath = path.domen + '/company/objects/?curlid={' + id.curlid + '}';
+          console.log(redirectPath);
+          window.location.href = redirectPath;
         } else if (res.status == 401) {
           alert("Сервер отклонил сохранение. Код ошибки " + res.status);
         }
