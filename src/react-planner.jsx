@@ -19,6 +19,7 @@ import SimpleCard from "./components/modal-window/ToolbarMaterial";
 import RoomInfo from "./components/modal-window/RoomInfo";
 import AdditionalRoomInformation from "./components/modal-window/AdditionalRoomInformation";
 import SelectedItemContextMenu from "./components/modal-window/SelectedItemContextMenu";
+import {getMap} from "./services/mainService";
 
 const {Toolbar} = ToolbarComponents;
 const {Sidebar} = SidebarComponents;
@@ -45,43 +46,43 @@ let additionalDataDictionary = {};
 let selectedObjectIsChanged = false;
 let currentElement = 0;
 let isAdmin = true;
-let isFittingTime = false;
+let isFittingTime = true;
 
-function getAllRoomInfo(id, count, projectActions, map, viewer2DActions, domen) {
-  currentElement = currentElement + 1;
-  if (additionalDataDictionary[id] == null) {
-    const url = domen + '/roomget/';
-    var request = new Request(url, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'text/plain;charset=UTF-8',
-      },
-      body: JSON.stringify({
-        curlid: id,
-      }),
-    });
-
-    fetch(request)
-      .then(function (response) {
-        if (response.status !== 200) {
-          console.log('Room info: there was a problem. Status code: ' +
-            response.status);
-          return;
-        }
-
-        response.json().then(function (data) {
-          additionalDataDictionary[id] = data;
-          if (currentElement == count) {
-
-            projectActions.loadProject(map);
-            projectActions.openProjectConfigurator();
-            isFittingTime = true;
-            projectActions.rollback();
-          }
-        });
-      });
-  }
-}
+// function getAllRoomInfo(id, count, projectActions, map, viewer2DActions, domen) {
+//   currentElement = currentElement + 1;
+//   if (additionalDataDictionary[id] == null) {
+//     const url = domen + '/roomget/';
+//     var request = new Request(url, {
+//       method: 'POST',
+//       headers: {
+//         'Content-Type': 'text/plain;charset=UTF-8',
+//       },
+//       body: JSON.stringify({
+//         curlid: id,
+//       }),
+//     });
+//
+//     fetch(request)
+//       .then(function (response) {
+//         if (response.status !== 200) {
+//           console.log('Room info: there was a problem. Status code: ' +
+//             response.status);
+//           return;
+//         }
+//
+//         response.json().then(function (data) {
+//           additionalDataDictionary[id] = data;
+//           if (currentElement == count) {
+//
+//             projectActions.loadProject(map);
+//             projectActions.openProjectConfigurator();
+//             isFittingTime = true;
+//             projectActions.rollback();
+//           }
+//         });
+//       });
+//   }
+// }
 
 class ReactPlanner extends Component {
   constructor(props) {
@@ -105,54 +106,78 @@ class ReactPlanner extends Component {
     projectActions.newProject();
 
     const searchParams = new URLSearchParams(location.search);
+    let id = {id: searchParams.get('id') || ''};
 
-    let id = {curlid: searchParams.get('curlid') || ''};
-    let path = {domen: searchParams.get('domen') || ''};
-    const url = path.domen + '/corpsget/';
+    projectActions.openProjectConfigurator();
+    isFittingTime = true;
+    projectActions.rollback();
 
-    var request = new Request(url, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'text/plain;charset=UTF-8',
-      },
-      body: JSON.stringify({
-        curlid: id.curlid,
-      }),
+    getMap(id).then(function (_) {
+      if (_.status !== 200) {
+        console.log('React planner: there was a problem. Status code: ' + _.status);
+        return;
+      }
+      _.json().then(function (_) {
+        console.log(_)
+        if (_) {
+          projectActions.loadProject(_);
+          projectActions.openProjectConfigurator();
+          isFittingTime = true;
+          projectActions.rollback();
+        }
+      });
     });
 
-    fetch(request)
-      .then(function (response) {
-        if (response.status !== 200) {
 
-          console.log('React planner: there was a problem. Status code: ' + response.status);
-          return;
-        }
+    // let id = {curlid: searchParams.get('curlid') || ''};
+    // let path = {domen: searchParams.get('domen') || ''};
+    // const url = path.domen + '/corpsget/';
 
-        response.json().then(function (data) {
-
-          if (data.height == null) {
-            isFittingTime = true;
-            projectActions.newProject();
-          }
-          else {
-
-            let items = data.layers['layer-1']['areas'];
-            let list = Object.values(items);
-
-            if (list.length != 0) {
-              list.forEach(function (item) {
-                getAllRoomInfo(item.id, list.length, projectActions, data, viewer2DActions, path.domen);
-              });
-            }
-            else {
-              projectActions.loadProject(data);
-              projectActions.openProjectConfigurator();
-              isFittingTime = true;
-              projectActions.rollback();
-            }
-          }
-        });
-      })
+    // var request = new Request(url, {
+    //   method: 'POST',
+    //   headers: {
+    //     'Content-Type': 'text/plain;charset=UTF-8',
+    //   },
+    //   body: JSON.stringify({
+    //     curlid: id.curlid,
+    //   }),
+    // });
+    //
+    // projectActions.newProject();
+    // return;
+    // fetch(request)
+    //   .then(function (response) {
+    //     if (response.status !== 200) {
+    //
+    //       console.log('React planner: there was a problem. Status code: ' + response.status);
+    //       return;
+    //     }
+    //
+    //     response.json().then(function (data) {
+    //
+    //       if (data.height == null) {
+    //         isFittingTime = true;
+    //         projectActions.newProject();
+    //       }
+    //       else {
+    //
+    //         let items = data.layers['layer-1']['areas'];
+    //         let list = Object.values(items);
+    //
+    //         if (list.length != 0) {
+    //           list.forEach(function (item) {
+    //             getAllRoomInfo(item.id, list.length, projectActions, data, viewer2DActions, path.domen);
+    //           });
+    //         }
+    //         else {
+    //           projectActions.loadProject(data);
+    //           projectActions.openProjectConfigurator();
+    //           isFittingTime = true;
+    //           projectActions.rollback();
+    //         }
+    //       }
+    //     });
+    //   })
   }
 
   getChildContext() {
@@ -196,7 +221,7 @@ class ReactPlanner extends Component {
   render() {
     let {width, height, state, stateExtractor, ...prop} = this.props;
 
-    if (!this.state.selectedItemContextIsVisible || selectedObjectIsChanged){
+    if (!this.state.selectedItemContextIsVisible || selectedObjectIsChanged) {
       this.state.X = X;
       this.state.Y = Y;
       selectedObjectIsChanged = false;
@@ -252,9 +277,7 @@ class ReactPlanner extends Component {
           state={extractedState} {...prop}
         />
       </div>
-    }
-
-    else {
+    } else {
       body =
         <div style={{...wrapperStyle, height}}>
           <Content

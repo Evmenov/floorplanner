@@ -29,6 +29,7 @@ import AgentsIcon from '@material-ui/icons/Group';
 import DraftsIcon from '@material-ui/icons/KeyboardArrowRight';
 import SaveIcon from '@material-ui/icons/Save';
 import {unselectAll} from "../../utils/layer-operations";
+import {saveMap} from "../../services/mainService";
 
 import Listmenu from "../modal-window/Catalog";
 import AlertDialogSlide from "../modal-window/SettingsDialog";
@@ -101,39 +102,49 @@ export default class Toolbar extends Component {
 
     let uploadAction = event => {
       const searchParams = new URLSearchParams(location.search);
-      let id = {curlid: searchParams.get('curlid') || ''};
-      let path = {domen: searchParams.get('domen') || ''};
-
-      const url = path.domen + '/corpsupdate/';
-
+      let id = {id: searchParams.get('id') || ''};
       let scene = state
         .get('scene')
          .update('layers', layers => layers.map(layer => unselectAll(layer)))
         .toJS();
 
-      event.preventDefault();
-      const datas = new FormData();
+      saveMap(id.id, scene);
 
-      datas.set('curlid', id.curlid);
-      datas.set('jsstring', JSON.stringify(scene));
 
-      var request = new Request(url,{
-        method: 'POST',
-        body: datas,
-      });
-
-      fetch(request).then(function (res) {
-        if (res.ok) {
-          alert("Сохранение прошло успешно!");
-          let redirectPath = path.domen + '/company/objects/?curlid={' + id.curlid + '}';
-          console.log(redirectPath);
-          window.location.href = redirectPath;
-        } else if (res.status == 401) {
-          alert("Сервер отклонил сохранение. Код ошибки " + res.status);
-        }
-      }, function (e) {
-        alert("Error submitting form!");
-      });
+      // const searchParams = new URLSearchParams(location.search);
+      // let id = {curlid: searchParams.get('curlid') || ''};
+      // let path = {domen: searchParams.get('domen') || ''};
+      //
+      // const url = path.domen + '/corpsupdate/';
+      //
+      // let scene = state
+      //   .get('scene')
+      //    .update('layers', layers => layers.map(layer => unselectAll(layer)))
+      //   .toJS();
+      //
+      // event.preventDefault();
+      // const datas = new FormData();
+      //
+      // datas.set('curlid', id.curlid);
+      // datas.set('jsstring', JSON.stringify(scene));
+      //
+      // var request = new Request(url,{
+      //   method: 'POST',
+      //   body: datas,
+      // });
+      //
+      // fetch(request).then(function (res) {
+      //   if (res.ok) {
+      //     alert("Сохранение прошло успешно!");
+      //     let redirectPath = path.domen + '/company/objects/?curlid={' + id.curlid + '}';
+      //     console.log(redirectPath);
+      //     window.location.href = redirectPath;
+      //   } else if (res.status == 401) {
+      //     alert("Сервер отклонил сохранение. Код ошибки " + res.status);
+      //   }
+      // }, function (e) {
+      //   alert("Error submitting form!");
+      // });
     };
 
     let mode = state.get('mode');
